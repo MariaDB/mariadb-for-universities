@@ -22,7 +22,7 @@ jobs:
       - name: Copy DBA files
         run: |
           mkdir -p deploy/content/dba
-          cp main/mariadb-dba* deploy/content/dba/
+          cp main/mariadb-dba*.md deploy/content/dba/
           cd deploy
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
