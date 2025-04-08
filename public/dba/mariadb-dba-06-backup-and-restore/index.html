@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MariaDB for Universities Program: Course Material</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    
+    <div class="top-menu">
+        <div class="menu-left">
+            <a href="/" class="home-link">
+                <img src="#" alt="" class="menu-icon">
+                MariaDB for Universities Program: Course Material
+            </a>
+        </div>
+        <div class="menu-right">
+            <a href="/">Course Material</a>
+            <a href="/contribute">Contribute</a>
+            <a href="/foundation">MariaDB Foundation</a>
+        </div>
+    </div>
+
+  
+
+    
+    <div class="content-wrapper">
+      
+      <div class="left-menu">
+        
+        <div class="table-of-contents">
+          <h2><a href=".">Lesson 6: Backup and Restore</a></h2>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#backing-up-data">Backing Up Data</a>
+      <ul>
+        <li><a href="#backup-principles">Backup Principles</a></li>
+        <li><a href="#basic-types-of-backup-methods">Basic Types of Backup Methods</a></li>
+        <li><a href="#mariadb-backup">MariaDB Backup</a></li>
+        <li><a href="#backing-up-data---mariadb-backup">Backing Up Data - MariaDB Backup</a></li>
+        <li><a href="#backing-up-data---mariadb-dump">Backing Up Data - MariaDB-dump</a></li>
+        <li><a href="#planning-and-scheduling-backups">Planning and Scheduling Backups</a></li>
+      </ul>
+    </li>
+    <li><a href="#restoring-data">Restoring Data</a>
+      <ul>
+        <li><a href="#restoring-data---mariadb-backup">Restoring Data - MariaDB Backup</a></li>
+        <li><a href="#restoring-data---mariadb-dump">Restoring Data - MariaDB-dump</a></li>
+        <li><a href="#verifying-backups">Verifying Backups</a></li>
+      </ul>
+    </li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+        </div>
+        
+      </div>
+
+      
+      <div class="main-content">
+        
+<nav class="breadcrumb">
+    
+      
+      <a href="/">MariaDB for Universities Course Material</a>
+    
+       &gt; 
+      <a href="/dba/">MariaDB DBA Course</a>
+    
+    &gt; <span class="current">Lesson 6: Backup and Restore</span>
+</nav>
+
+        <h1>Lesson 6: Backup and Restore</h1>
+        <h1 id="backup-and-restore">Backup and Restore</h1>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<ul>
+<li>Explain key backup principles and their importance, including the importance of verifying and testing backups</li>
+<li>Demonstrate and compare how to create full backups using different backup methods such as <code>MariaDB Backup</code> and <code>mariadb-dump</code></li>
+<li>Apply and assess recovery methods to restore data in MariaDB</li>
+<li>Design and implement a backup and recovery plan and schedule</li>
+</ul>
+<h2 id="backing-up-data">Backing Up Data</h2>
+<h3 id="backup-principles">Backup Principles</h3>
+<ul>
+<li>
+<p>Helps ensure high availability</p>
+</li>
+<li>
+<p>Cannot prevent user errors</p>
+</li>
+<li>
+<p>Backup data, logs, and configuration files</p>
+</li>
+<li>
+<p>Store backups in multiple locations</p>
+<ul>
+<li>Onsite for fast access</li>
+<li>Offsite for security</li>
+</ul>
+</li>
+<li>
+<p>Create consistent backups</p>
+</li>
+<li>
+<p>Backup methods</p>
+<ul>
+<li>Physical Backup</li>
+<li>Logical Backup</li>
+</ul>
+</li>
+<li>
+<p>Binary logs for Point-in-Time recovery</p>
+</li>
+<li>
+<p><strong>Always test the backup and recovery regularly</strong></p>
+</li>
+</ul>
+<h3 id="basic-types-of-backup-methods">Basic Types of Backup Methods</h3>
+<h4 id="physical-or-binary-backup">Physical or Binary Backup</h4>
+<p>MariaDB Backup, manual data directory copy (after stopping the MariaDB daemon), or VM/Cloud/LVM/ZFS snapshots</p>
+<ul>
+<li>A physical backup typically refers to a copy of the entire on disk database</li>
+<li>Used to mitigate a single or multiple host failure</li>
+<li>Can build replicas quickly</li>
+<li>Quick full recovery time</li>
+<li>Slow to recover single row or table (user error)</li>
+<li>Recovered only to the same storage engine with the same tablespaces</li>
+</ul>
+<h4 id="logical-backup">Logical Backup</h4>
+<p><code>mariadb-dump</code>, <code>mydumper</code>, <code>SELECT INTO OUTFILE</code></p>
+<ul>
+<li>Produces SQL files containing data that can regenerate a database</li>
+<li>Easily backup and restore single row, table, or database</li>
+<li>Can separate schema and data</li>
+<li>Can work across versions and forks</li>
+<li>SQL can be parsed with standard UNIX tools</li>
+<li>Restore process automatically replicated</li>
+<li>Long full restore time</li>
+<li>A SQL dump is independent of storage engine, and can be restored to a different storage engine, or used for migration</li>
+<li>Process can be slow and requires locks</li>
+</ul>
+<h3 id="mariadb-backup">MariaDB Backup</h3>
+<p><em>MariaDB&rsquo;s own backup package</em> (<code>mariabackup</code>) <em>is available from MariaDB repositories</em></p>
+<ul>
+<li>Supports MariaDB&rsquo;s features and storage engines</li>
+<li>Supports encryption</li>
+<li>Supports incremental backups</li>
+<li>Also available on Windows</li>
+<li>MariaDB Enterprise Backup contains improvements such as reduced locking</li>
+</ul>
+<h3 id="backing-up-data---mariadb-backup">Backing Up Data - MariaDB Backup</h3>
+<h4 id="full-backups">Full Backups</h4>
+<p>To use MariaDB Backup you need to create a user on your MariaDB Server with <code>RELOAD</code>, <code>LOCK TABLES</code> and <code>REPLICATION CLIENT</code> privileges.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>MariaDB [(<span style="color:#66d9ef">none</span>)]<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">USER</span> <span style="color:#e6db74">&#39;&lt;backupuser&gt;&#39;</span><span style="color:#f92672">@</span><span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED <span style="color:#66d9ef">BY</span> <span style="color:#e6db74">&#39;&lt;password&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>MariaDB [(<span style="color:#66d9ef">none</span>)]<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">GRANT</span> RELOAD, PROCESS, <span style="color:#66d9ef">LOCK</span> TABLES, REPLICATION CLIENT <span style="color:#66d9ef">ON</span> <span style="color:#f92672">*</span>.<span style="color:#f92672">*</span> <span style="color:#66d9ef">TO</span> <span style="color:#e6db74">&#39;&lt;backupuser&gt;&#39;</span><span style="color:#f92672">@</span><span style="color:#e6db74">&#39;localhost&#39;</span>;
+</span></span></code></pre></div><p>To take a full backup at the OS command-line use:</p>
+<pre tabindex="0"><code># mariabackup --backup --target-dir &lt;backupdir&gt; --user &lt;backupuser&gt; --password &lt;password&gt;
+# mariabackup --prepare --target-dir &lt;backupdir&gt;
+</code></pre><h3 id="backing-up-data---mariadb-dump">Backing Up Data - MariaDB-dump</h3>
+<p>The standard MariaDB logical dump tool copies schema and data to a SQL text file</p>
+<p>To use <code>mariadb-dump</code> you need to create a user on your MariaDB Server with <code>SELECT</code>, <code>RELOAD</code>, <code>LOCK TABLES</code>, <code>REPLICATION CLIENT</code>, <code>SHOW VIEW</code>, <code>EVENT</code>, and <code>TRIGGER</code> privileges</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">USER</span> <span style="color:#e6db74">&#39;backupuser&#39;</span><span style="color:#f92672">@</span><span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED <span style="color:#66d9ef">BY</span> <span style="color:#e6db74">&#39;mariadb&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">GRANT</span> <span style="color:#66d9ef">SELECT</span>, RELOAD, <span style="color:#66d9ef">LOCK</span> TABLES, REPLICATION CLIENT, <span style="color:#66d9ef">SHOW</span> <span style="color:#66d9ef">VIEW</span>, EVENT, <span style="color:#66d9ef">TRIGGER</span> <span style="color:#66d9ef">ON</span> <span style="color:#f92672">*</span>.<span style="color:#f92672">*</span> <span style="color:#66d9ef">TO</span> <span style="color:#e6db74">&#39;backupuser&#39;</span><span style="color:#f92672">@</span><span style="color:#e6db74">&#39;localhost&#39;</span>;
+</span></span></code></pre></div><p>To take a full backup at the OS command line use</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># mariadb-dump -u backupuser -p --all-databases --single-transaction --flush-logs -r /path/to/full-backup-YYYYMMDD.sql</span>
+</span></span></code></pre></div><h3 id="planning-and-scheduling-backups">Planning and Scheduling Backups</h3>
+<p>Take inventory of databases</p>
+<ul>
+<li>List of databases &amp; tables</li>
+<li>Number of rows</li>
+<li>Frequency of changes</li>
+<li>How active</li>
+<li>Sensitivity of data</li>
+</ul>
+<p>Write a backup schedule</p>
+<p>Write a verification schedule</p>
+<p>Verify and practice restoring from backups</p>
+<ul>
+<li>Backups are useless unless they have been tested</li>
+<li>Recovery procedures should be tested at least once per quarter</li>
+<li>Keep track of restore times during tests</li>
+</ul>
+<p>Naming standard for backup files</p>
+<p>Frequency — days and times</p>
+<p>Location — security and off-site</p>
+<h2 id="restoring-data">Restoring Data</h2>
+<h3 id="restoring-data---mariadb-backup">Restoring Data - MariaDB Backup</h3>
+<h4 id="full-backups-1">Full Backups</h4>
+<p>Working with a full backup taken with MariaDB Backup, you restore the backup into an <em>empty</em> data directory</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># mariabackup --copy-back --target-dir &lt;backupdir&gt; --datadir &lt;datadir&gt;</span>
+</span></span></code></pre></div><p>Afterwards it might be necessary to set the ownership of the data directory contents</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># chown -R mysql:mysql &lt;datadir&gt;</span>
+</span></span></code></pre></div><h3 id="restoring-data---mariadb-dump">Restoring Data - MariaDB-dump</h3>
+<p>Restoring from a logical backup</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># mariadb &lt; /path/to/full-backup-YYYYMMDD.sql</span>
+</span></span></code></pre></div><p>Or to avoid interpretation by the shell</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># mariadb</span>
+</span></span><span style="display:flex;"><span>SOURCE /path/to/full-backup-YYYYMMDD.sql
+</span></span></code></pre></div><p>You can also use standard linux tools such as <code>vi</code> or <code>grep</code> to edit or extract the backup</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># grep city worldbackup.sql</span>
+</span></span><span style="display:flex;"><span>CREATE TABLE <span style="color:#e6db74">`</span>world<span style="color:#e6db74">`</span>.<span style="color:#e6db74">`</span>city<span style="color:#e6db74">`</span> <span style="color:#f92672">(</span> ...
+</span></span></code></pre></div><h3 id="verifying-backups">Verifying Backups</h3>
+<ul>
+<li>Backups do not exist until you are certain they can be recovered so prepare a backup immediately</li>
+<li>Some of the reasons for preparing backups are to:
+<ul>
+<li>Enable recovery during a disaster</li>
+<li>Migrate to a new server</li>
+<li>Build a new replica</li>
+<li>Build a test environment that is cloned from production</li>
+</ul>
+</li>
+<li>Recovery procedures should be tested on a regular basis, at least once a quarter</li>
+<li>Validate the correctness of your backups</li>
+<li>Provide metrics on recovery time and recovery point</li>
+<li>Test by refreshing data to stage/test or development</li>
+<li>Test different kinds of restores as well
+<ul>
+<li>Do I know how to restore all of the data?</li>
+<li>Do I know how to restore just a single table?</li>
+<li>Do I know how to perform Point-in-Time recovery?</li>
+<li>Do I know how to restore a replica?</li>
+</ul>
+</li>
+<li>Restore and check for:
+<ul>
+<li>Errors</li>
+<li>Data Size</li>
+<li>Checksums</li>
+<li>Resultsets</li>
+</ul>
+</li>
+</ul>
+<h2 id="lesson-summary">Lesson Summary</h2>
+<ul>
+<li>Explain key backup principles and their importance, including the importance of verifying and testing backups</li>
+<li>Demonstrate and compare how to create full backups using different backup methods such as <code>MariaDB Backup</code> and <code>mariadb-dump</code></li>
+<li>Apply and assess recovery methods to restore data in MariaDB</li>
+<li>Design and implement a backup and recovery plan and schedule</li>
+</ul>
+
+      </div>
+
+      
+      <div class="right-menu">
+          <div class="quick-links">
+            <a href="https://github.com/robertsilen/mariadb-for-universities-www/blob/main/content/dba/mariadb-dba-06-backup-and-restore.md" class="icon-link edit-page">View page source</a>
+            <a href="https://github.com/robertsilen/mariadb-for-universities-www/edit/main/content/dba/mariadb-dba-06-backup-and-restore.md" class="icon-link view-source">Edit this page</a>
+            <a href="https://github.com/robertsilen/mariadb-for-universities-www/issues/new?title=Course%20Material%20issue%20for%20Lesson%206%3a%20Backup%20and%20Restore&body=I%20found%20an%20issue%20with%20the%20documentation%20for%20Lesson%206%3a%20Backup%20and%20Restore.%0A%0A%0A%0A---%0A%0AThis%20issue%20is%20related%20to%20the%20following%20page%3A%0A%0Ahttp%3a%2f%2flocalhost%3a1313%2fdba%2fmariadb-dba-06-backup-and-restore%2f" class="icon-link create-doc">Create Material issue</a>
+            <a href="#" class="icon-link print">Print entire section</a>
+          </div>
+      </div>
+  </div>
+
+
+</body>
+</html>

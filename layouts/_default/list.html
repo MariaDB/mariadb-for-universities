@@ -1,0 +1,37 @@
+{{ define "main" }}
+
+<!-- Main Content Area -->
+<div class="content-wrapper">
+  <!-- Left Side Menu -->
+  <div class="left-menu">
+    {{ if .Params.toc }}
+    <div class="table-of-contents">
+      <h2>Table of Contents</h2>
+      {{ .TableOfContents }}
+    </div>
+    {{ end }}
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+
+    {{ partial "breadcrumb.html" . }}
+
+    <h1>{{ .Title }}</h1>
+  <div class="list-content">
+    {{ .Content }}
+  </div>
+  <div class="list-items">
+    <ul>
+      {{ range .Pages }}
+        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+      {{ end }}
+    </ul>
+  </div>
+
+    <!-- Right Side Menu -->
+    <div class="right-menu">
+    </div>
+</div>
+
+{{ end }}

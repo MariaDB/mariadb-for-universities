@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 271 176" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+  <g id="all">
+    <path id="disk-group" serif:id="disk group" d="M269.791,6.086l0,163.76c0,3.083 -2.503,5.587 -5.586,5.587l-109.3,-0c-3.083,-0 -5.586,-2.504 -5.586,-5.587l-0,-163.76c-0,-3.083 2.503,-5.586 5.586,-5.586l109.3,-0c3.083,-0 5.586,2.503 5.586,5.586Z" style="fill:none;" />
+    <clipPath id="_clip1">
+      <path d="M269.791,6.086l0,163.76c0,3.083 -2.503,5.587 -5.586,5.587l-109.3,-0c-3.083,-0 -5.586,-2.504 -5.586,-5.587l-0,-163.76c-0,-3.083 2.503,-5.586 5.586,-5.586l109.3,-0c3.083,-0 5.586,2.503 5.586,5.586Z" />
+    </clipPath>
+    <g clip-path="url(#_clip1)">
+      <path id="_1-2" serif:id="1/2" d="M262.705,154.24l-0,14.961c-0,0.761 -0.617,1.378 -1.378,1.378l-103.544,-0c-0.76,-0 -1.377,-0.617 -1.377,-1.378l-0,-14.961c-0,-0.761 0.617,-1.378 1.377,-1.378l103.544,0c0.761,0 1.378,0.617 1.378,1.378Z" style="fill:none;" />
+      <clipPath id="_clip2">
+        <path d="M262.705,154.24l-0,14.961c-0,0.761 -0.617,1.378 -1.378,1.378l-103.544,-0c-0.76,-0 -1.377,-0.617 -1.377,-1.378l-0,-14.961c-0,-0.761 0.617,-1.378 1.377,-1.378l103.544,0c0.761,0 1.378,0.617 1.378,1.378Z" />
+      </clipPath>
+      <g clip-path="url(#_clip2)">
+        <g transform="matrix(9,0,0,9,248.905,163.964)"></g>
+        <text x="175.358px" y="163.964px" style="font-family:'Helvetica';font-size:9px;">Redo Log, File 2/2</text>
+      </g>
+      <path d="M262.705,154.24l-0,14.961c-0,0.761 -0.617,1.378 -1.378,1.378l-103.544,-0c-0.76,-0 -1.377,-0.617 -1.377,-1.378l-0,-14.961c-0,-0.761 0.617,-1.378 1.377,-1.378l103.544,0c0.761,0 1.378,0.617 1.378,1.378Z" style="fill:none;stroke:#000;stroke-width:1px;" />
+      <path id="_1-21" serif:id="1/2" d="M262.705,122.35l-0,14.962c-0,0.76 -0.617,1.377 -1.378,1.377l-103.544,-0c-0.76,-0 -1.377,-0.617 -1.377,-1.377l-0,-14.962c-0,-0.76 0.617,-1.378 1.377,-1.378l103.544,0c0.761,0 1.378,0.618 1.378,1.378Z" style="fill:none;" />
+      <clipPath id="_clip3">
+        <path d="M262.705,122.35l-0,14.962c-0,0.76 -0.617,1.377 -1.378,1.377l-103.544,-0c-0.76,-0 -1.377,-0.617 -1.377,-1.377l-0,-14.962c-0,-0.76 0.617,-1.378 1.377,-1.378l103.544,0c0.761,0 1.378,0.618 1.378,1.378Z" />
+      </clipPath>
+      <g clip-path="url(#_clip3)">
+        <g transform="matrix(9,0,0,9,248.905,132.074)"></g>
+        <text x="175.358px" y="132.074px" style="font-family:'Helvetica';font-size:9px;">Redo Log, File 1/2</text>
+      </g>
+      <path d="M262.705,122.35l-0,14.962c-0,0.76 -0.617,1.377 -1.378,1.377l-103.544,-0c-0.76,-0 -1.377,-0.617 -1.377,-1.377l-0,-14.962c-0,-0.76 0.617,-1.378 1.377,-1.378l103.544,0c0.761,0 1.378,0.618 1.378,1.378Z" style="fill:none;stroke:#000;stroke-width:1px;" />
+      <circle cx="206.012" cy="145.706" r="9.183" style="fill:#eee;" />
+      <clipPath id="_clip4">
+        <circle cx="206.012" cy="145.706" r="9.183" />
+      </clipPath>
+      <g clip-path="url(#_clip4)">
+        <path d="M206.606,138.689l-4.79,7.017l3.035,0.62l-1.616,5.498l6.32,-6.118l-2.826,-0.739l-0.123,-6.278Z" style="fill:none;stroke:#000;stroke-width:1px;" />
+      </g>
+      <circle cx="206.012" cy="145.706" r="9.183" style="fill:none;stroke:#000;stroke-width:1px;" />
+      <path id="data-files" serif:id="data files" d="M262.705,34.907l-0,65.832c-0,3.345 -2.716,6.06 -6.061,6.06l-94.178,0c-3.345,0 -6.06,-2.715 -6.06,-6.06l-0,-65.832c-0,-3.345 2.715,-6.061 6.06,-6.061l94.178,0c3.345,0 6.061,2.716 6.061,6.061Z" style="fill:none;" />
+      <clipPath id="_clip5">
+        <path d="M262.705,34.907l-0,65.832c-0,3.345 -2.716,6.06 -6.061,6.06l-94.178,0c-3.345,0 -6.06,-2.715 -6.06,-6.06l-0,-65.832c-0,-3.345 2.715,-6.061 6.06,-6.061l94.178,0c3.345,0 6.061,2.716 6.061,6.061Z" />
+      </clipPath>
+      <g clip-path="url(#_clip5)">
+        <g transform="matrix(0.340783,0,0,0.340783,110.864,-18.211)">
+          <text x="214.219px" y="221.864px" style="font-family:'Helvetica';font-size:26.41px;">Data Files(s)</text>
+          <text x="202.439px" y="248.273px" style="font-family:'Helvetica-Oblique', 'Helvetica';font-style:italic;font-size:26.41px;">(data, indexes,</text>
+          <g transform="matrix(26.4098,0,0,26.4098,344.121,274.683)"></g>
+          <text x="233.994px" y="274.683px" style="font-family:'Helvetica-Oblique', 'Helvetica';font-style:italic;font-size:26.41px;">undo log)</text>
+        </g>
+      </g>
+      <path d="M262.705,34.907l-0,65.832c-0,3.345 -2.716,6.06 -6.061,6.06l-94.178,0c-3.345,0 -6.06,-2.715 -6.06,-6.06l-0,-65.832c-0,-3.345 2.715,-6.061 6.06,-6.061l94.178,0c3.345,0 6.061,2.716 6.061,6.061Z" style="fill:none;stroke:#000;stroke-width:1px;" />
+      <g transform="matrix(12,0,0,12,225.333,18.9096)"></g>
+      <text x="199.985px" y="18.91px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:12px;">Disk</text>
+    </g>
+    <path d="M269.791,6.086l0,163.76c0,3.083 -2.503,5.587 -5.586,5.587l-109.3,-0c-3.083,-0 -5.586,-2.504 -5.586,-5.587l-0,-163.76c-0,-3.083 2.503,-5.586 5.586,-5.586l109.3,-0c3.083,-0 5.586,2.503 5.586,5.586Z" style="fill:none;stroke:#000;stroke-width:1px;" />
+    <path id="memory-group" serif:id="memory group" d="M120.972,6.086l0,163.76c0,3.083 -2.503,5.587 -5.586,5.587l-109.3,-0c-3.083,-0 -5.586,-2.504 -5.586,-5.587l-0,-163.76c-0,-3.083 2.503,-5.586 5.586,-5.586l109.3,-0c3.083,-0 5.586,2.503 5.586,5.586Z" style="fill:none;" />
+    <clipPath id="_clip6">
+      <path d="M120.972,6.086l0,163.76c0,3.083 -2.503,5.587 -5.586,5.587l-109.3,-0c-3.083,-0 -5.586,-2.504 -5.586,-5.587l-0,-163.76c-0,-3.083 2.503,-5.586 5.586,-5.586l109.3,-0c3.083,-0 5.586,2.503 5.586,5.586Z" />
+    </clipPath>
+    <g clip-path="url(#_clip6)">
+      <path d="M113.886,124.554l-0,38.9c-0,1.977 -1.605,3.581 -3.581,3.581l-99.137,0c-1.977,0 -3.581,-1.604 -3.581,-3.581l-0,-38.9c-0,-1.977 1.604,-3.582 3.581,-3.582l99.137,0c1.976,0 3.581,1.605 3.581,3.582Z" style="fill:none;" />
+      <clipPath id="_clip7">
+        <path d="M113.886,124.554l-0,38.9c-0,1.977 -1.605,3.581 -3.581,3.581l-99.137,0c-1.977,0 -3.581,-1.604 -3.581,-3.581l-0,-38.9c-0,-1.977 1.604,-3.582 3.581,-3.582l99.137,0c1.976,0 3.581,1.605 3.581,3.582Z" />
+      </clipPath>
+      <g clip-path="url(#_clip7)">
+        <g transform="matrix(0.24,0,0,0.24,-8.72181,88.2038)">
+          <text x="192.103px" y="221.864px" style="font-family:'Helvetica';font-size:37.5px;">Log Bugger</text>
+          <text x="191.096px" y="259.364px" style="font-family:'Helvetica-Oblique', 'Helvetica';font-style:italic;font-size:37.5px;">(transaction</text>
+          <g transform="matrix(37.5,0,0,37.5,385.966,296.864)"></g>
+          <text x="192.149px" y="296.864px" style="font-family:'Helvetica-Oblique', 'Helvetica';font-style:italic;font-size:37.5px;">data writes)</text>
+        </g>
+      </g>
+      <path d="M113.886,124.554l-0,38.9c-0,1.977 -1.605,3.581 -3.581,3.581l-99.137,0c-1.977,0 -3.581,-1.604 -3.581,-3.581l-0,-38.9c-0,-1.977 1.604,-3.582 3.581,-3.582l99.137,0c1.976,0 3.581,1.605 3.581,3.582Z" style="fill:none;stroke:#000;stroke-width:1px;" />
+      <path d="M113.886,34.907l-0,65.832c-0,3.345 -2.716,6.06 -6.06,6.06l-94.179,0c-3.345,0 -6.06,-2.715 -6.06,-6.06l-0,-65.832c-0,-3.345 2.715,-6.061 6.06,-6.061l94.179,0c3.344,0 6.06,2.716 6.06,6.061Z" style="fill:none;" />
+      <clipPath id="_clip8">
+        <path d="M113.886,34.907l-0,65.832c-0,3.345 -2.716,6.06 -6.06,6.06l-94.179,0c-3.345,0 -6.06,-2.715 -6.06,-6.06l-0,-65.832c-0,-3.345 2.715,-6.061 6.06,-6.061l94.179,0c3.344,0 6.06,2.716 6.06,6.061Z" />
+      </clipPath>
+      <g clip-path="url(#_clip8)">
+        <g transform="matrix(0.24,0,0,0.24,-5.92923,-10.7664)">
+          <text x="198.704px" y="221.864px" style="font-family:'Helvetica';font-size:37.5px;">Buf <tspan x="254.332px 264.75px " y="221.864px 221.864px ">fe</tspan>r pool </text>
+          <text x="160.847px" y="259.364px" style="font-family:'Helvetica-Oblique', 'Helvetica';font-style:italic;font-size:37.5px;">(cached data in</text>
+          <text x="160.856px" y="296.864px" style="font-family:'Helvetica-Oblique', 'Helvetica';font-style:italic;font-size:37.5px;">Indexes, stored</text>
+          <g transform="matrix(37.5,0,0,37.5,366.191,334.364)"></g>
+          <text x="211.924px" y="334.364px" style="font-family:'Helvetica-Oblique', 'Helvetica';font-style:italic;font-size:37.5px;">in pages)</text>
+        </g>
+      </g>
+      <path d="M113.886,34.907l-0,65.832c-0,3.345 -2.716,6.06 -6.06,6.06l-94.179,0c-3.345,0 -6.06,-2.715 -6.06,-6.06l-0,-65.832c-0,-3.345 2.715,-6.061 6.06,-6.061l94.179,0c3.344,0 6.06,2.716 6.06,6.061Z" style="fill:none;stroke:#000;stroke-width:1px;" />
+      <g transform="matrix(12,0,0,12,83.4032,17.6996)"></g>
+      <text x="37.39px" y="17.7px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:12px;">Memory</text>
+    </g>
+    <path d="M120.972,6.086l0,163.76c0,3.083 -2.503,5.587 -5.586,5.587l-109.3,-0c-3.083,-0 -5.586,-2.504 -5.586,-5.587l-0,-163.76c-0,-3.083 2.503,-5.586 5.586,-5.586l109.3,-0c3.083,-0 5.586,2.503 5.586,5.586Z" style="fill:none;stroke:#000;stroke-width:1px;" />
+    <g id="arrows-down" serif:id="arrows down">
+      <path d="M53.9,80.829l13.673,0l-0,33.557l6.837,-0l-13.674,13.673l-13.673,-13.673l6.837,-0l-0,-33.557Z" style="fill:#eee;" />
+      <clipPath id="_clip9">
+        <path d="M53.9,80.829l13.673,0l-0,33.557l6.837,-0l-13.674,13.673l-13.673,-13.673l6.837,-0l-0,-33.557Z" />
+      </clipPath>
+      <g clip-path="url(#_clip9)">
+        <g transform="matrix(3.90447e-17,-0.913829,1,8.30324e-17,-241.936,216.995)">
+          <g transform="matrix(9,0,0,9,141.183,305.817)"></g>
+          <text x="115.167px" y="305.817px" style="font-family:'Helvetica';font-size:9px;">Delete</text>
+        </g>
+      </g>
+      <path d="M53.9,80.829l13.673,0l-0,33.557l6.837,-0l-13.674,13.673l-13.673,-13.673l6.837,-0l-0,-33.557Z" style="fill:none;stroke:#000;stroke-width:1px;" />
+      <g>
+        <path d="M85.289,80.829l13.674,0l-0,33.557l6.837,-0l-13.674,13.673l-13.673,-13.673l6.836,-0l0,-33.557Z" style="fill:#eee;stroke:#000;stroke-width:1px;" />
+        <g transform="matrix(4.75003e-17,-0.822697,1,6.49389e-17,-199.159,231.993)">
+          <g transform="matrix(9,0,0,9,175.234,294.086)"></g>
+          <text x="146.213px" y="294.086px" style="font-family:'Helvetica';font-size:9px;">Update</text>
+        </g>
+      </g>
+      <g>
+        <path d="M22.51,80.829l13.673,0l-0,33.557l6.837,-0l-13.674,13.673l-13.673,-13.673l6.837,-0l-0,-33.557Z" style="fill:#eee;stroke:#000;stroke-width:1px;" />
+        <circle cx="12.576" cy="113.886" r="9.183" style="fill:#eee;stroke:#000;stroke-width:1px;" />
+        <g transform="matrix(9,0,0,9,15.5581,117.019)"></g>
+        <text x="10.553px" y="117.019px" style="font-family:'Helvetica';font-size:9px;">1</text>
+        <g transform="matrix(4.75003e-17,-0.775739,1,6.12323e-17,-255.652,176.759)">
+          <g transform="matrix(9,0,0,9,106.279,288.136)"></g>
+          <text x="83.77px" y="288.136px" style="font-family:'Helvetica';font-size:9px;">Insert</text>
+        </g>
+      </g>
+    </g>
+    <g id="arrows-right" serif:id="arrows right">
+      <g>
+        <path d="M98.224,152.542l0,-13.673l62.347,-0l-0,-6.837l13.673,13.674l-13.673,13.673l-0,-6.837l-62.347,0Z" style="fill:#eee;stroke:#000;stroke-width:1px;" />
+        <circle cx="102.529" cy="145.706" r="9.183" style="fill:#eee;stroke:#000;stroke-width:1px;" />
+        <g transform="matrix(9,0,0,9,105.078,148.863)"></g>
+        <text x="100.073px" y="148.863px" style="font-family:'Helvetica';font-size:9px;">2</text>
+        <g transform="matrix(9,0,0,9,147.914,148.864)"></g>
+        <text x="116.915px" y="148.864px" style="font-family:'Helvetica';font-size:9px;">Commit</text>
+      </g>
+      <g>
+        <g>
+          <path d="M101.646,76.106l-0,-13.673l58.925,-0l-0,-6.837l13.673,13.673l-13.673,13.674l-0,-6.837l-58.925,0Z" style="fill:#eee;stroke:#000;stroke-width:1px;" />
+          <ellipse cx="103.086" cy="68.791" rx="9.183" ry="9.662" style="fill:#eee;stroke:#000;stroke-width:1px;" />
+          <g transform="matrix(0.950478,0,0,1,4.08324,7.10543e-15)">
+            <g transform="matrix(9,0,0,9,106.751,72.3345)"></g>
+            <text x="101.746px" y="72.335px" style="font-family:'Helvetica';font-size:9px;">3</text>
+          </g>
+        </g>
+        <g transform="matrix(9,0,0,9,161.367,71.6468)"></g>
+        <text x="116.341px" y="71.647px" style="font-family:'Helvetica';font-size:9px;">Checkpoint</text>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MariaDB for Universities Program: Course Material</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    
+    <div class="top-menu">
+        <div class="menu-left">
+            <a href="/" class="home-link">
+                <img src="#" alt="" class="menu-icon">
+                MariaDB for Universities Program: Course Material
+            </a>
+        </div>
+        <div class="menu-right">
+            <a href="/">Course Material</a>
+            <a href="/contribute">Contribute</a>
+            <a href="/foundation">MariaDB Foundation</a>
+        </div>
+    </div>
+
+  
+
+    
+    <div class="content-wrapper">
+      
+      <div class="left-menu">
+        
+        <div class="table-of-contents">
+          <h2><a href=".">Lesson 1: Getting Started</a></h2>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#deployment">Deployment</a>
+      <ul>
+        <li><a href="#supported-operating-systems">Supported Operating Systems</a></li>
+        <li><a href="#installation-methods-and-packages">Installation Methods and Packages</a></li>
+        <li><a href="#installing-with-packages">Installing with Packages</a></li>
+        <li><a href="#starting-and-stopping-the-server">Starting and Stopping the Server</a></li>
+        <li><a href="#upgrading-mariadb">Upgrading MariaDB</a></li>
+      </ul>
+    </li>
+    <li><a href="#connectors-and-utilities">Connectors and Utilities</a>
+      <ul>
+        <li><a href="#connectors">Connectors</a></li>
+        <li><a href="#client-connections">Client Connections</a></li>
+        <li><a href="#mariadb-client---command-line-tool">MariaDB Client - Command-line Tool</a></li>
+        <li><a href="#mariadb-admin---command-line-tool">MariaDB-admin - Command-line Tool</a></li>
+        <li><a href="#other-client-utilities">Other Client Utilities</a></li>
+        <li><a href="#some-command-line-tools">Some Command Line Tools</a></li>
+        <li><a href="#graphical-user-interface-tools">Graphical User Interface Tools</a></li>
+      </ul>
+    </li>
+    <li><a href="#configuration-and-variables">Configuration and Variables</a>
+      <ul>
+        <li><a href="#configuration-file-locations">Configuration File Locations</a></li>
+        <li><a href="#server-defaults">Server Defaults</a></li>
+        <li><a href="#setting-the-innodb-buffer-pool-size">Setting the InnoDB Buffer Pool Size</a></li>
+        <li><a href="#global-and-status-variables">Global and Status Variables</a></li>
+        <li><a href="#session-variables">Session Variables</a></li>
+      </ul>
+    </li>
+    <li><a href="#log-files">Log Files</a>
+      <ul>
+        <li><a href="#mariadb-logs">MariaDB Logs</a></li>
+        <li><a href="#error-log">Error Log</a></li>
+        <li><a href="#general-query-log">General Query Log</a></li>
+        <li><a href="#sql-error-log">SQL Error Log</a></li>
+        <li><a href="#slow-query-log">Slow Query Log</a></li>
+        <li><a href="#managing-log-files">Managing Log Files</a></li>
+      </ul>
+    </li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+        </div>
+        
+      </div>
+
+      
+      <div class="main-content">
+        
+<nav class="breadcrumb">
+    
+      
+      <a href="/">MariaDB for Universities Course Material</a>
+    
+       &gt; 
+      <a href="/dba/">MariaDB DBA Course</a>
+    
+    &gt; <span class="current">Lesson 1: Getting Started</span>
+</nav>
+
+        <h1>Lesson 1: Getting Started</h1>
+        <h1 id="getting-started">Getting started</h1>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<ul>
+<li>List the steps to deploy MariaDB Enterprise Server using distribution packages</li>
+<li>Explain the benefits and challenges of upgrading MariaDB Enterprise Server, and list the steps you need to take before and after the upgrade</li>
+<li>Know which tools and client utilities to use to perform common tasks such as managing users accounts and permissions, benchmarking, and backing up and restoring data</li>
+<li>Change the default settings of MariaDB Enterprise Server while it&rsquo;s running to make the server work better for your needs</li>
+<li>Turn on and off server logs and use them to check the status and performance of MariaDB Enterprise Server</li>
+</ul>
+<h2 id="deployment">Deployment</h2>
+<h3 id="supported-operating-systems">Supported Operating Systems</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Operating System</th>
+          <th>ES10.6</th>
+          <th>ES10.5</th>
+          <th>ES10.4</th>
+          <th>ES10.3</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>RHEL8 (x86_64 / ARM64)</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>RHEL7 (x86_64)</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>CentOS 7 (x86_64)</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>Ubuntu 20.04 (x86_64 / ARM64)</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>Ubuntu 18.04 (x86_64 / ARM64)</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>Debian 11 (x86_64 / ARM64)</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>No</td>
+          <td>No</td>
+      </tr>
+      <tr>
+          <td>Debian 10 (x86_64 / ARM64)</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>Debian 9 (x86_64 / ARM64)</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>SLES15 (x86_64 / ARM64)</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>SLES12 (x86_64)</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>Windows (x86_64)</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="installation-methods-and-packages">Installation Methods and Packages</h3>
+<h4 id="installation-tools">Installation Tools</h4>
+<ul>
+<li>Built and tested by experts</li>
+<li>Installer (e.g., <code>yum</code>)</li>
+<li>Use up-to-date versions</li>
+</ul>
+<h4 id="distribution-packages">Distribution Packages</h4>
+<ul>
+<li><code>(rpm, deb, pkg, dmg)</code></li>
+<li>Easy and quick to install</li>
+<li>Need to configure manually</li>
+<li>Possibly old versions</li>
+</ul>
+<h4 id="docker">Docker</h4>
+<ul>
+<li>Enterprise Docker registry</li>
+<li>Easy Docker installs</li>
+<li>Maintained by MariaDB</li>
+</ul>
+<p>The recommended way to install MariaDB is via MariaDB&rsquo;s <code>repository</code> in conjunction with your distribution&rsquo;s package manager.</p>
+<h3 id="installing-with-packages">Installing with Packages</h3>
+<p><strong>Package Managers</strong><br>
+Automatically places binaries, configuration and other files in correct locations</p>
+<p><strong>Configuration File</strong><br>
+Add any system configuration items you require to the <code>.cnf</code> file</p>
+<p><strong>Maintained by MariaDB</strong><br>
+Official package repositories are available on our website</p>
+<h3 id="starting-and-stopping-the-server">Starting and Stopping the Server</h3>
+<p><code>systemctl [start|stop|restart|status] mariadb</code></p>
+<p>Configure start and stop timeouts by creating a <code>timeout.conf</code> file</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># vi /etc/systemd/system/mariadb.service.d/timeout.conf</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Service<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>TimeoutStartSec<span style="color:#f92672">=</span>30min
+</span></span><span style="display:flex;"><span>TimeoutStopSec<span style="color:#f92672">=</span>30min
+</span></span></code></pre></div><p>Reload the systemd daemon</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># systemctl daemon-reload</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># systemctl restart mariadb</span>
+</span></span></code></pre></div><h3 id="upgrading-mariadb">Upgrading MariaDB</h3>
+<h4 id="what-to-consider">What to Consider</h4>
+<ul>
+<li>
+<p>Review release notes
+(major and minor version upgrades)</p>
+</li>
+<li>
+<p>Upgrade system tables (<code>mariadb-upgrade</code>)</p>
+</li>
+<li>
+<p>Requires downtime on standalone servers</p>
+</li>
+<li>
+<p>Rolling restart available with MariaDB Cluster</p>
+</li>
+</ul>
+<h4 id="what-to-prepare">What to Prepare</h4>
+<ul>
+<li>
+<p>Backup Data</p>
+</li>
+<li>
+<p>Update applications and libraries</p>
+</li>
+<li>
+<p>Use a Test Server</p>
+<ul>
+<li>MariaDB SkySQL is an easy way to spin up what you need, test and then delete it</li>
+</ul>
+</li>
+<li>
+<p>Use Replication</p>
+<ul>
+<li>Upgrade the Replica, Promote the Replica and then Upgrade the Primary
+<ul>
+<li>Made even easier with MariaDB MaxScale</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="connectors-and-utilities">Connectors and Utilities</h2>
+<h3 id="connectors">Connectors</h3>
+<p>Various Libraries for connecting to MariaDB</p>
+<ul>
+<li>MariaDB Connector/C</li>
+<li>MariaDB Connector/C++ *</li>
+<li>MariaDB Connector/J (JDBC)</li>
+<li>MariaDB Connector/R2DBC</li>
+<li>MariaDB Connector/Node.js</li>
+<li>MariaDB Connector/ODBC *</li>
+<li>MariaDB Connector/Python *</li>
+<li>.NET, Perl DBI, PHP, Ruby **</li>
+</ul>
+<p>*Wrapper for MariaDB C API, which uses the MariaDB Network Protocol<br>
+** Non-native (unsupported) Connectors to use with MariaDB</p>
+<h3 id="client-connections">Client Connections</h3>
+<p>TCP/IP Connections available on All Platforms (<code>skip_networking</code> disables this)</p>
+<p>Socket Files available on Unix Platforms (fastest choice)</p>
+<p>Named Pipe (<code>named_pipe</code>) and Shared Memory (<code>shared_memory</code>) available on Windows</p>
+<p>MariaDB Connections require few resources and are easy to open</p>
+<p>Most use External Connection Pools (not needed usually)</p>
+<p>Set Global Client Connection Limit (<code>max_connections=n</code>)</p>
+<h3 id="mariadb-client---command-line-tool">MariaDB Client - Command-line Tool</h3>
+<ul>
+<li>Shell or SSH</li>
+<li>Manually Execute any SQL statement</li>
+<li>Display MariaDB settings and status counters</li>
+<li>Use as an Interactive Session, or Pipe SQL via Shell</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># mariadb --user=root -p</span>
+</span></span><span style="display:flex;"><span>MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; SHOW DATABASES;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># mariadb -p -u user_name --execute &#34;SHOW DATABASES&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mariadb -e &#34;CREATE DATABASE world&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mariadb world &lt; /path/to/world.sql</span>
+</span></span></code></pre></div><h3 id="mariadb-admin---command-line-tool">MariaDB-admin - Command-line Tool</h3>
+<ul>
+<li>Shell or SSH</li>
+<li>Manage User Accounts, Passwords, Permissions</li>
+<li>Display MariaDB settings and status counters</li>
+<li>View and Kill Active Connections</li>
+<li>Ping or Shutdown mysqld</li>
+<li>Create and Drop Databases</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># mariadb-admin processlist</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mariadb-admin kill 12345678</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mariadb-admin -u root -p create ragnar</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mariadb-admin extended-status</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mariadb-admin variables</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mariadb-admin ping</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mariadb-admin status</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mariadb-admin shutdown</span>
+</span></span></code></pre></div><h3 id="other-client-utilities">Other Client Utilities</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Name</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>mariadb-backup</code></td>
+          <td>Open source tool provided by MariaDB for performing physical online backups of InnoDB and Aria tables. For InnoDB &ldquo;hot online&rdquo; backups are possible.</td>
+      </tr>
+      <tr>
+          <td><code>mariadb-binlog</code></td>
+          <td>Processes binary logs and relay logs. Used to read the binary log file, and is often used in restoring data to a particular point in time.</td>
+      </tr>
+      <tr>
+          <td><code>mariadb-check</code></td>
+          <td>Checks, repairs, analyzes and optimizes tables.</td>
+      </tr>
+      <tr>
+          <td><code>mariadb-dump</code></td>
+          <td>Backup tool that allows a logical dump of SQL data or schema from your database.</td>
+      </tr>
+      <tr>
+          <td><code>mariadb-secure-installation</code></td>
+          <td>Tool that enables you to improve the security of your MariaDB installation in various ways. You should run this after every installation of MariaDB server.</td>
+      </tr>
+      <tr>
+          <td><code>mariadb-upgrade</code></td>
+          <td>Tool that checks and updates your tables to the latest version.</td>
+      </tr>
+      <tr>
+          <td><code>mariadb-slap</code></td>
+          <td>Tool for load-testing MariaDB.</td>
+      </tr>
+      <tr>
+          <td><code>sysbench</code></td>
+          <td>Another benchmarking tool that provides benchmarking capabilities for Linux. It supports testing CPU, memory, file I/O, mutex performance.</td>
+      </tr>
+      <tr>
+          <td><code>my_print_defaults</code></td>
+          <td>Useful in displaying the default settings that are given to the MariaDB daemon at startup, either manually or from the configuration file. Execute this from the command line followed by the &ndash;mysqld option.</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="some-command-line-tools">Some Command Line Tools</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Name</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>mariadb-tzinfo-to-sql</code></td>
+          <td>Use to load time zones on systems that have a zoneinfo database to load the time zone tables into the mysql database.</td>
+      </tr>
+      <tr>
+          <td><code>mariadb-install-db</code></td>
+          <td>Initializes the MariaDB data directory and creates the system tables in the mysql database.</td>
+      </tr>
+      <tr>
+          <td><code>mariadb-show</code></td>
+          <td>Shows the structure of a MariaDB database (databases, tables, columns and indexes).</td>
+      </tr>
+      <tr>
+          <td><code>mariadb-dump</code></td>
+          <td>Tool for examining the slow query log.</td>
+      </tr>
+      <tr>
+          <td><code>mariadb-dumpslow</code></td>
+          <td>Tool that enables you to improve the security of your MariaDB installation in various ways. This should be run after every installation of MariaDB server.</td>
+      </tr>
+      <tr>
+          <td><code>innochecksum</code></td>
+          <td>printing checksums for InnoDB files.</td>
+      </tr>
+      <tr>
+          <td><code>aria_chk</code></td>
+          <td>checks, repairs, optimizes, sorts and gets information about Aria tables.</td>
+      </tr>
+      <tr>
+          <td><code>aria_pack</code></td>
+          <td>Tool for compressing Aria tables.</td>
+      </tr>
+      <tr>
+          <td><code>aria_read_log</code></td>
+          <td>Tool for displaying and applying log records from an Aria transaction log.</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="graphical-user-interface-tools">Graphical User Interface Tools</h3>
+<ul>
+<li>Can Connect via SSL or SSH tunnel</li>
+<li>Schema and Query Construction</li>
+<li>Optimization and Profiling</li>
+<li>User Account Management</li>
+<li>Task and Backup Scheduling</li>
+<li>Data Migration and Cleaning</li>
+<li>Schema Sync and Diff Tools</li>
+<li>Notifications</li>
+</ul>
+<p><strong>Windows</strong></p>
+<ul>
+<li>HeidiSQL</li>
+<li>DBeaver</li>
+<li>SQLyog</li>
+<li>Toad</li>
+</ul>
+<p><strong>Mac and Linux</strong></p>
+<ul>
+<li>DBeaver</li>
+<li>Sequel Ace</li>
+<li>Querious</li>
+</ul>
+<h2 id="configuration-and-variables">Configuration and Variables</h2>
+<h3 id="configuration-file-locations">Configuration File Locations</h3>
+<h4 id="linux">Linux</h4>
+<ul>
+<li><code>/etc/my.cnf</code></li>
+<li><code>/etc/my.cnf.d/mariadb-enterprise.cnf</code></li>
+<li><code>/etc/my.cnf.d/server.cnf</code></li>
+<li><code>$MYSQL_HOME/my.cnf</code></li>
+<li><code>[datadir]/my.cnf</code></li>
+<li><code>~/.my.cnf (clients)</code></li>
+<li><code>/etc/my.cnf.d/*.cnf</code></li>
+<li><code>--defaults-extra-file</code></li>
+</ul>
+<h4 id="windows">Windows</h4>
+<ul>
+<li><code>C:\Windows\my.ini</code></li>
+<li><code>C:\Windows\my.cnf</code></li>
+<li><code>C:\my.ini</code></li>
+<li><code>INSTALLDIR\my.ini</code></li>
+<li><code>INSTALLDIR\my.cnf</code></li>
+<li><code>INSTALLDIR\data\my.ini</code></li>
+<li><code>INSTALLDIR\data\my.cnf</code></li>
+<li><code>--defaults-extra-file</code></li>
+</ul>
+<h3 id="server-defaults">Server Defaults</h3>
+<h4 id="finding-defaults">Finding Defaults</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># mariadbd --print-defaults</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mariadbd would have been started with the following arguments:
+</span></span><span style="display:flex;"><span>- <span style="color:#e6db74">`</span>--datadir<span style="color:#f92672">=</span>/data/mariadb<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#e6db74">`</span>--socket<span style="color:#f92672">=</span>/var/lib/mysql/mysql.sock<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#e6db74">`</span>--user<span style="color:#f92672">=</span>mysql<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#e6db74">`</span>--symbolic_links<span style="color:#f92672">=</span>0<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#e6db74">`</span>--local_infile<span style="color:#f92672">=</span>0<span style="color:#e6db74">`</span>
+</span></span></code></pre></div><h4 id="configuration-file-servercnf">Configuration File (server.cnf)</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[server]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[mysqld]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[galera]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[embedded]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[mariadb]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">datadir</span><span style="color:#f92672">=</span><span style="color:#e6db74">/data/mariadb</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">socket</span><span style="color:#f92672">=</span><span style="color:#e6db74">/var/lib/mysql/mysql.sock</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user</span><span style="color:#f92672">=</span><span style="color:#e6db74">mysql</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">symbolic_links</span><span style="color:#f92672">=</span><span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">local_infile</span><span style="color:#f92672">=</span><span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[mariadb-10.6]</span>
+</span></span></code></pre></div><h3 id="setting-the-innodb-buffer-pool-size">Setting the InnoDB Buffer Pool Size</h3>
+<p>The size of the buffer pool is the most important tunable for the InnoDB storage engine</p>
+<p>The buffer pool size is determined by the innodb_buffer_pool_size</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#a6e22e">innodb_buffer_pool_size</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">134217728</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">innodb_buffer_pool_chunk_size</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">134217728</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">innodb_buffer_pool_dump_at_shutdown</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">ON</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">innodb_buffer_pool_load_at_startup</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">ON</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">innodb_buffer_pool_filename</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">ib_buffer_pool</span>
+</span></span></code></pre></div><h3 id="global-and-status-variables">Global and Status Variables</h3>
+<h4 id="global-variables">Global Variables</h4>
+<ul>
+<li>
+<p>Global Variables are System Wide</p>
+<p><code>SHOW GLOBAL VARIABLES;</code></p>
+</li>
+<li>
+<p>Set in configuration file at start</p>
+</li>
+<li>
+<p>Can be changed with SET statement</p>
+<p><code>SET GLOBAL tmp_table_size = 32*1024*1024;</code></p>
+<p>Only user accounts with the SUPER privilege can dynamically change global system variables.</p>
+</li>
+</ul>
+<h4 id="global-status-variables">Global Status Variables</h4>
+<ul>
+<li>
+<p>SHOW GLOBAL STATUS provides Counters and Thresholds of Internal Statistics</p>
+<p><code>SHOW GLOBAL STATUS LIKE '%innodb_buffer_pool%';</code></p>
+</li>
+<li>
+<p>Check Status Variables to Decide on Adjustments to Global Variables</p>
+</li>
+</ul>
+<h3 id="session-variables">Session Variables</h3>
+<p>Global Variable Values are Defaults for New Sessions</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SHOW</span> <span style="color:#66d9ef">GLOBAL</span> VARIABLES <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;%character_set_client%&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">--------------------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> Variable_name      <span style="color:#f92672">|</span> Value <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">--------------------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> character_set_client <span style="color:#f92672">|</span> latin1 <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">--------------------+-------+
+</span></span></span></code></pre></div><p>Session Variables are Values for Current Session</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SHOW</span> <span style="color:#66d9ef">SESSION</span> VARIABLES <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;%character_set_client%&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">--------------------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> Variable_name      <span style="color:#f92672">|</span> Value <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">--------------------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> character_set_client <span style="color:#f92672">|</span> greek <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">--------------------+-------+
+</span></span></span></code></pre></div><h2 id="log-files">Log Files</h2>
+<h3 id="mariadb-logs">MariaDB Logs</h3>
+<ul>
+<li>ERROR LOG</li>
+<li>GENERAL QUERY LOG</li>
+<li>SQL ERROR LOG</li>
+<li>SLOW QUERY LOG</li>
+<li>BINARY LOG</li>
+<li>AUDIT LOG</li>
+</ul>
+<h3 id="error-log">Error Log</h3>
+<ul>
+<li>Required for the server to operate</li>
+<li>Contains startup, shutdown, and error messages</li>
+<li>Unix uses <code>stderr</code> and sends to <code>host_name.err</code> in datadir</li>
+<li>Systems that use systemd redirect to the syslog by default</li>
+<li>Windows uses <code>host_name.err</code> in the datadir, or System Event Log</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[mariadb]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">log_error</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/path/to/error_log_file_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">log_warnings</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">1</span>
+</span></span></code></pre></div><p><em>Excerpt from server.cnf, my.cnf or my.ini configuration file</em></p>
+<p><em>Set <code>log_warnings</code> to 2 for verbose mode</em></p>
+<h3 id="general-query-log">General Query Log</h3>
+<ul>
+<li>Logs all queries received from all clients, even queries with syntax errors</li>
+<li>Order Received - Not Executed</li>
+<li>Potential Problems with Log
+<ul>
+<li>Possible disk I/O bottleneck on high-traffic servers</li>
+<li>Log can quickly become huge</li>
+<li>Contains queries in plain text so make sure to secure the logs as you would the data in the database</li>
+<li>Reduces performance by up to 20%</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[mariadb]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">general_log</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">general_log_file</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/path/to/host.log&#39;</span>
+</span></span></code></pre></div><p>Excerpt from server.cnf, my.cnf or my.ini configuration file</p>
+<h3 id="sql-error-log">SQL Error Log</h3>
+<ul>
+<li>Logs SQL errors
+<ul>
+<li>Records error messages with SQL statement</li>
+<li>Saves username and host for SQL statement</li>
+</ul>
+</li>
+<li>Used for Detecting SQL Injections</li>
+<li>Logs User, Host, and Time</li>
+<li>Dynamically loadable</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>INSTALL PLUGIN sql_error_log SONAME <span style="color:#e6db74">&#39;sql_errlog&#39;</span>;
+</span></span></code></pre></div><p>Requires <code>INSERT</code> privilege for <code>mysql.plugin</code> table</p>
+<h3 id="slow-query-log">Slow Query Log</h3>
+<ul>
+<li>Queries that take more seconds to execute than <code>long_query_time</code></li>
+<li>Contains queries in plain text (security risk!)</li>
+<li>Useful when testing an application or new database</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[mariadb]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">slow_query_log</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">slow_query_log_file</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/path/to/mariadb-slow.log</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">long_query_time</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">2.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># log_queries_not_using_indexes</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">log_slow_admin_statements</span><span style="color:#f92672">=</span><span style="color:#e6db74">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">log_slow_disabled_statements</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;admin,call,slave,sp&#39;</span>
+</span></span></code></pre></div><h3 id="managing-log-files">Managing Log Files</h3>
+<h4 id="regularly-rotate-logs-file">Regularly Rotate Logs File</h4>
+<ul>
+<li>Manually move Existing Log Files and then Flush Logs</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>FLUSH LOGS;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># mariadb-admin flush-logs</span>
+</span></span></code></pre></div><p>An alternative method from the command-line</p>
+<h4 id="backups">Backups</h4>
+<ul>
+<li>Include Logs in Backups</li>
+<li>Synchronise Binary Logs with Backups</li>
+</ul>
+<h4 id="error-log-1">Error Log</h4>
+<ul>
+<li>Move the log file, then <code>FLUSH LOGS</code> to recreate</li>
+<li>Deleted file may still be opened by server</li>
+</ul>
+<h4 id="linux-logrotate-utility">Linux logrotate Utility</h4>
+<ul>
+<li>Automatic log rotation</li>
+<li>Various conditions can be set for log files (size, time frame)</li>
+</ul>
+<h2 id="lesson-summary">Lesson Summary</h2>
+<ul>
+<li>List the steps to deploy MariaDB Enterprise Server using distribution packages</li>
+<li>Explain the benefits and challenges of upgrading MariaDB Enterprise Server, and list the steps you need to take before and after the upgrade</li>
+<li>Know which tools and client utilities to use to perform common tasks such as managing users accounts and permissions, benchmarking, and backing up and restoring data</li>
+<li>Change the default settings of MariaDB Enterprise Server while it&rsquo;s running to make the server work better for your needs</li>
+<li>Turn on and off server logs and use them to check the status and performance of MariaDB Enterprise Server</li>
+</ul>
+
+      </div>
+
+      
+      <div class="right-menu">
+          <div class="quick-links">
+            <a href="https://github.com/robertsilen/mariadb-for-universities-www/blob/main/content/dba/mariadb-dba-01-getting-started.md" class="icon-link edit-page">View page source</a>
+            <a href="https://github.com/robertsilen/mariadb-for-universities-www/edit/main/content/dba/mariadb-dba-01-getting-started.md" class="icon-link view-source">Edit this page</a>
+            <a href="https://github.com/robertsilen/mariadb-for-universities-www/issues/new?title=Course%20Material%20issue%20for%20Lesson%201%3a%20Getting%20Started&body=I%20found%20an%20issue%20with%20the%20documentation%20for%20Lesson%201%3a%20Getting%20Started.%0A%0A%0A%0A---%0A%0AThis%20issue%20is%20related%20to%20the%20following%20page%3A%0A%0Ahttp%3a%2f%2flocalhost%3a1313%2fdba%2fmariadb-dba-01-getting-started%2f" class="icon-link create-doc">Create Material issue</a>
+            <a href="#" class="icon-link print">Print entire section</a>
+          </div>
+      </div>
+  </div>
+
+
+</body>
+</html>

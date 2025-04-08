@@ -1,0 +1,8 @@
+baseURL = 'https://mariadb4uni.mariadb.org/'
+languageCode = 'en-us'
+title = 'MariaDB for Universities Program Course Material'
+
+[params]
+  githubRepo = "https://github.com/robertsilen/mariadb-for-universities-www"
+
+

@@ -1,0 +1,9 @@
+{{ if not .IsHome }}
+<nav class="breadcrumb">
+    {{ range $i, $e := .Ancestors.Reverse }}
+      {{ if $i }} &gt; {{ end }}
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    {{ end }}
+    &gt; <span class="current">{{ .Title }}</span>
+</nav>
+{{ end }}

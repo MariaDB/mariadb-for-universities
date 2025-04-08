@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MariaDB for Universities Program: Course Material</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    
+    <div class="top-menu">
+        <div class="menu-left">
+            <a href="/" class="home-link">
+                <img src="#" alt="" class="menu-icon">
+                MariaDB for Universities Program: Course Material
+            </a>
+        </div>
+        <div class="menu-right">
+            <a href="/">Course Material</a>
+            <a href="/contribute">Contribute</a>
+            <a href="/foundation">MariaDB Foundation</a>
+        </div>
+    </div>
+
+  
+
+    
+    <div class="content-wrapper">
+      
+      <div class="left-menu">
+        
+        <div class="table-of-contents">
+          <h2><a href=".">Lesson 4: Transactions</a></h2>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#introduction-to-transactions">Introduction to Transactions</a>
+      <ul>
+        <li><a href="#transactions-1">Transactions</a></li>
+        <li><a href="#savepoint">Savepoint</a></li>
+        <li><a href="#autocommit">Autocommit</a></li>
+        <li><a href="#an-example-of-a-transaction">An Example of a Transaction</a></li>
+      </ul>
+    </li>
+    <li><a href="#isolation-levels">Isolation Levels</a>
+      <ul>
+        <li><a href="#isolation-levels-1">Isolation Levels</a></li>
+        <li><a href="#types-of-isolation-levels">Types of Isolation Levels</a></li>
+      </ul>
+    </li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+        </div>
+        
+      </div>
+
+      
+      <div class="main-content">
+        
+<nav class="breadcrumb">
+    
+      
+      <a href="/">MariaDB for Universities Course Material</a>
+    
+       &gt; 
+      <a href="/dba/">MariaDB DBA Course</a>
+    
+    &gt; <span class="current">Lesson 4: Transactions</span>
+</nav>
+
+        <h1>Lesson 4: Transactions</h1>
+        <h1 id="transactions">Transactions</h1>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<ul>
+<li>Define and describe what transactions are in a database environment</li>
+<li>Show how to perform transactions and when to use savepoints in MariaDB</li>
+<li>Explain and compare isolation levels and the types of isolation levels in MariaDB</li>
+</ul>
+<h2 id="introduction-to-transactions">Introduction to Transactions</h2>
+<h3 id="transactions-1">Transactions</h3>
+<p>A transaction is a mechanism for grouping together multiple SQL statements into one atomic operation; an all or nothing proposition</p>
+<p><strong>Atomicity</strong><br>
+All statements are executed successfully or are cancelled as a unit</p>
+<p><strong>Consistency</strong><br>
+A database is in a consistent state when a transaction begins and when a transaction ends</p>
+<p><strong>Isolation</strong><br>
+One transaction does not affect another</p>
+<p><strong>Durability</strong><br>
+All changes made by a successfully completed transaction are properly recorded in the database. No changes are lost</p>
+<h3 id="savepoint">Savepoint</h3>
+<p>Using savepoints, you can roll back to certain points within the transaction without terminating the transaction.</p>
+<p>Use the <code>SAVEPOINT</code> statement to set a name for the transaction</p>
+<pre tabindex="0"><code>SAVEPOINT savepoint_name;
+</code></pre><p>Use the <code>ROLLBACK TO</code> statement to roll back a transaction to the named savepoint without terminating the transaction</p>
+<pre tabindex="0"><code>ROLLBACK TO savepoint_name;
+</code></pre><p>Use the <code>RELEASE SAVEPOINT</code> statement to remove the specified savepoint from a transaction</p>
+<pre tabindex="0"><code>RELEASE SAVEPOINT savepoint_name;
+</code></pre><h3 id="autocommit">Autocommit</h3>
+<p>DDL statements, such as <code>CREATE</code> or <code>DROP</code> for databases and <code>CREATE</code>, <code>DROP</code>, or <code>ALTER</code> for tables or stored routines cannot be rolled back.</p>
+<p>By default, autocommit is ON, which means that all individual statements are committed as soon as they are finished unless they are in a <code>START TRANSACTION . . . COMMIT</code> block.</p>
+<p>If autocommit is OFF, you need to explicitly issue a <code>COMMIT</code> statement to commit a transaction</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">COMMIT</span>;
+</span></span></code></pre></div><p>To disable autocommit execute <code>START TRANSACTION</code>, or <code>BEGIN</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">START</span> <span style="color:#66d9ef">TRANSACTION</span>;   <span style="color:#75715e">/* or BEGIN */</span>
+</span></span></code></pre></div><h3 id="an-example-of-a-transaction">An Example of a Transaction</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#f92672">`</span><span style="color:#66d9ef">START</span> <span style="color:#66d9ef">TRANSACTION</span>;<span style="color:#f92672">`</span>  <span style="color:#75715e">/* Start transaction with START TRANSACTION or BEGIN */</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">…</span>  <span style="color:#75715e">/* Perform your SQL statements */</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">`</span>SAVEPOINT sp1;<span style="color:#f92672">`</span>  <span style="color:#75715e">/* Set savepoints sp1 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">…</span>  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">`</span>SAVEPOINT sp2;<span style="color:#f92672">`</span>  <span style="color:#75715e">/* Set savepoints sp2 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">…</span>  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">`</span>SAVEPOINT sp3;<span style="color:#f92672">`</span>  <span style="color:#75715e">/* Set savepoints sp3 */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">`</span>RELEASE SAVEPOINT sp2;<span style="color:#f92672">`</span>  <span style="color:#75715e">/* Deletes savepoint sp2 and all savepoints defined after which includes sp3 */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">`</span><span style="color:#66d9ef">ROLLBACK</span> <span style="color:#66d9ef">TO</span> sp1;<span style="color:#f92672">`</span>  <span style="color:#75715e">/* If anything goes wrong, undo only up to some savepoint */</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">`</span><span style="color:#66d9ef">ROLLBACK</span>;<span style="color:#f92672">`</span>  <span style="color:#75715e">/* If anything goes wrong, undo all changes in the transaction */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">`</span><span style="color:#66d9ef">COMMIT</span>;<span style="color:#f92672">`</span>  <span style="color:#75715e">/* Else if everything is successful, commit the changes */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* End of transaction */</span>
+</span></span></code></pre></div><h2 id="isolation-levels">Isolation Levels</h2>
+<h3 id="isolation-levels-1">Isolation Levels</h3>
+<p>When two or more transactions occur at the same time, the isolation level defines the degree at which a transaction is isolated from the resource or data modifications made by other transactions</p>
+<p>The default isolation level is <strong>REPEATABLE-READ</strong></p>
+<p>To change the isolation level, you need to set the <code>tx_isolation</code> variable which is dynamic and has session level scope</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> <span style="color:#66d9ef">SESSION</span> tx_isolation <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;READ-COMMITTED&#39;</span>;
+</span></span></code></pre></div><p>The <code>transaction_isolation</code> option can be set in the configuration file</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[mariadb]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">transaction_isolation</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">READ-COMMITTED</span>
+</span></span></code></pre></div><h3 id="types-of-isolation-levels">Types of Isolation Levels</h3>
+<p><strong>Read Uncommitted</strong><br>
+Allows a transaction to see uncommitted changes made by other transactions (<em>dirty read</em>)</p>
+<p><strong>Read Committed</strong><br>
+Allows a transaction to see changes made by other transactions (different row content or fewer rows due to a <code>DELETE</code>, or rows no longer match due to an <code>UPDATE</code>) only if the changes have been committed (non-repeatable read)</p>
+<p><strong>Repeatable Read</strong><br>
+Ensures that if a transaction issues the same <code>SELECT</code> twice, no rows vanish or show different content. New rows (phantom rows) can still appear</p>
+<p>Due to the implementation of row locks in InnoDB there are no phantom rows in InnoDB</p>
+<p><strong>Serializable</strong><br>
+Completely isolates a transaction&rsquo;s effects from other transactions</p>
+<p>In InnoDB this causes read locks after <code>SELECT</code> until <code>COMMIT</code> or <code>ROLLBACK</code> (like <code>WITH LOCK IN SHARE MODE</code>)</p>
+<h2 id="lesson-summary">Lesson Summary</h2>
+<ul>
+<li>Define and describe what transactions are in a database environment</li>
+<li>Show how to perform transactions and when to use savepoints in MariaDB</li>
+<li>Explain and compare isolation levels and the types of isolation levels in MariaDB</li>
+</ul>
+
+      </div>
+
+      
+      <div class="right-menu">
+          <div class="quick-links">
+            <a href="https://github.com/robertsilen/mariadb-for-universities-www/blob/main/content/dba/mariadb-dba-04-transactions.md" class="icon-link edit-page">View page source</a>
+            <a href="https://github.com/robertsilen/mariadb-for-universities-www/edit/main/content/dba/mariadb-dba-04-transactions.md" class="icon-link view-source">Edit this page</a>
+            <a href="https://github.com/robertsilen/mariadb-for-universities-www/issues/new?title=Course%20Material%20issue%20for%20Lesson%204%3a%20Transactions&body=I%20found%20an%20issue%20with%20the%20documentation%20for%20Lesson%204%3a%20Transactions.%0A%0A%0A%0A---%0A%0AThis%20issue%20is%20related%20to%20the%20following%20page%3A%0A%0Ahttp%3a%2f%2flocalhost%3a1313%2fdba%2fmariadb-dba-04-transactions%2f" class="icon-link create-doc">Create Material issue</a>
+            <a href="#" class="icon-link print">Print entire section</a>
+          </div>
+      </div>
+  </div>
+
+
+</body>
+</html>
