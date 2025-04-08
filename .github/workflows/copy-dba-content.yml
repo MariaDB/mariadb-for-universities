@@ -1,6 +1,11 @@
 name: Copy DBA Content to Deploy Branch
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'mariadb-dba*.md'
   workflow_dispatch:
 
 jobs:
