@@ -953,3 +953,4 @@ WHERE id = 2;
 - Demonstrate how to create and use databases, tables, and columns in MariaDB Enterprise Server
 - Compare and contrast the data types and built-in functions in MariaDB Enterprise Server, and explain their use cases
 
+
