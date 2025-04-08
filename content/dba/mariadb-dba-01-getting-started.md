@@ -475,3 +475,4 @@ An alternative method from the command-line
 - Know which tools and client utilities to use to perform common tasks such as managing users accounts and permissions, benchmarking, and backing up and restoring data
 - Change the default settings of MariaDB Enterprise Server while it's running to make the server work better for your needs
 - Turn on and off server logs and use them to check the status and performance of MariaDB Enterprise Server
+
