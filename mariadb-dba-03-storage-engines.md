@@ -1,5 +1,6 @@
 ---
 title: "Lesson 3: Storage Engines"
+url: "/dba/storage-engines/"
 date: 2025-04-07
 description: >
 categories: []

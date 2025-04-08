@@ -1,5 +1,6 @@
 ---
 title: "Lesson 1: Getting Started"
+url: "/dba/getting-started/"
 date: 2025-04-07
 description: >
 categories: []

@@ -1,5 +1,6 @@
 ---
 title: "Lesson 5: User Management"
+url: "/dba/user-management/"
 date: 2025-04-07
 description: >
 categories: []

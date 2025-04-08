@@ -1,5 +1,6 @@
 ---
 title: "Lesson 2: Schema Objects"
+url: "/dba/schema-objects/"
 date: 2025-04-07
 description: >
 categories: []

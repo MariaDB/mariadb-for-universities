@@ -1,5 +1,6 @@
 ---
 title: "Lesson 6: Backup and Restore"
+url: "/dba/backup-and-restore/"
 date: 2025-04-07
 description: >
 categories: []

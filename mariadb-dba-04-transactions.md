@@ -1,5 +1,6 @@
 ---
 title: "Lesson 4: Transactions"
+url: "/dba/transactions/"
 date: 2025-04-07
 description: >
 categories: []
