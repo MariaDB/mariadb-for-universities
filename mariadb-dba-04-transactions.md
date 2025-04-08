@@ -1,14 +1,24 @@
-# TRANSACTIONS
+---
+title: "Lesson 4: Transactions"
+date: 2025-04-07
+description: >
+categories: []
+tags: []
+weight: 4
+toc: true
+---
 
-## LEARNING OBJECTIVES
+# Transactions
+
+## Learning Objectives
 
 - Define and describe what transactions are in a database environment
 - Show how to perform transactions and when to use savepoints in MariaDB
 - Explain and compare isolation levels and the types of isolation levels in MariaDB
 
-## INTRODUCTION TO TRANSACTIONS
+## Introduction to Transactions
 
-## Transactions
+### Transactions
 
 A transaction is a mechanism for grouping together multiple SQL statements into one atomic operation; an all or nothing proposition
 
@@ -25,7 +35,7 @@ One transaction does not affect another
 All changes made by a successfully completed transaction are properly recorded in the database. No changes are lost
 
 
-## SAVEPOINT
+### Savepoint
 
 Using savepoints, you can roll back to certain points within the transaction without terminating the transaction.
 
@@ -47,7 +57,7 @@ Use the `RELEASE SAVEPOINT` statement to remove the specified savepoint from a t
 RELEASE SAVEPOINT savepoint_name;
 ```
 
-## AUTOCOMMIT
+### Autocommit
 
 DDL statements, such as `CREATE` or `DROP` for databases and `CREATE`, `DROP`, or `ALTER` for tables or stored routines cannot be rolled back.
 
@@ -55,14 +65,19 @@ By default, autocommit is ON, which means that all individual statements are com
 
 If autocommit is OFF, you need to explicitly issue a `COMMIT` statement to commit a transaction
 
-    COMMIT;
+```sql
+COMMIT;
+```
 
 To disable autocommit execute `START TRANSACTION`, or `BEGIN`
 
-    START TRANSACTION;   /* or BEGIN */
+```sql
+START TRANSACTION;   /* or BEGIN */
+```
 
-## An Example of a Transaction
+### An Example of a Transaction
 
+```sql
 `START TRANSACTION;`  /* Start transaction with START TRANSACTION or BEGIN */
 …  /* Perform your SQL statements */
 `SAVEPOINT sp1;`  /* Set savepoints sp1 */
@@ -79,10 +94,11 @@ To disable autocommit execute `START TRANSACTION`, or `BEGIN`
 `COMMIT;`  /* Else if everything is successful, commit the changes */
 
 /* End of transaction */
+```
 
-# ISOLATION LEVELS
+## Isolation Levels
 
-## ISOLATION LEVELS
+### Isolation Levels
 
 When two or more transactions occur at the same time, the isolation level defines the degree at which a transaction is isolated from the resource or data modifications made by other transactions
 
@@ -90,18 +106,18 @@ The default isolation level is **REPEATABLE-READ**
 
 To change the isolation level, you need to set the `tx_isolation` variable which is dynamic and has session level scope
 
-```
+```sql
 SET SESSION tx_isolation = 'READ-COMMITTED';
 ```
 
 The `transaction_isolation` option can be set in the configuration file
 
-```
+```ini
 [mariadb]
 transaction_isolation = READ-COMMITTED
 ```
 
-## TYPES OF ISOLATION LEVELS
+### Types of Isolation Levels
 
 **Read Uncommitted**  
 Allows a transaction to see uncommitted changes made by other transactions (*dirty read*)
@@ -115,11 +131,11 @@ Ensures that if a transaction issues the same `SELECT` twice, no rows vanish or 
 Due to the implementation of row locks in InnoDB there are no phantom rows in InnoDB
 
 **Serializable**  
-Completely isolates a transaction’s effects from other transactions
+Completely isolates a transaction's effects from other transactions
 
 In InnoDB this causes read locks after `SELECT` until `COMMIT` or `ROLLBACK` (like `WITH LOCK IN SHARE MODE`)
 
-## LESSON SUMMARY
+## Lesson Summary
 
 - Define and describe what transactions are in a database environment
 - Show how to perform transactions and when to use savepoints in MariaDB

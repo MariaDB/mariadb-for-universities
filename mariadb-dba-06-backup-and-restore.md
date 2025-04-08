@@ -1,4 +1,14 @@
-# BACKUP AND RESTORE
+---
+title: "Lesson 6: Backup and Restore"
+date: 2025-04-07
+description: >
+categories: []
+tags: []
+weight: 6
+toc: true
+---
+
+# Backup and Restore
 
 ## Learning Objectives
 
@@ -7,9 +17,9 @@
 - Apply and assess recovery methods to restore data in MariaDB
 - Design and implement a backup and recovery plan and schedule
 
-# BACKING UP DATA
+## Backing Up Data
 
-## BACKUP PRINCIPLES
+### Backup Principles
 
 - Helps ensure high availability
 - Cannot prevent user errors
@@ -25,9 +35,9 @@
 - Binary logs for Point-in-Time recovery
 - **Always test the backup and recovery regularly**
 
-## Basic Types of Backup Methods
+### Basic Types of Backup Methods
 
-### Physical or Binary Backup
+#### Physical or Binary Backup
 
 MariaDB Backup, manual data directory copy (after stopping the MariaDB daemon), or VM/Cloud/LVM/ZFS snapshots
 
@@ -38,7 +48,7 @@ MariaDB Backup, manual data directory copy (after stopping the MariaDB daemon), 
 - Slow to recover single row or table (user error)
 - Recovered only to the same storage engine with the same tablespaces
 
-### Logical Backup
+#### Logical Backup
 
 `mariadb-dump`, `mydumper`, `SELECT INTO OUTFILE`
 
@@ -52,23 +62,23 @@ MariaDB Backup, manual data directory copy (after stopping the MariaDB daemon), 
 - A SQL dump is independent of storage engine, and can be restored to a different storage engine, or used for migration
 - Process can be slow and requires locks
 
-## MARIADB BACKUP
+### MariaDB Backup
 
 _MariaDB's own backup package_ (`mariabackup`) _is available from MariaDB repositories_
 
-- Supports MariaDB’s features and storage engines
+- Supports MariaDB's features and storage engines
 - Supports encryption
 - Supports incremental backups
 - Also available on Windows
 - MariaDB Enterprise Backup contains improvements such as reduced locking
 
-## Backing Up Data - MariaDB Backup
+### Backing Up Data - MariaDB Backup
 
-### Full Backups
+#### Full Backups
 
-To use MariaDB Backup you need to create a user on your MariaDB Server with RELOAD, LOCK TABLES and REPLICATION CLIENT privileges.
+To use MariaDB Backup you need to create a user on your MariaDB Server with `RELOAD`, `LOCK TABLES` and `REPLICATION CLIENT` privileges.
 
-```
+```sql
 MariaDB [(none)]> CREATE USER '<backupuser>'@'localhost' IDENTIFIED BY '<password>';
 MariaDB [(none)]> GRANT RELOAD, PROCESS, LOCK TABLES, REPLICATION CLIENT ON *.* TO '<backupuser>'@'localhost';
 ```
@@ -80,13 +90,13 @@ To take a full backup at the OS command-line use:
 # mariabackup --prepare --target-dir <backupdir>
 ```
 
-## BACKING UP DATA - MARIADB-DUMP
+### Backing Up Data - MariaDB-dump
 
 The standard MariaDB logical dump tool copies schema and data to a SQL text file
 
 To use `mariadb-dump` you need to create a user on your MariaDB Server with `SELECT`, `RELOAD`, `LOCK TABLES`, `REPLICATION CLIENT`, `SHOW VIEW`, `EVENT`, and `TRIGGER` privileges
 
-```
+```sql
 CREATE USER 'backupuser'@'localhost' IDENTIFIED BY 'mariadb';
 
 GRANT SELECT, RELOAD, LOCK TABLES, REPLICATION CLIENT, SHOW VIEW, EVENT, TRIGGER ON *.* TO 'backupuser'@'localhost';
@@ -94,11 +104,11 @@ GRANT SELECT, RELOAD, LOCK TABLES, REPLICATION CLIENT, SHOW VIEW, EVENT, TRIGGER
 
 To take a full backup at the OS command line use
 
-```
+```sh
 # mariadb-dump -u backupuser -p --all-databases --single-transaction --flush-logs -r /path/to/full-backup-YYYYMMDD.sql
 ```
 
-## PLANNING AND SCHEDULING BACKUPS
+### Planning and Scheduling Backups
 
 Take inventory of databases
 
@@ -124,41 +134,47 @@ Frequency — days and times
 
 Location — security and off-site
 
-# RESTORING DATA
+## Restoring Data
 
-## RESTORING DATA - MARIADB BACKUP
+### Restoring Data - MariaDB Backup
 
-### Full Backups
+#### Full Backups
 
 Working with a full backup taken with MariaDB Backup, you restore the backup into an *empty* data directory
 
-```
+```sh
 # mariabackup --copy-back --target-dir <backupdir> --datadir <datadir>
 ```
 
 Afterwards it might be necessary to set the ownership of the data directory contents
 
-```
+```sh
 # chown -R mysql:mysql <datadir>
 ```
 
-## RESTORING DATA - MARIADB-DUMP
+### Restoring Data - MariaDB-dump
 
 Restoring from a logical backup
 
-    # mariadb < /path/to/full-backup-YYYYMMDD.sql
+```sh
+# mariadb < /path/to/full-backup-YYYYMMDD.sql
+```
 
 Or to avoid interpretation by the shell
 
-    # mariadb
-    SOURCE /path/to/full-backup-YYYYMMDD.sql
+```sh
+# mariadb
+SOURCE /path/to/full-backup-YYYYMMDD.sql
+```
 
 You can also use standard linux tools such as `vi` or `grep` to edit or extract the backup
 
-    # grep city worldbackup.sql
-    CREATE TABLE `world`.`city` ( ...
+```sh
+# grep city worldbackup.sql
+CREATE TABLE `world`.`city` ( ...
+```
 
-## Verifying Backups
+### Verifying Backups
 
 - Backups do not exist until you are certain they can be recovered so prepare a backup immediately
 - Some of the reasons for preparing backups are to:

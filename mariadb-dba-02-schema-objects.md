@@ -1,12 +1,22 @@
-# SCHEMA OBJECTS
+---
+title: "Lesson 2: Schema Objects"
+date: 2025-04-07
+description: >
+categories: []
+tags: []
+weight: 2
+toc: true
+---
 
-## LEARNING OBJECTIVES
+# Schema Objects
+
+## Learning Objectives
 
 - Identify and describe the schema objects available within MariaDB Enterprise Server
 - Demonstrate how to create and use databases, tables, and columns in MariaDB Enterprise Server
 - Compare and contrast the data types and built-in functions in MariaDB Enterprise Server, and explain their use cases
 
-## COLLATIONS AND CHARACTER SETS
+### Collations and Character Sets
 
 - A collation is a set of rules that defines how to compare and sort strings
 
@@ -18,11 +28,10 @@
 
 - Collation and character set are specified at table or column level
 
-## LISTING CHARACTER SETS
+### Listing Character Sets
 
-```plaintext
+```sql
 MariaDB [(none)]> SHOW CHARACTER SET;
-```
 
 | Charset | Description                 | Default collation | Maxlen |
 |---------|-----------------------------|-------------------|--------|
@@ -35,12 +44,12 @@ MariaDB [(none)]> SHOW CHARACTER SET;
 | latin2  | ISO 8859-2 Central European | latin2_general_ci | 1      |
 | swe7    | 7bit Swedish                | swe7_swedish_ci   | 1      |
 | ascii   | US ASCII                    | ascii_general_ci  | 1      |
-
 [...]
-
-## LISTING COLLATIONS
-
 ```
+
+### Listing Collations
+
+```sql
 MariaDB [(none)]> SHOW COLLATION LIKE 'utf8%';
 +-----------------------+---------+-----+---------+----------+---------+
 | Collation             | Charset | Id  | Default | Compiled | Sortlen |
@@ -59,9 +68,9 @@ MariaDB [(none)]> SHOW COLLATION LIKE 'utf8%';
 +-----------------------+---------+-----+---------+----------+---------+
 ```
 
-## DATABASES, TABLES, AND DEFAULT SCHEMAS
+## Databases, Tables, and Default Schemas
 
-## CASE SENSITIVITY
+### Case Sensitivity
 
 Depends on operating system, file system and `lower_case_table_names` configuration
 
@@ -73,7 +82,7 @@ Adopt a convention such as always creating and referring to databases and tables
 
 Most are limited to 64 characters
 
-## DATABASES
+### Databases
 
 **Database aka Schema**
 
@@ -85,7 +94,7 @@ All other objects reside within user-created databases however certain objects s
 
 `CREATE DATABASE world;`
 
-## Tables
+### Tables
 
 - Stores rows of structured data organized by typed columns
 
@@ -95,7 +104,7 @@ All other objects reside within user-created databases however certain objects s
 - Qualified by a database name  
   *(i.e. database.table)*
 
-## COLUMNS
+### Columns
 
 Set of typed data values
 
@@ -108,7 +117,7 @@ Generated columns are stored if they are created as `PERSISTENT` | `STORED` thou
 
 Index
 
-## INDEXES
+### Indexes
 
 - Exact copy of selected columns followed by primary key (e.g., name, address, ID)
   - For long columns the index might not be an "exact copy", but instead it might contain a prefix of the column
@@ -116,7 +125,7 @@ Index
 - For InnoDB the primary key is silently appended to the end of secondary indexes, unless specified elsewhere within an index
 - Attribute of a table
 
-## Constraints
+### Constraints
 
 - Types: Primary Key, Foreign Key, Unique, and Check
 - Support and implementation differs per storage engine
@@ -125,7 +134,7 @@ Index
 - Attribute of a table
 - Has potential for contention at scale
 
-## COLUMN ATTRIBUTES
+### Column Attributes
 
 Columns have strict type definitions
 
@@ -133,9 +142,9 @@ Can specify DEFAULT value for column
 
 Only the primary key can be automatically incremented
 
-`CREATE TABLE` people
-
 ```sql
+CREATE TABLE people
+
 (id INT AUTO_INCREMENT KEY,
    name VARCHAR(20) DEFAULT 'unknown');
 ```
@@ -147,7 +156,7 @@ Columns can be NULL, unless defined NOT NULL
   - Reduces storage in some storage engines
   - Can also reduce execution time because there are more CPU cycles used to first check for NULL
 
-## VIEWS
+### Views
 
 - Virtual table defined by a SQL `SELECT` query
 - Evaluated at each access
@@ -156,21 +165,25 @@ Columns can be NULL, unless defined NOT NULL
 - Updateable in certain cases (`WITH CHECK OPTION`)
 - Qualified by a database (`database.view`)
 
-## USING VIEWS
+### Using Views
 
 Customers Table
 
+```sql
 | ID | FirstName | LastName |
 |----|-----------|----------|
 | 1  | Alice     | Evans    |
 | 2  | Bob       | Smith    |
+```
 
 Addresses Table
 
+```sql
 | CustomerID | Address1        | City     |
 |------------|-----------------|----------|
 | 1          | 123 Main Street | Anytown  |
 | 2          | 456 Spruce Street | Anyburg |
+```
 
 ```sql
 CREATE VIEW CustomerAddresses AS
@@ -183,12 +196,14 @@ JOIN Addresses a ON c.id = a.CustomerId;
 
 CustomerAddresses View
 
+```sql
 | FullName    | FullAddress             |
 |-------------|-------------------------|
 | Alice Evans | 123 Main Street, Anytown|
 | Bob Smith   | 456 Spruce Street, Anyburg|
+```
 
-## STORED ROUTINES
+### Stored Routines
 
 - Types: Functions, Triggers, Events, and Stored Procedures
 - Has input and output parameters
@@ -203,9 +218,9 @@ CustomerAddresses View
 - If `SQL SECURITY INVOKER` is set then the privileges of the user executing the stored routine are used
 - Qualified by database (`database.my_stored_procedure`)
 
-## CREATING YOUR FIRST TABLE
+### Creating Your First Table
 
-```
+```sql
 CREATE TABLE city (
     ID INT(11) NOT NULL AUTO_INCREMENT,
     Name CHAR(35) NOT NULL DEFAULT '',
@@ -224,7 +239,7 @@ CREATE TABLE city (
 - Define primary key, secondary indexes and constraints
 - Define engine, partitions, character set and other attributes
 
-## ALTERING TABLES
+### Altering Tables
 
 `ALTER TABLE` IS USED TO CHANGE A TABLE'S SCHEMA
 
@@ -244,19 +259,21 @@ MODIFY COLUMN col8 VARCHAR(10);
 
 Basic syntax example for `ALTER TABLE` statement
 
-## TEMPORAL TABLES
+### Temporal Tables
 
+```sql
 | Type                   | Tracks                          | Sample Use Cases                         |
 |------------------------|---------------------------------|------------------------------------------|
 | System-Versioned       | Change history                  | Audit, forensics, IoT temperature tracking |
 | Application-Time Period| Time-limited values             | Sales offers, subscriptions              |
 | Bitemporal             | Time-limited values with history| Schedules, decision support models       |
+```
 
 *mariadb-dump* does not read historical rows from versioned tables, and so historical data will not be backed up.
 
-## TEMPORAL TABLES
+### Temporal Tables
 
-**System-Versioned Example**
+#### System-Versioned Example
 
 ```sql
 CREATE TABLE accounts (
@@ -266,7 +283,7 @@ CREATE TABLE accounts (
 ) WITH SYSTEM VERSIONING;
 ```
 
-**Application-Time Period Example**
+#### Application-Time Period Example
 
 ```sql
 CREATE TABLE coupons (
@@ -277,7 +294,7 @@ CREATE TABLE coupons (
 );
 ```
 
-**Bitemporal Example**
+#### Bitemporal Example
 
 ```sql
 CREATE TABLE coupons_new (
@@ -289,16 +306,16 @@ CREATE TABLE coupons_new (
 ) WITH SYSTEM VERSIONING;
 ```
 
-## DEFAULT SCHEMAS
+### Default Schemas
 
-### information_schema
+#### information_schema
 - The encyclopedia of your database
 - Contains information on databases, tables, columns, procedures, indexes, statistics, partitions and views
 - Plugins can install additional information_schema tables
 - Thread pool information tables
 - Keyword and SQL functions
 
-### mysql
+#### mysql
 Stores information on:
 - Server configuration
 - Grants and timezones
@@ -309,19 +326,19 @@ Stores information on:
 - Event definitions
 - Plugins installed by `INSTALL SONAME`/`INSTALL PLUGIN`
 
-### performance_schema
+#### performance_schema
 - Metrics and performance data
 - Covered in detail in our Performance Tuning class
 
-## DEFAULT SCHEMAS
+### Default Schemas
 
-### `sys_schema`
+#### `sys_schema`
 
 - Added in MariaDB 10.6
 - Tracks configuration changes in `sys_config` table
 - Has views, functions, and stored procedures for getting detailed metrics
 
-## INFORMATION SCHEMA DETAILS
+### Information Schema Details
 
 - Pseudo database that holds metadata on schemas
 - Generated as needed
@@ -332,6 +349,7 @@ Stores information on:
 - Provides much more information than `SHOW` statements and is ANSI/ISO SQL:2003
 - Do NOT automate queries in production as this can affect performance
   
+```sql
   CHARACTER_SETS  
   COLLATION_CHARACTER_SET_APP  
   LICABILITY  
@@ -361,27 +379,27 @@ Stores information on:
   TRIGGERS  
   USER_PRIVILEGES  
   VIEWS  
-
-
-## METHODS OF ACCESSING THE INFORMATION SCHEMA
-
-### Accessing Directly
-
 ```
+
+### Methods of Accessing the Information Schema
+
+#### Accessing Directly
+
+```sql
 SELECT TABLE_SCHEMA,ENGINE,COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA NOT IN('mysql','information_schema','performance_schema') GROUP BY TABLE_SCHEMA,ENGINE;
 
 SELECT * FROM information_schema.global_status WHERE VARIABLE_NAME LIKE '%qcache%';
 ```
 
-### Using Show Statements
+#### Using Show Statements
 
-```
+```sql
 SHOW STATUS LIKE '%qcache%';
 ```
 
-## CRASH SAFE SYSTEM TABLES
+### Crash Safe System Tables
 
-### mysql Schema
+#### mysql Schema
 
 `SELECT ENGINE, TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA="mysql";`
 
@@ -395,16 +413,16 @@ SHOW STATUS LIKE '%qcache%';
   - `mysql.innodb_table_stats`
   - `mysql.transaction_registry`
 
-# DATA TYPES
+## Data Types
 
-## DATA TYPES
+### Data Types
 
 Types: Binary, Numeric, String, Temporal, and User Defined
 
 Use the most suitable data type to store all possible, required values  
 Will truncate silently and round depending on `sql_mode`
 
-```
+```sql
 MariaDB [(none)]> help INT;
 Name: 'INT'
 Description: INT[(M)] [UNSIGNED] [ZEROFILL]
@@ -414,7 +432,13 @@ The signed range is -2,147,483,648 to 2,147,483,647.
 The unsigned range is 0 to 4,294,967,295.
 ```
 
-## NUMERIC DATA TYPES
+### Numeric Data Types
+
+- TINYINT
+- SMALLINT
+- MEDIUMINT
+- INTEGER,INT
+- BIGINT
 
 - Use `UNSIGNED` when appropriate
 - `INT(n)` specifies display precision, not storage precision
@@ -425,7 +449,7 @@ The unsigned range is 0 to 4,294,967,295.
 - `BIGINT` can enumerate more than all the ants on Earth and shouldn’t be your default choice
 - `TINYINT(1)` is used for `BOOLEAN` values and is aliased by the `BOOLEAN` type
 
-## AUTO_INCREMENT
+### AUTO_INCREMENT
 
 - Use `LAST_INSERT_ID()` to obtain the value generated for the client connection
 - `SERIAL` is a synonym for `BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE`
@@ -442,7 +466,13 @@ The unsigned range is 0 to 4,294,967,295.
 |  |  | Not safe for statement-based replication |
 |  |  | Generated IDs are not always consecutive |
 
-## NUMERIC DATA TYPES
+### Numeric Data Types
+
+- FLOAT
+- DOUBLE
+- DECIMAL
+- NUMERIC
+- REAL
 
 - `FLOAT` and `DOUBLE` are approximate types
   - Uses 4 and 8 bytes IEEE storage format
@@ -452,9 +482,16 @@ The unsigned range is 0 to 4,294,967,295.
 - `REAL` is a synonym for `DOUBLE`
   - Unless in `REAL_AS_FLOAT` SQL mode
 
-## STRING DATA TYPES
+### String Data Types 
 
 All String Data Types Have A Character Set
+
+- CHAR
+- VARCHAR
+- TINYTEXT
+- TEXT
+- MEDIUMTEXT
+- LONGTEXT
 
 - **CHAR (n)** - Number of characters, not bytes, wide
   - Always stores n characters
@@ -467,30 +504,31 @@ All String Data Types Have A Character Set
   - Not supported by the `MEMORY` storage engine
   - MariaDB uses `ARIA` for implicit on-disk temporary tables
 
-- **CHAR**
-- **VARCHAR**
-- **TINYTEXT**
-- **TEXT**
-- **MEDIUMTEXT**
-- **LONGTEXT**
 
-## STRING DATA TYPES
+### String Data Types 
 
 Character Set May Be Global or For Schema, Table, or Column
 
-- `CHAR`
-- `VARCHAR`
-- `TINYTEXT`
-- `TEXT`
-- `MEDIUMTEXT`
-- `LONGTEXT`
+- CHAR
+- VARCHAR
+- TINYTEXT
+- TEXT
+- MEDIUMTEXT
+- LONGTEXT
 
 - Multi-byte character sets increase disk storage and working memory requirements
   - `UTF-8` requires 3 or 4 bytes per character
 - Collations (character order) affect string comparison
 - Collations can be changed for a query
 
-## BINARY DATA TYPES
+### Binary Data Types
+
+- BINARY
+- VARBINARY
+- TINYBLOB
+- BLOB
+- MEDIUMBLOB
+- LONGBLOB
 
 - `BINARY`, `VARBINARY` and `BLOBs` can contain data with bytes from the whole range from 0 - 255
 - Uses a special character set and collation called "binary"
@@ -501,7 +539,22 @@ Character Set May Be Global or For Schema, Table, or Column
 - Blobs inflate `mysqld` memory usage
 - Modern InnoDB has some improvements in storage and lookup of blobs
 
-## TEMPORAL DATA TYPES
+### Temporal Data Types
+
+- DATE
+- TIME
+- DATETIME
+- TIMESTAMP
+- YEAR
+
+```sql
+SELECT CURTIME(4);
++-------------+
+| CURTIME(4)  |
++-------------+
+| 05:33:09.1061 |
++-------------+
+```
 
 - `DATE` — from 1000-01-01 to 9999-12-31
   - YYYY-MM-DD
@@ -514,16 +567,7 @@ Character Set May Be Global or For Schema, Table, or Column
   - Many applications store `UNIX_TIMESTAMP()` values in unsigned integer field
 - `YEAR` — Accepts YYYY
 
-```
-SELECT CURTIME(4);
-+-------------+
-| CURTIME(4)  |
-+-------------+
-| 05:33:09.1061 |
-+-------------+
-```
-
-## JSON DATA TYPE
+### JSON Data Type
 
 - JSON is a language-independent data format.
 - JSON documents can be validated for correct syntax with `JSON_VALID()` used as a `CHECK` constraint.
@@ -531,7 +575,7 @@ SELECT CURTIME(4);
 - JSON columns can be indexed by values of an attribute.
 - The indexes are created by using virtual generated columns.
 
-```
+```sql
 CREATE TABLE city (
   Name VARCHAR(35) NOT NULL,
   Info JSON DEFAULT NULL
@@ -546,7 +590,7 @@ INSERT INTO city VALUES (
 );
 ```
 
-```
+```sql
 SELECT
   Name, JSON_VALUE(Info,'$.Population') AS Population FROM city;
 
@@ -557,7 +601,7 @@ SELECT
 +---------+------------+
 ```
 
-```
+```sql
 SELECT * FROM city;
 
 +---------+------------------------------------------+
@@ -567,12 +611,12 @@ SELECT * FROM city;
 +---------+------------------------------------------+
 ```
 
-## SPECIAL DATA TYPES
+### Special Data Types
 
 - **ENUM** is an enumerated list of string values
   - Holds one of the values listed
 
-  ```
+  ```sql
   CREATE TABLE country (
       Continent ENUM('Asia','Europe','N America',
       'Africa','Oceania','Antarctica','S America') );
@@ -581,7 +625,7 @@ SELECT * FROM city;
 - **SET** is a specified list of string values
   - Can hold one or more values
 
-  ```
+  ```sql
   CREATE TABLE countrylanguage (
       CountryCode CHAR(3),
       Language SET ('English','French','Mandarin','Spanish'));
@@ -591,18 +635,18 @@ SELECT * FROM city;
       ('CAN','English,French');
   ```
 
-## SPECIAL DATA TYPES
+### Special Data Types
 
 - **INET6** is a data type for storing IPv6 IP addresses as well as IPv4
   - Stores as a BINARY(16)
   
-  ```
+  ```sql
   CREATE TABLE ipaddress (address INET6);
   ```
 
-# BUILT-IN FUNCTIONS
+## Built-in Functions
 
-## Manipulating Date and Time
+### Manipulating Date and Time
 
 **Functions for Date and Time Manipulation**
 
@@ -660,17 +704,17 @@ SELECT * FROM city;
 - `YEAR()`
 - YEARMONTH()
 
-## EXAMPLES OF DATE AND TIME FUNCTIONS
+### Examples of Date and Time Functions
 
 **Used in Queries and Data Manipulation Statements**
 
-```
+```sql
 SELECT NOW() + INTERVAL 1 DAY
            - INTERVAL 1 HOUR
        AS 'Day & Hour Earlier';
 ```
 
-```
+```sql
 +---------------------+
 | Day & Hour Earlier  |
 +---------------------+
@@ -680,7 +724,7 @@ SELECT NOW() + INTERVAL 1 DAY
 
 **Used in WHERE Clauses**
 
-```
+```sql
 UPDATE table1
 SET col3 = 'today', col4 = NOW()
 WHERE col5 = CURDATE();
@@ -688,16 +732,16 @@ WHERE col5 = CURDATE();
 
 **Used in Bulk Load**
 
-```
+```sql
 load data local infile '/tmp/test.csv' into
 table test fields terminated by ','
 ignore 1 lines (id,@dt1)
 set dt=str_to_date(@dt1,'%d/%m/%Y');
 ```
 
-## Manipulating Strings
+### Manipulating Strings
 
-### Functions For String Manipulation
+#### Functions For String Manipulation
 
 - ASCII()
 - BIN()
@@ -761,11 +805,11 @@ set dt=str_to_date(@dt1,'%d/%m/%Y');
 - UPPER()
 - WEIGHT_STRING()
 
-## AN EXAMPLE OF A STRING FUNCTION
+### An Example of a String Function
 
 Used in Queries and Data Manipulation Statements
 
-```
+```sql
 SELECT domain, domain_count
 FROM (
     SELECT
@@ -778,9 +822,9 @@ WHERE domain_count > 200
 LIMIT 100;
 ```
 
-## WORKING WITH THE JSON DATA TYPE
+### Working with the JSON Data Type
 
-### JSON Functions
+#### JSON Functions
 
 `JSONPath Expressions`  
 `JSON_ARRAY`  
@@ -818,31 +862,30 @@ LIMIT 100;
 `JSON_VALID`  
 `JSON_VALUE`
 
-## EXAMPLES OF JSON FUNCTIONS
+### Examples of JSON Functions
 
-### Used to pull a scalar value from JSON data
+#### Used to pull a scalar value from JSON data
 
 ```sql
 SELECT name, latitude, longitude, 
 JSON_VALUE(attr, '$.details.foodType') AS food_type 
 FROM locations 
 WHERE type = 'R';
-```
+
 
 | name   | latitude   | longitude   | food_type |
 |--------|------------|-------------|-----------|
 | Shogun | 34.1561131 | -118.131943 | Japanese  |
+```
 
-### Used to return entire JSON object data
+#### Used to return entire JSON object data
 
 ```sql
 SELECT name, latitude, longitude, 
 JSON_QUERY(attr, '$.details') AS details 
 FROM locations 
 WHERE type = 'R'\G
-```
 
-```
 *************************** 1. row ***************************
 name: Shogun
 latitude: 34.156113
@@ -850,9 +893,9 @@ longitude: -118.131943
 details: {"foodType": "Japanese", "menu": "https://www.restaurantshogun.com/menu/teppan-1-22.pdf"}
 ```
 
-## EXAMPLES OF JSON FUNCTIONS
+### Examples of JSON Functions
 
-### Used to validate JSON values
+#### Used to validate JSON values
 
 ```sql
 CREATE TABLE locations (
@@ -868,14 +911,14 @@ CREATE TABLE locations (
 );
 ```
 
-### Used to insert fields
+#### Used to insert fields
 
 ```sql
 UPDATE locations
     SET attr = JSON_INSERT(attr,'$.nickname','The Bean') WHERE id = 8;
 ```
 
-### Used to create new arrays
+#### Used to create new arrays
 
 ```sql
 UPDATE locations
@@ -884,11 +927,11 @@ UPDATE locations
     WHERE id = 1;
 ```
 
-## EXAMPLES OF JSON FUNCTIONS
+### Examples of JSON Functions
 
 Used to convert data
 
-```
+```sql
 SELECT l.name, d.food_type, d.menu
 FROM locations AS l,
      JSON_TABLE(l.attr,
@@ -897,13 +940,13 @@ FROM locations AS l,
          menu VARCHAR(200) PATH '$.menu')
      ) AS d
 WHERE id = 2;
-```
 
 | name   | food_type | menu                                                                 |
 |--------|-----------|----------------------------------------------------------------------|
 | Shogun | Japanese  | https://www.restaurantshogun.com/menu/teppan-1-22.pdf |
+```
 
-## LESSON SUMMARY
+## Lesson Summary
 
 - Identify and describe the schema objects available within MariaDB Enterprise Server
 - Demonstrate how to create and use databases, tables, and columns in MariaDB Enterprise Server

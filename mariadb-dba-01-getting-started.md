@@ -1,4 +1,14 @@
-# GETTING STARTED
+---
+title: "Lesson 1: Getting Started"
+date: 2025-04-07
+description: >
+categories: []
+tags: []
+weight: 1
+toc: true
+---
+
+# Getting started
 
 ## Learning Objectives
 
@@ -8,9 +18,9 @@
 - Change the default settings of MariaDB Enterprise Server while it's running to make the server work better for your needs
 - Turn on and off server logs and use them to check the status and performance of MariaDB Enterprise Server
 
-# DEPLOYMENT
+## Deployment
 
-## SUPPORTED OPERATING SYSTEMS
+### Supported Operating Systems
 
 | Operating System     | ES10.6 | ES10.5 | ES10.4 | ES10.3 |
 |----------------------|--------|--------|--------|--------|
@@ -26,27 +36,27 @@
 | SLES12 (x86_64)               | Yes    | Yes    | Yes    | Yes    |
 | Windows (x86_64)              | Yes    | Yes    | Yes    | Yes    |
 
-## INSTALLATION METHODS AND PACKAGES
+### Installation Methods and Packages
 
-### Installation Tools
+#### Installation Tools
 - Built and tested by experts
 - Installer (e.g., `yum`)
 - Use up-to-date versions
 
-### Distribution Packages
+#### Distribution Packages
 - `(rpm, deb, pkg, dmg)`
 - Easy and quick to install
 - Need to configure manually
 - Possibly old versions
 
-### Docker
+#### Docker
 - Enterprise Docker registry
 - Easy Docker installs
 - Maintained by MariaDB
 
 The recommended way to install MariaDB is via MariaDB's `repository` in conjunction with your distribution's package manager.
 
-## INSTALLING WITH PACKAGES
+### Installing with Packages
 
 **Package Managers**  
 Automatically places binaries, configuration and other files in correct locations
@@ -57,13 +67,13 @@ Add any system configuration items you require to the `.cnf` file
 **Maintained by MariaDB**  
 Official package repositories are available on our website
 
-## STARTING AND STOPPING THE SERVER
+### Starting and Stopping the Server
 
 `systemctl [start|stop|restart|status] mariadb`
 
 Configure start and stop timeouts by creating a `timeout.conf` file
 
-```
+```sh
 # vi /etc/systemd/system/mariadb.service.d/timeout.conf
 
 [Service]
@@ -73,14 +83,14 @@ TimeoutStopSec=30min
 
 Reload the systemd daemon
 
-```
+```sh
 # systemctl daemon-reload
 # systemctl restart mariadb
 ```
 
-## UPGRADING MARIADB
+### Upgrading MariaDB
 
-### What To Consider
+#### What to Consider
 
 - Review release notes
   (major and minor version upgrades)
@@ -91,7 +101,7 @@ Reload the systemd daemon
 
 - Rolling restart available with MariaDB Cluster
 
-### What To Prepare
+#### What to Prepare
 
 - Backup Data
 
@@ -104,25 +114,26 @@ Reload the systemd daemon
   - Upgrade the Replica, Promote the Replica and then Upgrade the Primary
     - Made even easier with MariaDB MaxScale
 
-## CONNECTORS AND UTILITIES
+## Connectors and Utilities
 
-## CONNECTORS
+### Connectors
 
 Various Libraries for connecting to MariaDB
 
-CONNECTORS
-
-| MariaDB Connector/C | MariaDB Connector/Node.js |
-|---------------------|---------------------------|
-| * MariaDB Connector/C++ | * MariaDB Connector/ODBC |
-| MariaDB Connector/J (JDBC) | * MariaDB Connector/Python |
-| MariaDB Connector/R2DBC | ** .NET, Perl DBI, PHP, Ruby |
+* MariaDB Connector/C
+* MariaDB Connector/C++ * 
+* MariaDB Connector/J (JDBC) 
+* MariaDB Connector/R2DBC
+* MariaDB Connector/Node.js 
+* MariaDB Connector/ODBC *
+* MariaDB Connector/Python *
+* .NET, Perl DBI, PHP, Ruby ** 
 
 *Wrapper for MariaDB C API, which uses the MariaDB Network Protocol  
 ** Non-native (unsupported) Connectors to use with MariaDB  
 
 
-## CLIENT CONNECTIONS
+### Client Connections
 
 TCP/IP Connections available on All Platforms (`skip_networking` disables this)
 
@@ -136,25 +147,25 @@ Most use External Connection Pools (not needed usually)
 
 Set Global Client Connection Limit (`max_connections=n`)
 
-## MARIADB CLIENT - COMMAND-LINE TOOL
+### MariaDB Client - Command-line Tool
 
 - Shell or SSH
 - Manually Execute any SQL statement
 - Display MariaDB settings and status counters
 - Use as an Interactive Session, or Pipe SQL via Shell
 
-```
+```sh
 # mariadb --user=root -p
 MariaDB [(none)]> SHOW DATABASES;
 ```
 
-```
+```sh
 # mariadb -p -u user_name --execute "SHOW DATABASES"
 # mariadb -e "CREATE DATABASE world"
 # mariadb world < /path/to/world.sql
 ```
 
-## MARIADB-ADMIN - COMMAND-LINE TOOL
+### MariaDB-admin - Command-line Tool
 
 - Shell or SSH
 - Manage User Accounts, Passwords, Permissions
@@ -163,7 +174,7 @@ MariaDB [(none)]> SHOW DATABASES;
 - Ping or Shutdown mysqld
 - Create and Drop Databases
 
-```
+```sh
 # mariadb-admin processlist
 # mariadb-admin kill 12345678
 # mariadb-admin -u root -p create ragnar
@@ -174,7 +185,7 @@ MariaDB [(none)]> SHOW DATABASES;
 # mariadb-admin shutdown
 ```
 
-## OTHER CLIENT UTILITIES
+### Other Client Utilities
 
 | Name                           | Description                                                                                                                                                                                                                                                 |
 |-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -188,7 +199,7 @@ MariaDB [(none)]> SHOW DATABASES;
 | `sysbench`                    | Another benchmarking tool that provides benchmarking capabilities for Linux. It supports testing CPU, memory, file I/O, mutex performance.                                                                                                                                                          |
 | `my_print_defaults`           | Useful in displaying the default settings that are given to the MariaDB daemon at startup, either manually or from the configuration file. Execute this from the command line followed by the --mysqld option.                                                                                    |
 
-## Some Command Line Tools
+### Some Command Line Tools
 
 | Name                      | Description                                                                                                  |
 |---------------------------|--------------------------------------------------------------------------------------------------------------|
@@ -202,7 +213,7 @@ MariaDB [(none)]> SHOW DATABASES;
 | `aria_pack`               | Tool for compressing Aria tables.                                                                            |
 | `aria_read_log`           | Tool for displaying and applying log records from an Aria transaction log.                                   |
 
-## Graphical User Interface Tools
+### Graphical User Interface Tools
 
 - Can Connect via SSL or SSH tunnel
 - Schema and Query Construction
@@ -224,11 +235,11 @@ MariaDB [(none)]> SHOW DATABASES;
 - Sequel Ace
 - Querious
 
-# CONFIGURATION AND VARIABLES
+## Configuration and Variables
 
-## Configuration File Locations
+### Configuration File Locations
 
-### Linux
+#### Linux
 
 - `/etc/my.cnf`
 - `/etc/my.cnf.d/mariadb-enterprise.cnf`
@@ -239,7 +250,7 @@ MariaDB [(none)]> SHOW DATABASES;
 - `/etc/my.cnf.d/*.cnf`
 - `--defaults-extra-file`
 
-### Windows
+#### Windows
 
 - `C:\Windows\my.ini`
 - `C:\Windows\my.cnf`
@@ -250,13 +261,12 @@ MariaDB [(none)]> SHOW DATABASES;
 - `INSTALLDIR\data\my.cnf`
 - `--defaults-extra-file`
 
-## SERVER DEFAULTS
+### Server Defaults
 
-### Finding Defaults
+#### Finding Defaults
 
-```
+```sh
 # mariadbd --print-defaults
-```
 
 mariadbd would have been started with the following arguments:
 - `--datadir=/data/mariadb`
@@ -264,10 +274,11 @@ mariadbd would have been started with the following arguments:
 - `--user=mysql`
 - `--symbolic_links=0`
 - `--local_infile=0`
-
-### Configuration File (server.cnf)
-
 ```
+
+#### Configuration File (server.cnf)
+
+```ini
 [server]
 
 [mysqld]
@@ -286,13 +297,13 @@ local_infile=0
 [mariadb-10.6]
 ```
 
-## Setting the InnoDB Buffer Pool Size
+### Setting the InnoDB Buffer Pool Size
 
 The size of the buffer pool is the most important tunable for the InnoDB storage engine
 
 The buffer pool size is determined by the innodb_buffer_pool_size
 
-```
+```ini
 innodb_buffer_pool_size = 134217728
 
 innodb_buffer_pool_chunk_size = 134217728
@@ -304,9 +315,9 @@ innodb_buffer_pool_load_at_startup = ON
 innodb_buffer_pool_filename = ib_buffer_pool
 ```
 
-## Global and Status Variables
+### Global and Status Variables
 
-### Global Variables
+#### Global Variables
 
 - Global Variables are System Wide
 
@@ -319,7 +330,7 @@ innodb_buffer_pool_filename = ib_buffer_pool
 
   Only user accounts with the SUPER privilege can dynamically change global system variables.
 
-### Global Status Variables
+#### Global Status Variables
 
 - SHOW GLOBAL STATUS provides Counters and Thresholds of Internal Statistics
 
@@ -327,11 +338,11 @@ innodb_buffer_pool_filename = ib_buffer_pool
 
 - Check Status Variables to Decide on Adjustments to Global Variables
 
-## Session Variables
+### Session Variables
 
 Global Variable Values are Defaults for New Sessions
 
-```
+```sql
 SHOW GLOBAL VARIABLES LIKE '%character_set_client%';
 +--------------------+-------+
 | Variable_name      | Value |
@@ -342,7 +353,7 @@ SHOW GLOBAL VARIABLES LIKE '%character_set_client%';
 
 Session Variables are Values for Current Session
 
-```
+```sql
 SHOW SESSION VARIABLES LIKE '%character_set_client%';
 +--------------------+-------+
 | Variable_name      | Value |
@@ -351,9 +362,9 @@ SHOW SESSION VARIABLES LIKE '%character_set_client%';
 +--------------------+-------+
 ```
 
-# LOG FILES
+## Log Files
 
-## MARIADB LOGS
+### MariaDB Logs
 
 - ERROR LOG
 - GENERAL QUERY LOG
@@ -362,7 +373,7 @@ SHOW SESSION VARIABLES LIKE '%character_set_client%';
 - BINARY LOG
 - AUDIT LOG
 
-## ERROR LOG
+### Error Log
 
 - Required for the server to operate
 - Contains startup, shutdown, and error messages
@@ -370,7 +381,7 @@ SHOW SESSION VARIABLES LIKE '%character_set_client%';
 - Systems that use systemd redirect to the syslog by default
 - Windows uses `host_name.err` in the datadir, or System Event Log
 
-```
+```ini
 [mariadb]
 log_error = /path/to/error_log_file_name
 log_warnings = 1
@@ -380,7 +391,7 @@ _Excerpt from server.cnf, my.cnf or my.ini configuration file_
 
 _Set `log_warnings` to 2 for verbose mode_
 
-## General Query Log
+### General Query Log
 
 - Logs all queries received from all clients, even queries with syntax errors
 - Order Received - Not Executed
@@ -390,7 +401,7 @@ _Set `log_warnings` to 2 for verbose mode_
   - Contains queries in plain text so make sure to secure the logs as you would the data in the database
   - Reduces performance by up to 20%
 
-```
+```ini
 [mariadb]
 general_log
 general_log_file='/path/to/host.log'
@@ -398,8 +409,7 @@ general_log_file='/path/to/host.log'
 
 Excerpt from server.cnf, my.cnf or my.ini configuration file
 
-##
-SQL ERROR LOG
+### SQL Error Log
 
 - Logs SQL errors
   - Records error messages with SQL statement
@@ -408,19 +418,19 @@ SQL ERROR LOG
 - Logs User, Host, and Time
 - Dynamically loadable
 
-```
+```sql
 INSTALL PLUGIN sql_error_log SONAME 'sql_errlog';
 ```
 
 Requires `INSERT` privilege for `mysql.plugin` table
 
-## SLOW QUERY LOG
+### Slow Query Log
 
 - Queries that take more seconds to execute than `long_query_time`
 - Contains queries in plain text (security risk!)
 - Useful when testing an application or new database
 
-```
+```ini
 [mariadb]
 slow_query_log = 1
 slow_query_log_file = /path/to/mariadb-slow.log
@@ -430,22 +440,22 @@ log_slow_admin_statements=1
 log_slow_disabled_statements='admin,call,slave,sp'
 ```
 
-## Managing Log Files
+### Managing Log Files
 
-### Regularly Rotate Logs File
+#### Regularly Rotate Logs File
 - Manually move Existing Log Files and then Flush Logs
 
-```
+```sql
 FLUSH LOGS;
 ```
 
-```
+```sh
 # mariadb-admin flush-logs
 ```
 
 An alternative method from the command-line
 
-### Backups
+#### Backups
 - Include Logs in Backups
 - Synchronise Binary Logs with Backups
 
@@ -453,19 +463,14 @@ An alternative method from the command-line
 - Move the log file, then `FLUSH LOGS` to recreate
 - Deleted file may still be opened by server
 
-### Linux logrotate Utility
+#### Linux logrotate Utility
 - Automatic log rotation
 - Various conditions can be set for log files (size, time frame)
 
 ## Lesson Summary
 
 - List the steps to deploy MariaDB Enterprise Server using distribution packages
-
 - Explain the benefits and challenges of upgrading MariaDB Enterprise Server, and list the steps you need to take before and after the upgrade
-
 - Know which tools and client utilities to use to perform common tasks such as managing users accounts and permissions, benchmarking, and backing up and restoring data
-
 - Change the default settings of MariaDB Enterprise Server while it's running to make the server work better for your needs
-
 - Turn on and off server logs and use them to check the status and performance of MariaDB Enterprise Server
-
