@@ -2,7 +2,8 @@ baseURL = 'https://mariadb4uni.mariadb.org/'
 languageCode = 'en-us'
 title = 'MariaDB for Universities Program Course Material'
 
+pygmentsStyle = "friendly"  # hugo defualt is "monokai". Try "monokai", "friendly", "github", etc.
+pygmentsUseClasses = false
+
 [params]
   githubRepo = "https://github.com/MariaDB/mariadb-for-universities"
-
-
