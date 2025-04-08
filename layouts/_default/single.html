@@ -22,8 +22,8 @@
       <!-- Right Side Menu -->
       <div class="right-menu">
           <div class="quick-links">
-            <a href="{{ .Site.Params.githubRepo }}/blob/main/{{ .File }}.md" class="icon-link edit-page">View page source</a>
-            <a href="{{ .Site.Params.githubRepo }}/edit/main/{{ .File }}.md" class="icon-link view-source">Edit this page</a>
+            <a href="{{ .Site.Params.githubRepo }}/blob/main/{{ .File.LogicalName }}.md" class="icon-link edit-page">View page source</a>
+            <a href="{{ .Site.Params.githubRepo }}/edit/main/{{ .File.LogicalName }}.md" class="icon-link view-source">Edit this page</a>
             <a href="{{ .Site.Params.githubRepo }}/issues/new?title=Course%20Material%20issue%20for%20{{ .Title }}&body=I%20found%20an%20issue%20with%20the%20documentation%20for%20{{ .Title }}.%0A%0A%0A%0A---%0A%0AThis%20issue%20is%20related%20to%20the%20following%20page%3A%0A%0A{{ .Permalink }}" class="icon-link create-doc">Create Material issue</a>
             <a href="#" class="icon-link print">Print entire section</a>
           </div>
