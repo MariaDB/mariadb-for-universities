@@ -1,6 +1,6 @@
 # MariaDB for Universities training material 
 
-This repo contains training material for MariaDB DBA and Developers courses. Released for non-commercial use by MariaDB Corporation with license CC BY-NC-SA 4.0 (Attribution-NonCommercial-ShareAlike 4.0 International).
+This repo contains training material for MariaDB DBA and Developer courses. Released for non-commercial use by MariaDB Corporation with license CC BY-NC-SA 4.0 (Attribution-NonCommercial-ShareAlike 4.0 International).
 
 # Beta version of site
 
