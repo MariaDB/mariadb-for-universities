@@ -1,0 +1,36 @@
+name: Copy Developer Content to Deploy Branch
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'mariadb-dev*.md'
+  workflow_dispatch:
+
+jobs:
+  copy-content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+
+      - name: Checkout deploy branch
+        uses: actions/checkout@v4
+        with:
+          ref: deploy
+          path: deploy
+
+      - name: Copy Developer files
+        run: |
+          mkdir -p deploy/content/dev
+          cp main/mariadb-dev*.md deploy/content/dev/
+          cd deploy
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git add content/dev/
+          git commit -m "Copy Developer content from main branch" || echo "No changes to commit"
+          git push origin deploy 
