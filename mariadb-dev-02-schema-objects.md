@@ -1,5 +1,16 @@
-# Schema objects
+---
+title: "Lesson 2: Schema objects"
+url: "/dev/schema-objects/"
+date: 2025-04-10
+description: >
+categories: []
+tags: []
+weight: 1
+toc: true
+---
 
+# Schema objects
+ 
 ## Learning objectives
 
 - Gain an understanding of schema objects available within MariaDB
@@ -7,9 +18,9 @@
 - Discuss data types and built-in functions, and their use cases
 - Learn how to create and use views, triggers, events, and sequences
 
-# Databases, tables and default schemas
+## Databases, tables and default schemas
 
-## Case sensitivity
+### Case sensitivity
 
 Depending on Operating System, File System and `lower_case_table_names`
 
@@ -19,7 +30,7 @@ Usually case sensitive by default on Linux, not so on Windows and MacOS
 
 Adopt a convention, such as always creating and referring to databases and tables using lowercase names
 
-## Databases
+### Databases
 
 **Database aka Schema**
 
@@ -29,7 +40,7 @@ Adopt a convention, such as always creating and referring to databases and table
 
 `CREATE DATABASE world;`
 
-## Tables
+### Tables
 
 Stores rows of structured data organised by typed columns
 
@@ -39,7 +50,7 @@ Each corresponds to a metadata file (`.frm`) and data file(s), dependent on stor
 Qualified by a database name  
 (i.e. `database.table`)
 
-## Columns
+### Columns
 
 - Set of typed data values
 
@@ -51,7 +62,7 @@ Qualified by a database name
 
 - Index
 
-## Column attributes
+### Column attributes
 
 Columns have strict type definitions
 
@@ -72,7 +83,7 @@ Columns can be NULL, unless defined NOT NULL
   - Reduces storage in some Engines
   - Can also reduce execution time because there are more CPU cycles used to first check for NULL
 
-## Indexes
+### Indexes
 
 - Exact copy of selected columns followed by primary key (e.g., name,address,ID)
   - For long columns the index might not be an "exact copy", but instead it might contain a prefix of the column
@@ -80,7 +91,7 @@ Columns can be NULL, unless defined NOT NULL
 - For InnoDB, primary key is silently appended to end of secondary indexes, unless specified elsewhere within index
 - Attribute of a table
 
-## Constraints
+### Constraints
 
 - Types: Primary Key, Foreign Key, Unique and Check
 - Support and implementation differs per storage engine
@@ -89,7 +100,7 @@ Columns can be NULL, unless defined NOT NULL
 - Attribute of a table
 - Has potential for contention at scale
 
-## Views
+### Views
 
 - Virtual table defined by a SQL `SELECT` query
 - Evaluated at each access
@@ -98,7 +109,7 @@ Columns can be NULL, unless defined NOT NULL
 - Updateable in certain cases (`WITH CHECK OPTION`)
 - Qualified by database (`database.view`)
 
-## Stored routines
+### Stored routines
 
 - Types: Functions, Triggers, Events, and Stored Procedures
 - Has input and output parameters
@@ -113,14 +124,14 @@ Columns can be NULL, unless defined NOT NULL
 - If SQL SECURITY INVOKER is set then the privileges of the user executing the stored routine are used
 - Qualified by database (`database.my_stored_procedure`)
 
-## Default schemas
+### Default schemas
 
-### information_schema
+#### information_schema
 - The encyclopedia of your database
 - Contains information on databases, tables, columns, procedures, indexes, statistics, partitions and views
 - Plugins can install additional `information_schema` tables
 
-### mysql
+#### mysql
 Stores information on:
 - Server configuration
 - Grants and timezones
@@ -131,11 +142,11 @@ Stores information on:
 - Event definitions
 - Plugins installed by `INSTALL SONAME`/`INSTALL PLUGIN`
 
-### performance_schema
+#### performance_schema
 - Metrics and performance data
 - Will be covered in Tuning & optimization Module
 
-## Creating your first table
+### Creating your first table
 
 ```sql
 CREATE TABLE city (
@@ -156,7 +167,7 @@ CREATE TABLE city (
 - Define Primary Key, Secondary Indexes and Constraints
 - Define Engine, Partitions, Character Set and other attributes
 
-## Altering tables
+### Altering tables
 
 `ALTER TABLE` is used to change a table's schema
 
@@ -166,7 +177,7 @@ CREATE TABLE city (
 
 **CHANGE COLUMN** and **MODIFY COLUMN** to Alter a Column
 
-```
+```sql
 ALTER TABLE table1
 ADD COLUMN col5 CHAR(8),
 DROP COLUMN col3,
@@ -176,7 +187,7 @@ MODIFY COLUMN col8 VARCHAR(10);
 
 Basic Syntax Example for `ALTER TABLE` Statement
 
-## Temporal tables
+### Temporal tables
 
 | Type                    | Tracks                           | Sample Use Cases                          |
 |-------------------------|----------------------------------|-------------------------------------------|
@@ -184,9 +195,9 @@ Basic Syntax Example for `ALTER TABLE` Statement
 | Application-Time Period | Time-limited values              | Sales offers, subscriptions               |
 | Bitemporal              | Time-limited values with history | Schedules, decision support models        |
 
-## Temporal tables
+### Temporal tables
 
-### System-Versioned Example
+#### System-Versioned Example
 
 ```sql
 CREATE TABLE accounts (
@@ -196,7 +207,7 @@ CREATE TABLE accounts (
 ) WITH SYSTEM VERSIONING;
 ```
 
-### Application-Time Period Example
+#### Application-Time Period Example
 
 ```sql
 CREATE TABLE coupons (
@@ -208,7 +219,7 @@ CREATE TABLE coupons (
 );
 ```
 
-### Bitemporal Example
+#### Bitemporal Example
 
 ```sql
 CREATE TABLE coupons_new (
@@ -221,28 +232,29 @@ CREATE TABLE coupons_new (
 ) WITH SYSTEM VERSIONING;
 ```
 
-# Data types and built-in functions
+## Data types and built-in functions
 
-## Data types
+### Data types
 
 Types: Binary, Numeric, String, Temporal, and User Defined
 
 Use the most suitable data type to store all possible, required values  
 Will truncate silently and rounds (`sql_mode`)
 
-```
+```sql
 MariaDB [(none)]> help INT;
 Name: 'INT'
 Description: INT[(M)] [UNSIGNED] [ZEROFILL]
+```
 
 A normal-size integer.
 The signed range is -2147483648 to 2147483647.
 The unsigned range is 0 to 4294967295.
 
 URL: https://mariadb.com/kb/en/mariadb/data-types-numeric-data-types/
-```
 
-## Numeric data types
+
+### Numeric data types
 
 - `FLOAT` and `DOUBLE` are approximate types
   - Uses 4 and 8 bytes IEEE storage format
@@ -252,7 +264,7 @@ URL: https://mariadb.com/kb/en/mariadb/data-types-numeric-data-types/
 - `REAL` is a synonym for `DOUBLE`
   - Unless in `REAL_AS_FLOAT` SQL mode
 
-## Auto increment
+### Auto increment
 
 - Use `LAST_INSERT_ID()` to get value generated for client connection
 - `SERIAL` is a synonym for `BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE`
@@ -261,21 +273,21 @@ URL: https://mariadb.com/kb/en/mariadb/data-types-numeric-data-types/
   - Prepares `AUTO_INCREMENT` counters when the MariaDB Server starts
   - Single mutex on a table, behavior changed with `innodb_autoinc_lock_mode`
  
-### 0 | default, Traditional
+#### 0 | default, Traditional
 - Holds table-level lock for all `INSERTs` until end of statement
 
-### 1 Consecutive
+#### 1 Consecutive
 - Holds table-level lock for all bulk `INSERTs` (such as `LOAD DATA` or `INSERT ... SELECT`) until end of statement
 - For simple `INSERTs`, no table-level lock held
 
-### 2 Interleaved
+#### 2 Interleaved
 
 - No table-level locks are held ever
 - Fastest and most scalable
 - Not safe for statement-based replication
 - Generated IDs are not always consecutive
 
-## Numeric data types
+### Numeric data types
 
 - Use `UNSIGNED` when appropriate
 - `INT(n)` specifies display precision, not storage precision
@@ -286,7 +298,7 @@ URL: https://mariadb.com/kb/en/mariadb/data-types-numeric-data-types/
 - `BIGINT` can enumerate more than all the ants on Earth and shouldn’t be your default choice
 - `TINYINT(1)` is used for `BOOLEAN` values and is aliased by the `BOOLEAN` type
 
-## String data types
+### String data types
 
 All String Data Types Have A Character Set
 
@@ -308,7 +320,7 @@ All String Data Types Have A Character Set
 - `MEDIUMTEXT`
 - `LONGTEXT`
 
-## String data types
+### String data types
 
 Character set may be global or for schema, table, or column
 
@@ -324,7 +336,7 @@ Character set may be global or for schema, table, or column
 - Collations affect string comparison (character order)
 - Collations can be changed for a query
 
-## Binary data types
+### Binary data types
 
 - `BINARY`, `VARBINARY` and `BLOBs` can contain data with bytes from the whole range from 0 - 255
 - Uses a special character set and collation called "binary"
@@ -335,7 +347,7 @@ Character set may be global or for schema, table, or column
 - Blobs inflate `mysqld` memory usage
 - Modern InnoDB has some improvements in storage and lookup of blobs
 
-## Temporal data types
+### Temporal data types
 
 - `DATE` — from 1000-01-01 to 9999-12-31
   - YYYY-MM-DD
@@ -359,7 +371,7 @@ SELECT CURTIME(4);
 | 05:33:09.1061 |
 ```
 
-## Special data types
+### Special data types
 
 - `ENUM` is an enumerated list of string values
   - Uses a 2-byte integer index
@@ -381,7 +393,7 @@ SELECT CURTIME(4);
   ('CAN','English,French');
   ```
 
-## Built-in functions
+### Built-in functions
 
 Types: String, Date and Time, Aggregate, Numeric, Control Flow
 
@@ -389,7 +401,7 @@ Secondary functions such as Bit Functions and Operators, Encryption, Hashing and
 
 Special Functions such as Dynamic Columns, Geographic, JSON, Spider and Window Functions
 
-## Manipulating date & time
+### Manipulating date & time
 
 Functions for date and time manipulation
 
@@ -451,9 +463,9 @@ YEARWEEK()
 
 Documentation on Date and Time Functions: [https://mariadb.com/kb/en/mariadb/date-and-time-functions/](https://mariadb.com/kb/en/mariadb/date-and-time-functions/)
 
-## Examples of date & time functions
+### Examples of date & time functions
 
-### Used in Queries and Data Manipulation Statements
+#### Used in Queries and Data Manipulation Statements
 
 ```sql
 SELECT NOW() + INTERVAL 1 DAY
@@ -469,7 +481,7 @@ SELECT NOW() + INTERVAL 1 DAY
 +---------------------+
 ```
 
-### Used in WHERE Clauses
+#### Used in WHERE Clauses
 
 ```sql
 UPDATE table1
@@ -477,16 +489,16 @@ SET col3 = 'today', col4 = NOW()
 WHERE col5 = CURDATE();
 ```
 
-### Used in Bulk Load
+#### Used in Bulk Load
 
-```
+```sql
 load data local infile '/tmp/test.csv' into
 table test fields terminated by ','
 ignore 1 lines (id,@dt1)
 set dts=str_to_date(@dt1,'%d/%m/%Y');
 ```
 
-## Manipulating strings
+### Manipulating strings
 
 Functions for string manipulation
 
@@ -553,11 +565,11 @@ Functions for string manipulation
 
 Documentation on String Functions: [https://mariadb.com/kb/en/library/string-functions/](https://mariadb.com/kb/en/library/string-functions/)
 
-## An example of a string function
+### An example of a string function
 
 Used in queries and data manipulation statements
 
-```
+```sql
 SELECT domain, domain_count FROM
 ( SELECT SUBSTRING(email_address, LOCATE('@', email_address) +1 ) AS domain,
 COUNT(*) AS domain_count
@@ -567,7 +579,7 @@ WHERE domain_count > 200
 LIMIT 100;
 ```
 
-## Aggregate functions
+### Aggregate functions
 
 Used for Summary Operations
 
@@ -602,7 +614,7 @@ FROM City;
 +-----------------------------+
 ```
 
-## Aggregate multiplication
+### Aggregate multiplication
 
 **Using logarithm logic:**
 
@@ -616,7 +628,7 @@ With an initial investment of $1,000 in 2009, calculate the value of the investm
   ```
 - Problem: This would result in an average return of approximately 9.9% over the 10 year span, but it does not take into account compound interest.
 
-## Aggregate multiplication
+### Aggregate multiplication
 
 Calculating compound interest: Find each year's ROR:
 
@@ -637,7 +649,7 @@ FROM investment;
 10 rows in set (#.## sec)
 ```
 
-## Aggregate multiplication
+### Aggregate multiplication
 
 Calculating compound interest:
 
@@ -665,7 +677,7 @@ Calculating compound interest:
    +------------------------+
    ```
 
-## Aggregate multiplication
+### Aggregate multiplication
 
 Calculating compound interest:
 
@@ -685,7 +697,7 @@ SELECT EXP(SUM(LOG(1+ROR)))*1000 FROM investment;
 +-------------------------+
 ```
 
-## Running total query
+### Running total query
 
 In the course of almost every analytical presentation, someone will request that a running total be presented!
 
@@ -699,7 +711,7 @@ JOIN investment b ON (a.YEAR >= b.YEAR)
 GROUP BY a.YEAR, a.ROR;
 ```
 
-## Running total query
+### Running total query
 
 Notice how this statement works
 
@@ -726,7 +738,7 @@ ORDER BY a.YEAR, a.ROR;
 +------+----------+------------------+
 ```
 
-## Control flow functions
+### Control flow functions
 
 `IF(expr1,expr2,expr3)`
 - If `expr1` is TRUE (`expr1 <> 0` and `expr1 <> NULL`) then `IF()` returns `expr2`; otherwise it returns `expr3`
@@ -735,7 +747,7 @@ ORDER BY a.YEAR, a.ROR;
 
 Do not mix up with `NULLIF(expr1,expr2)` which returns `expr1` if `expr1<>expr2` otherwise `NULL`
 
-## Some numeric functions
+### Some numeric functions
 
 - `CEIL(X)`
   - Returns the smallest integer value not less than `X`
@@ -747,15 +759,15 @@ Do not mix up with `NULLIF(expr1,expr2)` which returns `expr1` if `expr1<>expr2`
 - `ABS(X)`
   - Returns the non-negative number of `X`
 
-# Views, triggers and events
+## Views, triggers and events
 
-## Views
+### Views
 
 - Adapt and standardize table schema
 - Simplify, split, or factor complex reporting queries
 - Restrict visible table data to specific users and applications
 
-## An example of a view
+### An example of a view
 
 - A SQL Statement Represented as a Table
 - Views are Not Materialised
@@ -777,14 +789,14 @@ SHOW CREATE VIEW emp_names \G
 DROP VIEW emp_names;
 ```
 
-# Lesson summary
+## Lesson summary
 
 - Gain an understanding of schema objects available within MariaDB
 - Learn how to use and create databases and tables, including temporal data tables, and flexible and invisible columns
 - Discuss data types and built-in functions, and their use cases
 - Learn how to create and use views, triggers, events, and sequences
 
-# Lab exercises
+## Lab exercises
 
 - 2-1 Creating a Database
 - 2-2 Creating a Table

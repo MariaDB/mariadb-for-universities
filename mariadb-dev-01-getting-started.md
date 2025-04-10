@@ -1,3 +1,14 @@
+---
+title: "Lesson 1: Getting Started"
+url: "/dev/getting-started/"
+date: 2025-04-10
+description: >
+categories: []
+tags: []
+weight: 1
+toc: true
+---
+
 # Getting started
 
 ## Learning objectives
@@ -7,23 +18,23 @@
 - Utilize MariaDB connectors and utilities
 - Learn basic MariaDB administration tasks relating to server logs, user management, and backing up and restoring data
 
-# Architecture
+## Architecture
 
-## Installation methods and packages
+### Installation methods and packages
 
-### Linux
+#### Linux
 - MariaDB repositories
 - Distribution repositories
 - Binary tarballs
 - Docker Container Image
 - Source tarballs
 
-### Windows
+#### Windows
 - MariaDB installer
 - Docker Container Image
 - Source tarballs
 
-### MacOS
+#### MacOS
 - Homebrew
 - Macports
 - Docker Container Image
@@ -31,7 +42,7 @@
 
 Only certain MariaDB repositories and installers provide MariaDB Enterprise Server. All other sources provide MariaDB Community Server.
 
-## Isolation levels
+### Isolation levels
 
 When two or more transactions occur at the same time, the isolation level defines the degree at which a transaction is isolated from the resource or data modifications made by other transactions.
 
@@ -45,12 +56,12 @@ SET SESSION tx_isolation = 'READ-COMMITTED';
 
 The `transaction_isolation` option can be set in the configuration file.
 
-```
+```ini
 [mariadb]
 transaction_isolation = READ-COMMITTED
 ```
 
-## Types of isolation levels
+### Types of isolation levels
 
 Read Uncommitted  
 Allows a transaction to see uncommitted changes made by other transactions (*dirty read*).
@@ -66,7 +77,7 @@ Serializable
 Completely isolates a transaction’s effects from other transactions.  
 In InnoDB this causes read locks after SELECT until COMMIT or ROLLBACK (like WITH LOCK IN SHARE MODE).
 
-## Storage engine concept
+### Storage engine concept
 
 ```sql
 SHOW ENGINES;
@@ -91,9 +102,9 @@ Some offer Special Features (Foreign Keys, GIS, Columnar Data)
 
 Some Provide optimization
 
-# Connectors and utilities
+## Connectors and utilities
 
-## Connectors
+### Connectors
 
 Various Libraries for connecting to MariaDB
 
@@ -112,7 +123,7 @@ Various Libraries for connecting to MariaDB
 
 \** Non-native (unsupported) Connectors to use with MariaDB
 
-## Client connections
+### Client connections
 
 - TCP/IP Connections available on All Platforms (`skip_networking` disables this)
 - Socket Files available on Unix Platforms *(fastest choice)*
@@ -121,25 +132,25 @@ Various Libraries for connecting to MariaDB
 - Most use External Connection Pools *(not needed usually)*
 - Set Global Client Connection Limit (`max_connections=n`)
 
-## Mariadb client - command-line tool
+### Mariadb client - command-line tool
 
 - Shell or SSH
 - Manually Execute any SQL statement
 - Display MariaDB settings and status counters
 - Use as an Interactive Session, or Pipe SQL via Shell
 
-```
+```sh
 # mariadb --user=root -h hostname -P 3306 -p
 MariaDB [(none)]> SHOW DATABASES;
 ```
 
-```
+```sh
 # mariadb -p -u user_name --execute "SHOW DATABASES"
 # mariadb -e "CREATE DATABASE world"
 # mariadb world < /path/to/world.sql
 ```
 
-## Mariadb-admin - command-line tool
+### Mariadb-admin - command-line tool
 
 - Shell or SSH
 - Useful for scripting
@@ -149,7 +160,7 @@ MariaDB [(none)]> SHOW DATABASES;
 - Ping or Shutdown mysqld
 - Create and Drop Databases
 
-```
+```sh
 # mariadb-admin processlist
 # mariadb-admin kill 12345678
 # mariadb-admin -u root -p create ragnar
@@ -160,7 +171,7 @@ MariaDB [(none)]> SHOW DATABASES;
 # mariadb-admin shutdown
 ```
 
-## Graphical user interface tools
+### Graphical user interface tools
 
 - Can connect via SSL or SSH tunnel
 - Schema and query construction
@@ -182,7 +193,7 @@ MariaDB [(none)]> SHOW DATABASES;
 - SequelPro
 - Querious
 
-## Business intelligence and analysis tools
+### Business intelligence and analysis tools
 
 Can Connect via SSL or SSH tunnel
 
@@ -197,11 +208,11 @@ Use MariaDB Connectors
 - **Apache Zeppelin** - Connector/J
 - **Jupyter Notebook** - Connector/Python
 
-# Basic administration
+## Basic administration
 
-## Configuration file locations
+### Configuration file locations
 
-### Linux
+#### Linux
 
 `/etc/my.cnf`  
 `/etc/my.cnf.d/*.cnf`  
@@ -211,7 +222,7 @@ Use MariaDB Connectors
 `--defaults-file`  
 `--defaults-extra-file`
 
-### Windows
+#### Windows
 
 `C:\Windows\my.ini`  
 `C:\Windows\my.cnf`  
@@ -222,11 +233,11 @@ Use MariaDB Connectors
 `INSTALLDIR\data\my.cnf`  
 `--defaults-extra-file`
 
-## Server defaults
+### Server defaults
 
-### Finding Defaults
+#### Finding Defaults
 
-```
+```sh
 # mariadbd --print-defaults
 
 mariadbd would have been started with the following arguments:
@@ -237,9 +248,9 @@ mariadbd would have been started with the following arguments:
 --local_infile=0
 ```
 
-### Configuration File (Server.Cnf)
+#### Configuration File (Server.Cnf)
 
-```
+```sh
 [server]
 
 [mysqld]
@@ -258,13 +269,13 @@ local_infile=0
 [mariadb-10.4]
 ```
 
-## Starting and stopping the server
+### Starting and stopping the server
 
 `systemctl [start|stop|restart|status] mariadb`
 
 Configure start and stop timeouts by creating timeout.conf file
 
-```
+```sh
 # vi /etc/systemd/system/mariadb.service.d/timeout.conf
 
 [Service]
@@ -276,7 +287,7 @@ Reload the systemd daemon
 `systemctl daemon-reload`
 `systemctl restart mariadb`
 
-## Error log
+### Error log
 
 - Active by default
 - Contains startup, shutdown, and error messages
@@ -284,17 +295,17 @@ Reload the systemd daemon
 - Systems that use systemd redirect to the syslog by default
 - Windows uses `host_name.err` in datadir, or System Event Log
 
-    ```
-    [mariadb]
-    log_error = /path/to/error_log_file_name
-    log_warnings = 1
-    ```
+```sh
+[mariadb]
+log_error = /path/to/error_log_file_name
+log_warnings = 1
+```
     
 *Excerpt from my.cnf or my.ini configuration file*
 
 *Set `log_warnings` to 2 for verbose mode*
 
-## Sql error log
+### Sql error log
 
 - Logs SQL errors
   - Records error messages with SQL statement
@@ -303,19 +314,19 @@ Reload the systemd daemon
 - Logs user, host, & time
 - Dynamically loadable
 
-```
+```sql
 MariaDB [(none)]> INSTALL PLUGIN sql_error_log SONAME 'sql_errlog';
 ```
 Requires INSERT privilege for mysql.plugin table
 
-## Slow query log
+### Slow query log
 
 - Queries that take more seconds to execute than `long_query_time`
 - Contains Queries in Plain Text (security risk!)
 - Useful when testing an application or new database
 - Use `mariadb-dumpslow` to Read Log
 
-```
+```ini
 [mariadb]
 slow_query_log = 1
 slow_query_log_file = /path/to/mariadb-slow.log
@@ -325,13 +336,13 @@ log_slow_admin_statements=1
 log_slow_disabled_statements='admin,call,slave,sp'
 ```
 
-## Mariadb user accounts
+### Mariadb user accounts
 
 - Authentication is based on user, host and password
 - Privileges are based on user and host combined, and the user's current role
 - Privileges can be granted globally, at the database level, at the table level or at the column level
 
-## Creating users
+### Creating users
 
 Changes made with the account management statements are automatically activated
 
@@ -362,7 +373,7 @@ CREATE USER 'foo'@'test'
     CIPHER 'text';
 ```
 
-## Checking users
+### Checking users
 
 The `SHOW CREATE USER` statement is a useful way to see the command required to create a user for auditing or the creation of similar accounts
 
@@ -370,7 +381,7 @@ The `SHOW CREATE USER` statement is a useful way to see the command required to 
 SHOW CREATE USER 'user'@'host'\G
 ```
 
-## Managing users
+### Managing users
 
 Changes made with the account management statements are automatically activated.
 
@@ -398,7 +409,7 @@ Changing a user's password can be rewritten to use the ALTER USER statement
 ALTER USER CURRENT_USER() IDENTIFIED BY 'mariadb2';
 ```
 
-## Managing users
+### Managing users
 
 `ALTER USER` statement to limit the number of simultaneous connections
 
@@ -415,7 +426,7 @@ AND ISSUER '/C=FI/ST=Somewhere/L=City/O=Some Company/CN=Peter Parker/emailAddres
 AND CIPHER 'TLSv1.2';
 ```
 
-## Assigning privileges
+### Assigning privileges
 
 The `mysql` database contains the grants tables, which are loaded into memory when MariaDB starts up
 
@@ -434,7 +445,7 @@ GRANT
      | MAX_USER_CONNECTIONS count ]
 ```
 
-## Available privileges (show privileges)
+### Available privileges (show privileges)
 
 - **Basic Privileges**
   - Usage
@@ -477,7 +488,7 @@ GRANT
   - Replication Client
   - Replication Slave
 
-## Checking & revoking privileges
+### Checking & revoking privileges
 
 The REVOKE statement removes privileges but does not remove the user account.
 
@@ -508,7 +519,7 @@ Confirm that the revoke was successful with SHOW GRANTS
 SHOW GRANTS FOR 'user'@'host';
 ```
 
-## Restricting users
+### Restricting users
 
 User accounts can have a limit set on resource use
 
@@ -528,7 +539,7 @@ Resource limit counters reset then the server starts|restarts or when `FLUSH USE
 FLUSH USER_RESOURCES;
 ```
 
-## Removing users
+### Removing users
 
 Delete users in MariaDB with the `DROP USER` statement
 
@@ -538,11 +549,11 @@ Check for leftover user accounts which still allow access from other hosts
 
 `SELECT User,Host from mysql.user WHERE User = 'user';`
 
-# Backing up and restoring data
+## Backing up and restoring data
 
-## Basic types of backup methods
+### Basic types of backup methods
 
-### Physical or Binary Backup
+#### Physical or Binary Backup
 
 - MariaDB Backup, manual data directory copy (after stopping MariaDB daemon), or VM/Cloud/LVM/ZFS snapshots
   - A physical backup typically refers to a copy of the entire on disk database
@@ -552,7 +563,7 @@ Check for leftover user accounts which still allow access from other hosts
   - Slow to recover single row or table (user error)
   - Recovered Only to the Same Storage Engine with the same tablespaces
 
-### Logical Backup
+#### Logical Backup
 
 - mariadb-dump, mydumper, `SELECT INTO OUTFILE`
   - Produces SQL files containing data that can regenerate a database
@@ -565,7 +576,7 @@ Check for leftover user accounts which still allow access from other hosts
   - A SQL dump is independent of Storage Engine, and can be Restored to a different Storage Engine, or Used for Migration
   - Process can be Slow and Requires Locks
 
-## MariaDB backup
+### MariaDB backup
 
 MariaDB's own backup package (`mariabackup`) is included since MariaDB 10.1
 
@@ -576,41 +587,41 @@ MariaDB's own backup package (`mariabackup`) is included since MariaDB 10.1
 - Command-line compatibility with XtraBackup
 - MariaDB Enterprise Backup contains improvements such as less locking
 
-## Backing up data - MariaDB backup
+### Backing up data - MariaDB backup
 
-### Full Backups
+#### Full Backups
 
 To use MariaDB Backup you need to create a user on your MariaDB Server with RELOAD, LOCK TABLES and REPLICATION CLIENT privileges.
 
-```
+```sql
 MariaDB [(none)]> CREATE USER 'backupuser'@'localhost' IDENTIFIED BY '<password>';
 MariaDB [(none)]> GRANT RELOAD, PROCESS, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'backupuser'@'localhost';
 ```
 
 To take a full backup at the OS command-line use:
 
-```
+```sh
 # mariabackup --backup --target-dir <backupdir> --user <backupuser> --password <password>
 # mariabackup --prepare --target-dir <backupdir>
 ```
 
-## Restoring data - MariaDB backup
+### Restoring data - MariaDB backup
 
-### Full Backups
+#### Full Backups
 
 Working with a full backup taken with MariaDB Backup, you restore the backup into an empty data directory
 
-```
+```sh
 # mariabackup --copy-back --target-dir <backupdir> --datadir <datadir>
 ```
 
 Afterwards it might be necessary to set the ownership of the data directory contents
 
-```
+```sh
 # chown -R mysql:mysql <datadir>
 ```
 
-## Backing up data - mariadb-dump
+### Backing up data - mariadb-dump
 
 The standard MariaDB logical dump tool copies schema and data to a SQL text file
 
@@ -624,40 +635,40 @@ MariaDB> GRANT SELECT, RELOAD, LOCK TABLES, REPLICATION CLIENT, SHOW VIEW, EVENT
 
 To take a full backup at the OS command line use:
 
-```
+```sh
 # mariadb-dump -u backupuser -p --all-databases --single-transaction --flush-logs -r /path/to/full-backup-YYYYMMDD.sql
 ```
 
-## Restoring data - mariadb-dump
+### Restoring data - mariadb-dump
 
 Restoring from a logical backup
 
-```
+```sh
 # mariadb < /path/to/full-backup-YYYYMMDD.sql
 ```
 
 Or to avoid interpretation by bash:
 
-```
+```sh
 # mariadb
 MariaDB> source /path/to/full-backup-YYYYMMDD.sql
 ```
 
 You can also use standard linux tools such as vi or grep to edit or extract the backup.
 
-```
+```sh
 # grep city worldbackup.sql
 CREATE TABLE `world`.`city` ( ...
 ```
 
-# Lesson summary
+## Lesson summary
 
 - Discuss MariaDB's client / server architecture
 - Gain an understanding of isolation levels and MariaDB's storage engine concept
 - Utilize MariaDB connectors and utilities
 - Learn basic MariaDB administration tasks relating to server logs, user management, and backing up and restoring data
 
-# Lab exercises
+## Lab exercises
 
 - 1-1 Verifying the MariaDB Installation
 - 1-2 Enabling Logging in MariaDB

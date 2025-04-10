@@ -1,3 +1,14 @@
+---
+title: "Lesson 5: Programming"
+url: "/dev/programming/"
+date: 2025-04-10
+description: >
+categories: []
+tags: []
+weight: 1
+toc: true
+---
+
 # Programming
 
 ## Learning objectives
@@ -7,9 +18,9 @@
 - Understand how to access MariaDB via APIs using both native and non-native MariaDB connectors
 - Set SQL modes to affect error output and use the SHOW WARNINGS and SHOW ERRORS statements to interpret error messages
 
-# JSON
+## JSON
 
-## Relational + JSON
+### Relational + JSON
 
 **How to use hybrid data models**
 
@@ -27,7 +38,7 @@ flexibility, simplicity and ubiquity
 - Structured data is externally described
 - Semi-structured data is self described
 
-## Relational + JSON
+### Relational + JSON
 
 | Name   | Format | Price | Video                                           |
 |--------|--------|-------|-------------------------------------------------|
@@ -41,9 +52,9 @@ Structure described by the schema
 
 Structure described by the data
 
-## Define
+### Define
 
-### Creating and Querying JSON Documents
+#### Creating and Querying JSON Documents
 
 ```sql
 CREATE TABLE IF NOT EXISTS products (
@@ -55,9 +66,9 @@ CREATE TABLE IF NOT EXISTS products (
     attr JSON NOT NULL);
 ```
 
-## Create
+### Create
 
-### Creating and querying JSON documents
+#### Creating and querying JSON documents
 
 ```sql
 INSERT INTO products (type, name, format, price, attr) VALUES
@@ -69,7 +80,7 @@ INSERT INTO products (type, name, format, price, attr) VALUES
   ('B', 'Foundation', 'Paperback', 7.99, '{"author": "Isaac Asimov", "page_count": 296}');
 ```
 
-## Read field
+### Read field
 
 Creating and Querying JSON Documents
 
@@ -78,13 +89,13 @@ SELECT name, format, price,
     JSON_VALUE(attr, '$.video.aspectRatio') AS aspect_ratio
 FROM products
 WHERE type = 'M';
-```
 
 | Name   | Format | Price | Aspect_ratio |
 |--------|--------|-------|--------------|
 | Aliens | Blu-ray| 13.99 | 1.85:1       |
+```
 
-## Null field
+### Null field
 
 Creating and Querying JSON Documents
 
@@ -92,14 +103,14 @@ Creating and Querying JSON Documents
 SELECT type, name, format, price,
     JSON_VALUE(attr,$.video.aspectRatio') AS aspect_ratio
 FROM products;
-```
 
 | Type | Name       | Format    | Price | Aspect_ratio |
 |------|------------|-----------|-------|--------------|
 | M    | Aliens     | Blue-ray  | 13.99 | 1.85:1       |
 | B    | Foundation | Paperback | 7.99  | NULL         |
+```
 
-## Contains field
+### Contains field
 
 Creating and Querying JSON Documents
 
@@ -109,13 +120,13 @@ SELECT name, format, price,
 FROM products
 WHERE type = 'M' AND
     JSON_CONTAINS_PATH(attr, 'one', '$.video.resolution') = 1;
-```
 
 | Name  | Format | Price | Aspect_ratio |
 |-------|--------|-------|--------------|
 | Aliens | Blu-ray | 13.99 | 1.85:1 |
+```
 
-## Contains value
+### Contains value
 
 Creating and Querying JSON Documents
 
@@ -124,13 +135,13 @@ SELECT id, name, format, price
 FROM products
 WHERE type = 'M' AND
   JSON_CONTAINS(attr, '\"DTS HD\"', '$.audio') = 1;
-```
 
 | Name   | Format | Price | Aspect_ratio |
 |--------|--------|-------|--------------|
 | Aliens | Blu-ray| 13.99 | 1.85:1       |
+```
 
-## Read array
+### Read array
 
 Creating and Querying JSON Documents
 
@@ -139,13 +150,13 @@ SELECT name, format, price,
    JSON_QUERY(attr, '$.audio') AS audio
 FROM products
 WHERE type = 'M';
-```
 
 | Name   | Format | Price | Audio                          |
 |--------|--------|-------|--------------------------------|
 | Aliens | Blu-ray| 13.99 | [ "DTS HD", "Dolby Surround" ] |
+```
 
-## Read array element
+### Read array element
 
 Creating and Querying JSON Documents
 
@@ -154,28 +165,28 @@ SELECT name, format, price,
   JSON_VALUE(attr, '$.audio[0]') AS default_audio
 FROM products
 WHERE type = 'M';
-```
 
 | Name  | Format | Price | Audio  |
 |-------|--------|-------|------- |
 | Aliens | Blu-ray | 13.99 | DTS HD |
+```
 
-## Read object
+### Read object
 
-### Creating and querying JSON documents
+#### Creating and querying JSON documents
 
 ```sql
 SELECT name, format, price,
     JSON_QUERY(attr, '$.video') AS video
 FROM products
 WHERE type = 'M';
-```
 
 | Name  | Format | Price | Video                                    |
 |-------|--------|-------|------------------------------------------|
 | Aliens| Blu-ray| 13.99 | { "resolution": "1080p", "aspectRatio": "1.85:1" } |
+```
 
-## Read objects
+### Read objects
 
 Creating and Querying JSON Documents
 
@@ -185,13 +196,13 @@ SELECT name,
     JSON_QUERY(attr, '$.video') AS video
 FROM products
 WHERE type = 'M';
-```
 
 | Name   | Audio                           | Video                                    |
 |--------|---------------------------------|------------------------------------------|
 | Aliens | [ "DTS HD", "Dolby Surround" ]  | { "resolution": "1080p", "aspectRatio": "1.85:1" } |
+```
 
-## Field equals
+### Field equals
 
 Creating and Querying JSON Documents
 
@@ -204,7 +215,7 @@ Creating and Querying JSON Documents
 |-------|--------|-------|--------------|
 | Aliens | Blu-ray | 13.99 | 1.85:1 |
 
-## Indexing
+### Indexing
 
 Creating and Querying JSON Documents
 
@@ -212,29 +223,29 @@ Creating and Querying JSON Documents
 ALTER TABLE products ADD COLUMN
     video_resolution VARCHAR(5) AS (JSON_VALUE(attr, '$.video.resolution')) VIRTUAL;
 EXPLAIN SELECT name, format, price FROM products WHERE video_resolution = '1080p';
-```
 
 | ID | Select_type | Table    | Type | Possible_keys |
 |----|-------------|----------|------|---------------|
 | 1  | SIMPLE      | Products | ALL  | NULL          |
+```
 
-## Indexing
+### Indexing
 
-### Creating and Querying JSON Documents
+#### Creating and Querying JSON Documents
 
 ```sql
 CREATE INDEX resolutions ON products(video_resolution);
 
 EXPLAIN SELECT name, format, price FROM products WHERE video_resolution = '1080p';
-```
 
 | ID  | Select_type | Table    | Ref | Possible_keys |
 | --- | ----------- | -------- | --- | ------------- |
 | 1   | SIMPLE      | Products | ref | resolutions   |
+```
 
-## Insert field
+### Insert field
 
-### Modifying JSON documents
+#### Modifying JSON documents
 
 ```sql
 UPDATE products SET attr = JSON_INSERT(attr, '$.disks', 1) WHERE id = 1;
@@ -242,13 +253,13 @@ SELECT name, format, price,
     JSON_VALUE(attr, '$.disks') AS disks
 FROM products
 WHERE type = 'M';
-```
 
 | Name   | Format | Price | Disks |
 |--------|--------|-------|-------|
 | Aliens | Blu-ray| 13.99 | 1     |
+```
 
-## Insert array
+### Insert array
 
 Modifying JSON Documents
 
@@ -258,45 +269,45 @@ JSON_ARRAY('English', 'French')) WHERE id = 1;
 
 SELECT name, format, price, JSON_QUERY(attr, '$.languages') AS languages
 FROM products WHERE type = 'M';
-```
 
 | Name   | Format | Price | Languages      |
 |--------|--------|-------|----------------|
 | Aliens | Blu-ray| 13.99 | ["English", "French"] |
+```
 
-## Add array element
+### Add array element
 
-### Modifying JSON Documents
+#### Modifying JSON Documents
 
 ```sql
 UPDATE products SET attr = JSON_ARRAY_APPEND(attr, '$.languages', 'Spanish')
 WHERE id = 1;
 SELECT name, format, price, JSON_QUERY(attr, '$.languages') AS languages
 FROM products WHERE type = 'M';
-```
 
 | Name   | Format | Price | Languages                           |
 |--------|--------|-------|-------------------------------------|
 | Aliens | Blu-ray | 13.99 | [ "English", "French", "Spanish" ] |
+```
 
-## Remove array element
+### Remove array element
 
-### Modifying JSON Documents
+#### Modifying JSON Documents
 
 ```sql
 UPDATE products SET attr = JSON_REMOVE(attr, '$.languages[0]') WHERE id = 1;
 
 SELECT name, format, price, JSON_QUERY(attr, '$.languages') AS languages
 FROM products WHERE type = 'M';
-```
 
 | Name   | Format | Price | Languages                |
 |--------|--------|-------|--------------------------|
 | Aliens | Blu-ray| 13.99 | [ "French", "Spanish" ]  |
+```
 
-## Relational to JSON
+### Relational to JSON
 
-### Creating JSON Documents From Relational Data
+#### Creating JSON Documents From Relational Data
 
 ```sql
 SELECT JSON_OBJECT('name', name, 'format', format, 'price', price) AS DATA
@@ -304,7 +315,7 @@ FROM products
 WHERE type = 'M';
 ```
 
-### Data
+#### Data
 
 ```json
 {
@@ -314,9 +325,9 @@ WHERE type = 'M';
 }
 ```
 
-## Relational + JSON
+### Relational + JSON
 
-### Creating JSON Documents From Relational Data
+#### Creating JSON Documents From Relational Data
 
 ```sql
 SELECT JSON_OBJECT('name', name, 'format', format, 'price', price, 'resolution',
@@ -325,7 +336,7 @@ FROM products
 WHERE type = 'M';
 ```
 
-### Data
+#### Data
 
 ```json
 {
@@ -336,9 +347,9 @@ WHERE type = 'M';
 }
 ```
 
-## Relational + JSON (merge)
+### Relational + JSON (merge)
 
-### Creating JSON Documents From Relational Data
+#### Creating JSON Documents From Relational Data
 
 ```sql
 SELECT JSON_MERGE(
@@ -350,7 +361,7 @@ FROM products
 WHERE type = 'M';
 ```
 
-### Data
+#### Data
 
 ```json
 {
@@ -368,7 +379,7 @@ WHERE type = 'M';
 }
 ```
 
-## Constraints
+### Constraints
 
 Enforcing Data Integrity With JSON Documents
 
@@ -386,7 +397,7 @@ ALTER TABLE products ADD CONSTRAINT check_attr
       JSON_LENGTH(JSON_QUERY(attr, '$.audio')) > 0));
 ```
 
-## Constraints
+### Constraints
 
 Enforcing Data Integrity With JSON Documents
 
@@ -403,9 +414,9 @@ ERROR 4025 (23000): CONSTRAINT `check_attr` failed for `test`.`products`
 
 NO RESOLUTION FIELD!
 
-## Constraints
+### Constraints
 
-### Enforcing Data Integrity With JSON Documents
+#### Enforcing Data Integrity With JSON Documents
 
 ```sql
 INSERT INTO products (type, name, format, price, attr) VALUES 
@@ -417,9 +428,9 @@ INSERT INTO products (type, name, format, price, attr) VALUES
 
 “ONE” IS NOT A NUMBER!
 
-# Accessing MariaDB with APIs
+## Accessing MariaDB with APIs
 
-## Application program interface (API)
+### Application program interface (API)
 
 Database API allows an Application Server to interface easily with a MariaDB Server:
 
@@ -430,7 +441,7 @@ End Users → Web Page → Application Server → Database Server
 
 Browser App → Backend / API → MariaDB
 
-## Minimal steps for an application
+### Minimal steps for an application
 
 **Preparation**
 
@@ -443,9 +454,9 @@ Browser App → Backend / API → MariaDB
 - Query the database
 - Parse the data and display to user
 
-## Api database user account
+### Api database user account
 
-### Create User Account for API
+#### Create User Account for API
 
 Set Host to Localhost
 
@@ -456,7 +467,7 @@ CREATE USER 'api_user'@'localhost' IDENTIFIED BY 'mariadb';
 GRANT SELECT ON api.* TO 'api_user'@'localhost';
 ```
 
-## Installing and configuring - Java
+### Installing and configuring - Java
 
 Connector/J is the standard connector for Java
 
@@ -466,7 +477,7 @@ Available from MariaDB web site as binary download (compiled classes in JAR)
 
 Just place the JAR somewhere in your CLASSPATH
 
-## Connecting to MariaDB - Java
+### Connecting to MariaDB - Java
 
 Connect a Java Application to MariaDB
 
@@ -489,7 +500,7 @@ Connection conn = DriverManager.getConnection("jdbc:mysql://"
 + host + "/" + db + "?" + "user=" + user + "&password=" + pw);
 ```
 
-## Querying MariaDB - Java
+### Querying MariaDB - Java
 
 **Import required packages**
 
@@ -520,7 +531,7 @@ while (rs.next()) {
 }
 ```
 
-## Installing and configuring - R2DBC
+### Installing and configuring - R2DBC
 
 Standard connector for Java using the Reactive Relational Database Connectivity (R2DBC) API
 
@@ -534,7 +545,7 @@ Just place the JAR somewhere in your `CLASSPATH`
 
 The R2DBC specification is currently pre-GA and is planned to be released GA (v 1.0) by end of 2021.
 
-## Connecting to MariaDB - R2DBC
+### Connecting to MariaDB - R2DBC
 
 Connect an R2DBC application to MariaDB
 
@@ -557,11 +568,11 @@ MariadbConnectionFactory connFactory = new MariadbConnectionFactory(conf);
 Connection conn = connFactory.create().block();
 ```
 
-## Querying MariaDB - R2DBC
+### Querying MariaDB - R2DBC
 
-### Import required packages from R2DBC
+#### Import required packages from R2DBC
 
-### Query Server
+#### Query Server
 - Declare a statement
 - Execute the statement and map back the result to an iterator
 - Define the action inside the iterator
@@ -586,7 +597,7 @@ for (String contact_entry :
 }
 ```
 
-## Installing and configuring - Node.js
+### Installing and configuring - Node.js
 
 - Multiple legacy connectors exists like `mysql` and `mysql2`
 - MariaDB provides its own connector `mariadb`
@@ -595,7 +606,7 @@ for (String contact_entry :
 - Available in NPM
   - `# npm install mariadb`
 
-## Connecting to MariaDB - Node.js
+### Connecting to MariaDB - Node.js
 
 Connect a Node.js Program to MariaDB
 
@@ -621,7 +632,7 @@ var conn = mariadb.createConnection({host: host, user: user, password: pw, datab
 conn.end();
 ```
 
-## Querying MariaDB - Node.js
+### Querying MariaDB - Node.js
 
 Declare a SQL statement
 
@@ -649,7 +660,7 @@ conn.query(sql)
 });
 ```
 
-## Installing and configuring - Python
+### Installing and configuring - Python
 
 Native connector for MariaDB exists under the name `mariadb`
 
@@ -659,7 +670,7 @@ Available in the Python Package Index (PyPI) repository
 
 `# pip install mariadb`
 
-## Connecting to MariaDB - Python
+### Connecting to MariaDB - Python
 
 Connect a Python Program to MariaDB
 
@@ -681,7 +692,7 @@ except mariadb.Error as e:
 cur = conn.cursor()
 ```
 
-## Querying MariaDB - Python
+### Querying MariaDB - Python
 
 Queries are run through a cursor
 
@@ -708,7 +719,7 @@ except mariadb.Error as e:
 conn.close()
 ```
 
-## Installing and configuring - C++
+### Installing and configuring - C++
 
 MariaDB Connector/C++ is a native C++ driver that can be used within C++ projects
 
@@ -719,7 +730,7 @@ MariaDB Connector/C++ can be downloaded and installed for use on Linux and Windo
 For more information on getting started with Connector/C++ see the official documentation -  
 [https://mariadb.com/docs/clients/connector-cpp/#connector-cpp-installation](https://mariadb.com/docs/clients/connector-cpp/#connector-cpp-installation)
 
-## Connecting to MariaDB - C++
+### Connecting to MariaDB - C++
 
 Connect a C++ Program to MariaDB Connector/C++
 
@@ -746,9 +757,9 @@ std::unique_ptr<sql::Connection>
 conn->close();
 ```
 
-## Querying MariaDB - C++
+### Querying MariaDB - C++
 
-### Query Server
+#### Query Server
 
 Include required headers
 
@@ -779,19 +790,19 @@ while (res->next()) {
 }
 ```
 
-## Installing and configuring - C
+### Installing and configuring - C
 
 MariaDB provides a client shared object library with header files
 
 Use `yum` or similar to install the development package:
 
-```
+```sh
 # yum install MariaDB-devel
 ```
 
 Alternatively, if you compile MariaDB from source, client library and headers will be installed locally
 
-## Connecting to MariaDB - C
+### Connecting to MariaDB - C
 
 Connect a C Programme to MariaDB
 
@@ -817,7 +828,7 @@ if (!mysql_real_connect(conn, HOST, USER, PW, DB, 3306, NULL, 0))
 mysql_close(conn);
 ```
 
-## Querying MariaDB - C
+### Querying MariaDB - C
 
 Define a SQL query
 
@@ -841,9 +852,9 @@ while (MYSQL_ROW row = mysql_fetch_row(rs))
 mysql_free_result(rs);
 ```
 
-# Non-native MariaDB connectors
+## Non-native MariaDB connectors
 
-## Installing and configuring - .NET
+### Installing and configuring - .NET
 
 Multiple connectors exist, both free to use and commercial ones.
 
@@ -853,11 +864,11 @@ It has a permissive license (MIT)
 
 It is available from the NuGet repository
 
-```
+```sh
 C:\> Install-Package MySqlConnector -Version 1.3.8
 ```
 
-## Connecting to MariaDB - .NET
+### Connecting to MariaDB - .NET
 
 Connect a .NET Program to MariaDB
 
@@ -871,7 +882,7 @@ using (var connection = new MySqlConnection("Server=myserver;User ID=mylogin;Pas
 }
 ```
 
-## Querying MariaDB - .NET
+### Querying MariaDB - .NET
 
 Use an existing connection.
 
@@ -895,20 +906,20 @@ using (var connection = new MySqlConnection("Server=myserver;User ID=mylogin;Pas
 }
 ```
 
-## Installing and configuring - PHP
+### Installing and configuring - PHP
 
 Three PHP APIs (*mysql*, *mysqli*, and PDO Extensions)  
 - MySQL Improved (*mysqli*) is Recommended
 
 Use `yum` or similar Utility to Install PHP and *mysqli*
 
-```
+```sh
 # yum install php php-mysql
 ```
 
 The web server should be configured to render PHP pages properly; if PHP is installed from a distribution package, this is usually included in the package.
 
-## Connecting to MariaDB - PHP
+### Connecting to MariaDB - PHP
 
 Connect a Web Page or Program to MariaDB
 
@@ -934,7 +945,7 @@ if (mysqli_connect_errno()) {
 ?>
 ```
 
-## Querying MariaDB - PHP
+### Querying MariaDB - PHP
 
 - **Capture & Parse User Input**
 
@@ -965,7 +976,7 @@ $connect->close();
 ?>
 ```
 
-## Other database connectors
+### Other database connectors
 
 Many other programming languages provide their own connectors for MariaDB Server
 
@@ -977,7 +988,7 @@ Some could be native, others are often based on the MariaDB client shared librar
 - For Erlang, there is a native implementation named `MySQL/OTP` which can be used with MariaDB Server.
 - For dotNet, there are commercially supported connectors from various vendors which may offer advanced features, compared to the open-source one.
 
-## Object-relational mapping (ORM)
+### Object-relational mapping (ORM)
 
 Object-Relational Mapping (ORM) is technique that lets you query and manipulate data from a database using an object-oriented paradigm.
 
@@ -989,9 +1000,9 @@ There are many ORM libraries/frameworks that exist across a variety of languages
 
 Before incorporating an ORM into a project, make sure you understand how it works with the database and how this relates to your projected workload.
 
-# Error and warning handling
+## Error and warning handling
 
-## SQL errors and warnings
+### SQL errors and warnings
 
 **SHOW WARNINGS** Statement returns errors, warnings, and notes
 
@@ -1013,7 +1024,7 @@ SHOW WARNINGS;
 +---------+------+----------------------------------------+
 ```
 
-## Operating system errors
+### Operating system errors
 
 Low level errors may affect MariaDB's operation
 
@@ -1032,7 +1043,7 @@ Can't get stat of '/root/test' (Errcode: 13)
 Error code 13: Permission denied
 ```
 
-## Domain name service
+### Domain name service
 
 MariaDB uses DNS and Reverse DNS for IP and Hostname with Client Connections
 
@@ -1043,7 +1054,7 @@ Running a Local DNS Server Helps with Lookup Speed and Security
 Use `--skip-name-resolve` to Tell MariaDB Not to do DNS Lookup  
 Then Use Only IP Addresses in Permissions Tables
 
-## Persistent connections
+### Persistent connections
 
 Some Client Languages and Connection Pool Solutions use Persistent Connections (PHP `mysql_pconnect()`)
 
@@ -1054,7 +1065,7 @@ Client Session Buffers can Stay Allocated too Long if the Client Pool of Applica
 
 Transactions can be Held Open if Application is Built Poorly, Reducing Concurrency
 
-## Avoiding divide by zero
+### Avoiding divide by zero
 
 MariaDB Fails Silently and Produces a `NULL` Response for Divide-by-zero Error
 
@@ -1082,14 +1093,14 @@ SELECT COALESCE(50 /NULLIF(@INPUT1,0),0) AS response;
 +----------+
 ```
 
-# Lesson summary
+## Lesson summary
 
 - Differentiate between stored procedures and stored functions using the native MariaDB SQL/PSM language
 - Use JSON document stores
 - Understand how to access MariaDB via APIs using both native and non-native MariaDB connectors
 - Set SQL modes to affect error output and use the `SHOW WARNINGS` and `SHOW ERRORS` statements to interpret error messages
 
-# Lab exercises
+## Lab exercises
 
 - 7-1 Connecting to MariaDB with a PHP-Based Web Form
 - 7-2 Connecting to MariaDB with a Python Script

@@ -1,3 +1,14 @@
+---
+title: "Lesson 3: Database design"
+url: "/dev/database-design/"
+date: 2025-04-10
+description: >
+categories: []
+tags: []
+weight: 1
+toc: true
+---
+
 # Database design
 
 ## Learning objectives
@@ -6,9 +17,9 @@
 - Describe how MariaDB data types affect performance
 - Assign appropriate column options
 
-# Data modeling and database design
+## Data modeling and database design
 
-## Database mindset
+### Database mindset
 
 - **Redundant data is eliminated**  
   Easier updating and maintenance
@@ -25,7 +36,7 @@
 
 - Indexable
 
-## Naming convention
+### Naming convention
 
 Consistent, Descriptive Names Reduce Mistakes
 
@@ -39,9 +50,9 @@ Long, descriptive names are better than short, cryptic ones. Use aliases.
 
 Use consistent naming for an `id` column and its references as `table_id`.
 
-## Table design
+### Table design
 
-### Normalization
+#### Normalization
 
 - Process of Optimizing and Factoring a Schema
   - 1:1, 1:n and n:n
@@ -52,7 +63,7 @@ Use consistent naming for an `id` column and its references as `table_id`.
 - Often Improves Concurrency by Reducing Locking Overhead - Not Always
 - Increases Number of Tables and Associated Maintenance
 
-### Denormalization
+#### Denormalization
 
 - Complete Normalization can Slow Queries
 - More Complex `JOIN` Queries are Drains and Harder to Maintain
@@ -65,7 +76,7 @@ Use consistent naming for an `id` column and its references as `table_id`.
   - Write Queries become More Complex or Numerous as Multiple Locations must be Maintained
 - It's Easier to Normalize First, Then Denormalize when Appropriate
 
-## Data relationships
+### Data relationships
 
 **One-to-One or Zero-to-One**  
 Stored generally in the same table  
@@ -78,33 +89,33 @@ Many in separate table referenced by one primary key (i.e., a foreign key)
 Several tables with one operating as a link  
 Linked tables often have a composite primary key  
 
-## Third normal form (3NF)
+### Third normal form (3NF)
 
-### Remove horizontal redundancies
+#### Remove horizontal redundancies
 **First normal form**
 
 No single column with more than a single item
 
 No two columns with the same information
 
-### Each row must be unique
+#### Each row must be unique
 **First normal form**
 
 Use a primary key: Natural or surrogate like `AUTO_INCREMENT`
 
-### Remove vertical redundancy
+#### Remove vertical redundancy
 **Second normal form**
 
 Same value should not repeat across rows
 
 Data type can play a role (e.g., `ENUM`)
 
-### Remove vertical redundancy
+#### Remove vertical redundancy
 **Third normal form**
 
 Columns not dependent on primary key are removed
 
-## Character set and collation
+### Character set and collation
 
 Character set may be global or for schema, table or column
 
@@ -121,7 +132,7 @@ SELECT * FROM table1 ORDER BY col1
 COLLATE latin1_german2_ci;
 ```
 
-## Indexing concept
+### Indexing concept
 
 **Poor Indexing #1 Reason For Poor Performance**
 
@@ -141,7 +152,7 @@ Regularly Remove Unused or Redundant Indexes
 
 Avoid foreign keys due to performance overhead
 
-## Index best practices
+### Index best practices
 
 Every table should have a Primary Key
 
@@ -162,7 +173,7 @@ Consider `ORDER BY` clause for possible composite Indexes
 
 `EXPLAIN` / `ANALYZE` and `PROFILING` queries are the most important tools available when looking for possible Index candidates
 
-## File storage
+### File storage
 
 **Store Files in `BLOB` Useful**
 
@@ -182,7 +193,7 @@ Consider `ORDER BY` clause for possible composite Indexes
 - Database is Smaller and More Efficient
 - Organize Separate Back-Up, possibly with External Locking for Consistency
 
-## Database design summary
+### Database design summary
 
 Adjust schema as needs change  
 - Don’t over plan or over anticipate for unknown requirements  
@@ -209,12 +220,12 @@ Consider sharding large tables across multiple servers
 Use auto generated columns when possible  
 - Act as function based indexes when indexed  
 
-# Lesson summary
+## Lesson summary
 
 - Explain the purpose of data modeling and database design
 - Describe how MariaDB data types affect performance
 - Assign appropriate column options
 
-# Lab exercises
+## Lab exercises
 
 - 3-1 Designing a Database in Third Normal Form

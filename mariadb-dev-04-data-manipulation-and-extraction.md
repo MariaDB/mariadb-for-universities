@@ -7,9 +7,9 @@
 - Know how to use correct `SQL` syntax when creating subqueries within a statement, and demonstrate how to convert subqueries into joins
 - Describe and use window functions and common table expressions (`CTEs`)
 
-# Selecting data
+## Selecting data
 
-## Select statement
+### Select statement
 
 **Retrieves data from the table for the client**
 
@@ -29,7 +29,7 @@ LIMIT 1;
 
 An Example of Retrieving Data, Calculating, and Using Functions with a `SELECT` Statement
 
-## Where clause
+### Where clause
 
 Used with `SELECT`, `UPDATE`, and `DELETE` Statements
 
@@ -53,7 +53,7 @@ WHERE Population > 1000000;
 
 Basic Example for `SELECT` Statement using `WHERE` Clause
 
-## Operators
+### Operators
 
 The `WHERE` Clause Allows For Several Operators
 
@@ -68,7 +68,7 @@ The `WHERE` Clause Allows For Several Operators
 |            |            | BETWEEN ... AND|
 |            |            | NOT BETWEEN ... AND|
 
-## Limit clause
+### Limit clause
 
 Used to limit the offset and number of rows returned
 
@@ -91,7 +91,7 @@ LIMIT 2, 3;
 +-------------------+-----------+
 ```
 
-## Order by and limit clause
+### Order by and limit clause
 
 Data can be Ordered and Broken into Blocks
 
@@ -115,7 +115,7 @@ Basic Syntax Example for `SELECT` Statement with `ORDER BY` Clause
 | Napoli  | 1,002,079  |
 | Perm    | 1,070,162  |
 
-## Ascending and descending order
+### Ascending and descending order
 
 Add the `ASC` or `DESC` Options to Order Results in Ascending or Descending Order
 
@@ -127,7 +127,7 @@ No descending indexes however B+ Tree indexes can be used to optimize sort or ra
 SELECT Name, District FROM City
 WHERE CountryCode = 'FIN'
 ORDER BY District DESC, Name ASC;
-```
+
 
 | Name           | District         |
 |----------------|------------------|
@@ -138,9 +138,9 @@ ORDER BY District DESC, Name ASC;
 | Espoo          | Newmaa           |
 | Helsinki [Helsingfors]| Newmaa     |
 | Vantaa         | Newmaa           |
+```
 
-
-## Group by clause
+### Group by clause
 
 Useful with Aggregate Functions to Create Sub-Groups
 
@@ -148,9 +148,7 @@ Useful with Aggregate Functions to Create Sub-Groups
 SELECT Continent, SUM(Population)
 FROM Country
 GROUP BY Continent;
-```
 
-```sql
 +---------------+------------------+
 | Continent     | SUM(Population)  |
 +---------------+------------------+
@@ -164,7 +162,7 @@ GROUP BY Continent;
 +---------------+------------------+
 ```
 
-## Select into outfile statement
+### Select into outfile statement
 
 Exports Results to a File on Server  
 File is Saved to datadir by Default  
@@ -192,9 +190,9 @@ STARTING BY 'Record: ';
 
 Examples of More Precise Format Options
 
-# Inserting and loading data
+## Inserting and loading data
 
-## Single versus multi-row insert
+### Single versus multi-row insert
 
 Single Row `INSERT` Repeats Full Write Process for Each
 
@@ -224,7 +222,7 @@ Write Process
 - INDEX
 - DISCONNECT
 
-## Multi-row insert caveats
+### Multi-row insert caveats
 
 **Multi-Row `INSERT` Statements are Transactions**
 - All Rows must be Written to Commit Transaction with a Transactional Engines
@@ -235,7 +233,7 @@ Write Process
 **Faster Loading of Large Data Sets**
 - Used by Default by `mysqldump`
 
-## Insert...select statement
+### Insert...select statement
 
 - Useful in copying data between tables
   - Fields of `SELECT` must match `INSERT` column list
@@ -250,7 +248,7 @@ SELECT emp_id, gender, birth_date
 FROM employees;
 ```
 
-## Duplicate keys statement
+### Duplicate keys statement
 
 `DUPLICATE KEY` does a select then decides on insert versus update
 
@@ -283,7 +281,7 @@ VALUES ('bt-45','45mm Bolt');
 This DUPLICATE KEYS statement is the equivalent of these statements ====>
 
 
-## Load data infile statement
+### Load data infile statement
 
 Imports Data Directly from File to Server
 
@@ -306,7 +304,7 @@ LINES TERMINATED BY '\r\n'
 STARTING BY 'Record: ';
 ```
 
-## Importing SQL files
+### Importing SQL files
 
 Import SQL Text Files using `mysql` Client from Command-Line
 
@@ -314,13 +312,13 @@ Fast Option and No Screen Output
 
 Aborts on Errors by Default
 
-```
+```sh
 # mysql -u devuser -p world < /path/to/world.sql
 ```
 
-# Changing and deleting data
+## Changing and deleting data
 
-## Update statement
+### Update statement
 
 Use `SET` Clause to Change Column Values
 
@@ -348,7 +346,7 @@ Query OK, 7 rows affected (0.00 sec)
 Rows matched: 7 Changed: 7 Warnings: 0
 ```
 
-## Replace statement
+### Replace statement
 
 **`REPLACE` can be used instead of `INSERT` (MariaDB Extension to SQL)**
 
@@ -364,7 +362,7 @@ REPLACE INTO table (columns) VALUES (values);
 
 Basic Syntax Example for `REPLACE` Statement
 
-## Delete statement
+### Delete statement
 
 Specify Table or Tables from which to Delete Rows
 
@@ -392,7 +390,7 @@ Query OK, 7 rows affected (0.02 sec)
 Rows matched: 7  Changed: 7  Warnings: 0
 ```
 
-## Truncate statement
+### Truncate statement
 
 Empties a table completely
 
@@ -408,9 +406,9 @@ Will return a row count of 0 so if you need to know how many rows were removed, 
 
 Drops all historical records from a system-versioned table
 
-# Joins
+## Joins
 
-## Joins overview
+### Joins overview
 
 Joins combine records from two or more tables, using values common within each one
 
@@ -424,7 +422,7 @@ Result may be returned to the client, placed into a new table, or used as an *im
 `CROSS` `STRAIGHT_JOIN` `RIGHT`  
 `LEFT` `USING` `ON`
 
-## Implicit join syntax
+### Implicit join syntax
 
 Join and Other `WHERE` Conditions Mingled
 
@@ -444,7 +442,7 @@ Basic Syntax Example for Joining Tables
 
 Practical Example for Joining Tables within `WHERE` Clause
 
-## Explicit join syntax
+### Explicit join syntax
 
 With a `JOIN` Clause the Join Conditions are Separate
 
@@ -468,7 +466,7 @@ WHERE City.Population < 100000;
 
 Practical Example for Joining Tables with `JOIN` Clause
 
-## Inner joins
+### Inner joins
 
 - `JOIN` defaults to an `INNER JOIN`
   - `INNER` keyword is optional
@@ -490,7 +488,7 @@ WHERE
 other-conditions;
 ```
 
-## Outer joins
+### Outer joins
 
 `LEFT JOIN` really means `LEFT OUTER JOIN`
 
@@ -516,7 +514,7 @@ WHERE
 other-conditions;
 ```
 
-## Outer join example
+### Outer join example
 
 `SELECT cols FROM table LEFT JOIN table2 ON join-condition WHERE other-conditions;`
 
@@ -535,7 +533,7 @@ other-conditions;
 +-------------------------------+--------------+
 ```
 
-## Natural joins
+### Natural joins
 
 - Compare columns common to table a and b
 - Column names must match exactly
@@ -548,7 +546,7 @@ other-conditions;
   - If a field is dropped from one table, but not the other?
   - There will be no explicit error, but the result set will change!
 
-## General tips
+### General tips
 
 Cartesian products of table subsets, with variations
 
@@ -563,15 +561,15 @@ Cartesian products of table subsets, with variations
 - Try to keep `GROUP BY` and `ORDER BY` columns in one table, so that an index may be used (if available)
 - Consider *join decomposition* (very application specific)
 
-## General tips
+### General tips
 
-### Watch for ambiguous column references
+#### Watch for ambiguous column references
 
 Example: If two tables contain a `Name` field
 
 Use full notation such as: `tableA.Name = tableB.Name`
 
-### Use table aliases to shorten and simplify queries
+#### Use table aliases to shorten and simplify queries
 
 An alias is just an alternative name for a table, within this query
 
@@ -588,7 +586,7 @@ SELECT ... FROM TableA AS a, TableB AS b
 WHERE a.Name = b.Name;
 ```
 
-## General tips
+### General tips
 
 Tables in joins are not necessarily processed in the same order they are listed in the query  
 MariaDB's Optimizer will move them around for efficiency  
@@ -605,9 +603,9 @@ Unexpected `NULLs` make applications fall over (ie, when data changes)
 
 Avoid using comma joins in queries to attain readability, flexibility and portability
 
-# Subqueries
-
 ## Subqueries
+
+### Subqueries
 
 Queries within Other Queries Entered within Parentheses
 
@@ -616,7 +614,7 @@ SELECT Language FROM CountryLanguage
 WHERE CountryCode = (SELECT Code FROM Country WHERE Name = 'Finland');
 ```
 
-## Scalar subquery
+### Scalar subquery
 
 - Returns a Single Value
   - Result Set must be One Row with One Column
@@ -637,7 +635,7 @@ FROM Country;
 ...
 ```
 
-## Row subqueries
+### Row subqueries
 
 Row subqueries return a single row
 
@@ -663,7 +661,7 @@ FROM City WHERE ID = 456) AS is_london;
 +-----------+
 ```
 
-## Table subquery result set
+### Table subquery result set
 
 Table subqueries return an _implicit_ table
 
@@ -688,7 +686,7 @@ SELECT * FROM
 ...
 ```
 
-## Rewriting to joins
+### Rewriting to joins
 
 Why rewrite a perfectly good subquery into a join?
 
@@ -703,7 +701,7 @@ Correlated subqueries can lead to performance traps
 They depend on the outer query and may be executed repeatedly  
 Cannot be executed alone  
 
-## Rewriting to joins
+### Rewriting to joins
 
 **IN** subqueries can be an **INNER JOIN**  
 Same concept: An inner join only returns rows that match  
@@ -716,14 +714,14 @@ Sometimes, the equivalent join is much more complex
 For example using subqueries in the `FROM` clause for easy aggregation  
 Or using subqueries used for accessing hierarchical data
 
-# Lesson summary
+## Lesson summary
 
 - Know how to select, insert, load, change and delete data
 - Explain how to execute outer and inner joins, and join a table to itself
 - Know how to use correct SQL syntax when creating subqueries within a statement, and demonstrate how to convert subqueries into joins
 - Describe and use window functions and common table expressions (CTEs)
 
-# Lab exercises
+## Lab exercises
 
 - 5-1 Exporting and Importing Data Using mariadb-dump
 - 5-2 Exporting and Importing Data Using MariaDB Backup

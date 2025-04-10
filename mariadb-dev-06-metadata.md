@@ -1,3 +1,14 @@
+---
+title: "Lesson 6: Metadata"
+url: "/dev/metadata/"
+date: 2025-04-10
+description: >
+categories: []
+tags: []
+weight: 1
+toc: true
+---
+
 # Metadata
 
 ## Learning objectives
@@ -7,9 +18,9 @@
 - Use query profiling to improve query performance
 - Describe features of the performance schema
 
-# Information schema
+## Information schema
 
-## Information schema details
+### Information schema details
 
 - Pseudo database that holds metadata on schemas
 - Generated as needed
@@ -51,9 +62,9 @@
         VIEWS
 ```
 
-## Methods of accessing the information schema
+### Methods of accessing the information schema
 
-### Accessing directly
+#### Accessing directly
 
 ```sql
 SELECT TABLE_SCHEMA,ENGINE,COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA NOT IN('mysql','information_schema','performance_schema') GROUP BY TABLE_SCHEMA,ENGINE;
@@ -63,15 +74,15 @@ SELECT TABLE_SCHEMA,ENGINE,COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_S
 SELECT * FROM information_schema.global_status WHERE VARIABLE_NAME LIKE '%qcache%';
 ```
 
-### Using show statements
+#### Using show statements
 
 ```sql
 SHOW STATUS LIKE '%qcache%';
 ```
 
-# Query profiling
-
 ## Query profiling
+
+### Query profiling
 
 The `SHOW PROFILE` and `SHOW PROFILES` statements display profiling information that indicates resource usage for statements executed during the current session
 
@@ -83,7 +94,7 @@ Profiling is enabled by
 
 List size is controlled by profiling_history_size session variable (default: 15 / max. : 100)
 
-## Query profiling example
+### Query profiling example
 
 Enable profiling and `SELECT ... WHERE` for non-indexed column
 
@@ -97,7 +108,7 @@ MariaDB [test]> select id, pad from test.sbtest1 where id=1000000;
 MariaDB [test]> select id,pad from test.sbtest1 where pad='96658133632-61067815236-70200144435-65878686334-75374878237';
 ```
 
-## Query profiling example
+### Query profiling example
 
 Without an index execution time becomes much longer  
 So an index is added to the pad column
@@ -117,7 +128,7 @@ MariaDB [test]> SHOW PROFILES;
 +----------+-----------+-----------------------------------------------------+
 ```
 
-## Query profiling example
+### Query profiling example
 
 ```sql
 MariaDB [test]> ALTER TABLE sbtest1 ADD INDEX(pad);
@@ -149,14 +160,14 @@ pad='96658133632-61067815236-70200144435-65878686334-75374878237' |
 +----------+------------+--------------------------------------------------------------------------------------+
 ```
 
-# Lesson summary
+## Lesson summary
 
 - List the various metadata access methods available
 - Understand the structure of the `INFORMATION_SCHEMA`, and list the differences between the `SHOW` statements and the `INFORMATION_SCHEMA`
 - Use query profiling to improve query performance
 - Describe features of the performance schema
 
-# Lab exercises
+## Lab exercises
 
 - 8-1 Collecting Server Information
 - 8-2 Using the Information Schema’s Profiling Table
