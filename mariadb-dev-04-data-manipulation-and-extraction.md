@@ -1,3 +1,14 @@
+---
+title: "Lesson 4: Data manipulation and extraction"
+url: "/dev/data-manipulation-and-extraction/"
+date: 2025-04-10
+description: >
+categories: []
+tags: []
+weight: 1
+toc: true
+---
+
 # Data manipulation and extraction
 
 ## Learning objectives
