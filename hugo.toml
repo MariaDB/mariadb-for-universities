@@ -1,4 +1,4 @@
-baseURL = 'https://mariadb4uni.mariadb.org/'
+baseURL = 'https://uni.mariadb.org/'
 languageCode = 'en-us'
 title = 'MariaDB for Universities Program Course Material'
 
