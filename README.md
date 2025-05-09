@@ -1,7 +1,3 @@
-<div align="right">
-<img src="mariadb_for_uni_sealion-300px.jpeg" alt="MariaDB for Universities" width="300">
-</div>
-
 # MariaDB for Universities training material 
 
 This repo contains training material for MariaDB DBA and Developer courses. Released for non-commercial use by MariaDB Corporation with license [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
