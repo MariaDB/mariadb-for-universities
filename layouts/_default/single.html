@@ -26,8 +26,30 @@
             <a href="{{ .Site.Params.githubRepo }}/blob/main/{{ .File.LogicalName }}" class="icon-link edit-page">View page source</a>
             <a href="{{ .Site.Params.githubRepo }}/edit/main/{{ .File.LogicalName }}" class="icon-link view-source">Edit this page</a>
             <a href="{{ .Site.Params.githubRepo }}/issues/new?title=Course%20Material%20issue%20for%20{{ .Title }}&body=I%20found%20an%20issue%20with%20the%20documentation%20for%20{{ .Title }}.%0A%0A%0A%0A---%0A%0AThis%20issue%20is%20related%20to%20the%20following%20page%3A%0A%0A{{ .Permalink }}" class="icon-link create-doc">Create material issue</a>
+            <a href="javascript:void(0)" onclick="printSection()" class="icon-link print">Print entire section</a>
           </div>
       </div>
   </div>
+
+  <script>
+    function printSection() {
+      // Store original display values
+      const leftMenu = document.querySelector('.left-menu');
+      const rightMenu = document.querySelector('.right-menu');
+      const originalLeftDisplay = leftMenu.style.display;
+      const originalRightDisplay = rightMenu.style.display;
+      
+      // Hide menus during print
+      leftMenu.style.display = 'none';
+      rightMenu.style.display = 'none';
+      
+      // Print the page
+      window.print();
+      
+      // Restore original display values
+      leftMenu.style.display = originalLeftDisplay;
+      rightMenu.style.display = originalRightDisplay;
+    }
+  </script>
 
 {{ end }}
