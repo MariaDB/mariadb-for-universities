@@ -34,10 +34,13 @@ body {
 
 .menu-left {
     padding-left: 20px;
+    flex: 1;
+    min-width: 0; /* Allows text to wrap properly */
 }
 
 .menu-right {
-    padding-right: 200px;
+    padding-right: 20px;
+    white-space: nowrap;
 }
 
 .menu-left .home-link {
@@ -48,6 +51,16 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    line-height: 1.2;
+    /* Allow text to wrap */
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+.menu-left .home-link span {
+    /* Ensure text wraps properly */
+    display: inline-block;
+    max-width: 100%;
 }
 
 .menu-right {
@@ -272,6 +285,20 @@ body {
     }
 }
 
+@media (max-width: 992px) {
+    .menu-right {
+        display: none; /* Hide the MariaDB Foundation text */
+    }
+    
+    .menu-left {
+        padding-right: 20px; /* Add some padding on the right when menu-right is hidden */
+    }
+    
+    .menu-left .home-link {
+        font-size: 1.1em; /* Slightly smaller font on medium screens */
+    }
+}
+
 @media (max-width: 768px) {
     .left-menu {
         display: none;
@@ -279,6 +306,9 @@ body {
     
     .main-content {
         margin-left: 0;
+    }
+    .menu-left .home-link {
+        font-size: 1em; /* Even smaller font on small screens */
     }
 } 
 
