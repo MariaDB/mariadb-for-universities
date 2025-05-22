@@ -1,0 +1,39 @@
+name: Build and Deploy Hugo Site
+
+on:
+  push:
+    branches:
+      - deploy
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout deploy branch
+        uses: actions/checkout@v4
+        with:
+          ref: deploy
+          fetch-depth: 0  # Fetch all history for proper git operations
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.136.5'
+          extended: false
+
+      - name: Build Hugo site
+        run: hugo --minify
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'github-actions@github.com'
+
+      - name: Commit and push if changed
+        run: |
+          git add public/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Build Hugo site [skip ci]" && git push)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
