@@ -24,7 +24,7 @@ jobs:
           extended: false
 
       - name: Build Hugo site
-        run: hugo --minify
+        run: hugo --minify --destination html_site
 
       - name: Configure Git
         run: |
@@ -33,7 +33,7 @@ jobs:
 
       - name: Commit and push if changed
         run: |
-          git add public/
+          git add html_site/
           git diff --quiet && git diff --staged --quiet || (git commit -m "Build Hugo site [skip ci]" && git push)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
