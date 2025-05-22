@@ -7,6 +7,9 @@ categories: []
 tags: []
 weight: 1
 toc: true
+license_note: "For academic and non-commercial usage, licensed under CC BY-NC-SA 4.0 by MariaDB plc."
+license: "CC BY-NC-SA 4.0"
+license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 ---
 
 # Schema objects

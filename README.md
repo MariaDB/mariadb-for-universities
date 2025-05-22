@@ -2,7 +2,7 @@
 
 # MariaDB for Universities lecture material 
 
-MariaDB lecture material for DBA and Developer courses by MariaDB Foundation and the community. Based on professional training material released for non-commercial use by MariaDB Corporation with license [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+MariaDB lecture material for DBA and Developer courses by MariaDB Foundation and the community. Based on professional training material released for academic and non-commercial use by MariaDB Corporation under license [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 # Website uni.mariadb.org in "beta live"
 
