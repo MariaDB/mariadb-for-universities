@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MariaDB for Universities Course Material on MariaDB for Universities Program Course Material</title><link>https://uni.mariadb.org/</link><description>Recent content in MariaDB for Universities Course Material on MariaDB for Universities Program Course Material</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Thu, 10 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://uni.mariadb.org/index.xml" rel="self" type="application/rss+xml"/><item><title>Lesson 1: Getting Started</title><link>https://uni.mariadb.org/dev/getting-started/</link><pubDate>Thu, 10 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dev/getting-started/</guid><description>&lt;h1 id="getting-started">Getting started&lt;/h1>
+&lt;h2 id="learning-objectives">Learning objectives&lt;/h2>
+&lt;ul>
+&lt;li>Discuss MariaDB&amp;rsquo;s client / server architecture&lt;/li>
+&lt;li>Gain an understanding of isolation levels and MariaDB&amp;rsquo;s storage engine concept&lt;/li>
+&lt;li>Utilize MariaDB connectors and utilities&lt;/li>
+&lt;li>Learn basic MariaDB administration tasks relating to server logs, user management, and backing up and restoring data&lt;/li>
+&lt;/ul>
+&lt;h2 id="architecture">Architecture&lt;/h2>
+&lt;h3 id="installation-methods-and-packages">Installation methods and packages&lt;/h3>
+&lt;h4 id="linux">Linux&lt;/h4>
+&lt;ul>
+&lt;li>MariaDB repositories&lt;/li>
+&lt;li>Distribution repositories&lt;/li>
+&lt;li>Binary tarballs&lt;/li>
+&lt;li>Docker Container Image&lt;/li>
+&lt;li>Source tarballs&lt;/li>
+&lt;/ul>
+&lt;h4 id="windows">Windows&lt;/h4>
+&lt;ul>
+&lt;li>MariaDB installer&lt;/li>
+&lt;li>Docker Container Image&lt;/li>
+&lt;li>Source tarballs&lt;/li>
+&lt;/ul>
+&lt;h4 id="macos">MacOS&lt;/h4>
+&lt;ul>
+&lt;li>Homebrew&lt;/li>
+&lt;li>Macports&lt;/li>
+&lt;li>Docker Container Image&lt;/li>
+&lt;li>Source tarballs&lt;/li>
+&lt;/ul>
+&lt;p>Only certain MariaDB repositories and installers provide MariaDB Enterprise Server. All other sources provide MariaDB Community Server.&lt;/p></description></item><item><title>Lesson 2: Schema objects</title><link>https://uni.mariadb.org/dev/schema-objects/</link><pubDate>Thu, 10 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dev/schema-objects/</guid><description>&lt;h1 id="schema-objects">Schema objects&lt;/h1>
+&lt;h2 id="learning-objectives">Learning objectives&lt;/h2>
+&lt;ul>
+&lt;li>Gain an understanding of schema objects available within MariaDB&lt;/li>
+&lt;li>Learn how to use and create databases and tables, including temporal data tables, and flexible and invisible columns&lt;/li>
+&lt;li>Discuss data types and built-in functions, and their use cases&lt;/li>
+&lt;li>Learn how to create and use views, triggers, events, and sequences&lt;/li>
+&lt;/ul>
+&lt;h2 id="databases-tables-and-default-schemas">Databases, tables and default schemas&lt;/h2>
+&lt;h3 id="case-sensitivity">Case sensitivity&lt;/h3>
+&lt;p>Depending on Operating System, File System and &lt;code>lower_case_table_names&lt;/code>&lt;/p>
+&lt;p>Set before starting a project (strongly recommended)!&lt;/p></description></item><item><title>Lesson 3: Database design</title><link>https://uni.mariadb.org/dev/database-design/</link><pubDate>Thu, 10 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dev/database-design/</guid><description>&lt;h1 id="database-design">Database design&lt;/h1>
+&lt;h2 id="learning-objectives">Learning objectives&lt;/h2>
+&lt;ul>
+&lt;li>Explain the purpose of data modeling and database design&lt;/li>
+&lt;li>Describe how MariaDB data types affect performance&lt;/li>
+&lt;li>Assign appropriate column options&lt;/li>
+&lt;/ul>
+&lt;h2 id="data-modeling-and-database-design">Data modeling and database design&lt;/h2>
+&lt;h3 id="database-mindset">Database mindset&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>Redundant data is eliminated&lt;/strong>&lt;br>
+Easier updating and maintenance&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Atomicity, Isolation, Consistency, Durability (ACID)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Field have explicit data types&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Flexible and easy to query programmatically&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Accessible by multiple remote, differing clients&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Multiple ways to view the same dataset&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Indexable&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="naming-convention">Naming convention&lt;/h3>
+&lt;p>Consistent, Descriptive Names Reduce Mistakes&lt;/p></description></item><item><title>Lesson 4: Data manipulation and extraction</title><link>https://uni.mariadb.org/dev/data-manipulation-and-extraction/</link><pubDate>Thu, 10 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dev/data-manipulation-and-extraction/</guid><description>&lt;h1 id="data-manipulation-and-extraction">Data manipulation and extraction&lt;/h1>
+&lt;h2 id="learning-objectives">Learning objectives&lt;/h2>
+&lt;ul>
+&lt;li>Know how to select, insert, load, change and delete data&lt;/li>
+&lt;li>Explain how to execute outer and inner joins, and join a table to itself&lt;/li>
+&lt;li>Know how to use correct &lt;code>SQL&lt;/code> syntax when creating subqueries within a statement, and demonstrate how to convert subqueries into joins&lt;/li>
+&lt;li>Describe and use window functions and common table expressions (&lt;code>CTEs&lt;/code>)&lt;/li>
+&lt;/ul>
+&lt;h2 id="selecting-data">Selecting data&lt;/h2>
+&lt;h3 id="select-statement">Select statement&lt;/h3>
+&lt;p>&lt;strong>Retrieves data from the table for the client&lt;/strong>&lt;/p></description></item><item><title>Lesson 5: Programming</title><link>https://uni.mariadb.org/dev/programming/</link><pubDate>Thu, 10 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dev/programming/</guid><description>&lt;h1 id="programming">Programming&lt;/h1>
+&lt;h2 id="learning-objectives">Learning objectives&lt;/h2>
+&lt;ul>
+&lt;li>Differentiate between stored procedures and stored functions using the native MariaDB SQL/PSM language&lt;/li>
+&lt;li>Use JSON document stores&lt;/li>
+&lt;li>Understand how to access MariaDB via APIs using both native and non-native MariaDB connectors&lt;/li>
+&lt;li>Set SQL modes to affect error output and use the SHOW WARNINGS and SHOW ERRORS statements to interpret error messages&lt;/li>
+&lt;/ul>
+&lt;h2 id="json">JSON&lt;/h2>
+&lt;h3 id="relational--json">Relational + JSON&lt;/h3>
+&lt;p>&lt;strong>How to use hybrid data models&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>Relational&lt;/strong>&lt;br>
+data integrity, transactions and reliability&lt;/p></description></item><item><title>Lesson 6: Metadata</title><link>https://uni.mariadb.org/dev/metadata/</link><pubDate>Thu, 10 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dev/metadata/</guid><description>&lt;h1 id="metadata">Metadata&lt;/h1>
+&lt;h2 id="learning-objectives">Learning objectives&lt;/h2>
+&lt;ul>
+&lt;li>List the various metadata access methods available&lt;/li>
+&lt;li>Understand the structure of the &lt;code>INFORMATION_SCHEMA&lt;/code>, and list the differences between the &lt;code>SHOW&lt;/code> statements and the &lt;code>INFORMATION_SCHEMA&lt;/code>&lt;/li>
+&lt;li>Use query profiling to improve query performance&lt;/li>
+&lt;li>Describe features of the performance schema&lt;/li>
+&lt;/ul>
+&lt;h2 id="information-schema">Information schema&lt;/h2>
+&lt;h3 id="information-schema-details">Information schema details&lt;/h3>
+&lt;ul>
+&lt;li>Pseudo database that holds metadata on schemas&lt;/li>
+&lt;li>Generated as needed&lt;/li>
+&lt;li>No on-disk presence&lt;/li>
+&lt;li>Read-only tables&lt;/li>
+&lt;li>Plugins can install additional information_schema tables (e.g. &lt;code>METADATA_LOCK_INFO&lt;/code>)&lt;/li>
+&lt;li>Useful for schema design, redesign and migration&lt;/li>
+&lt;li>Provides much more information than &lt;code>SHOW&lt;/code> statements and is ANSI/ISO SQL:2003&lt;/li>
+&lt;li>Do NOT automate queries in production as this can affect performance&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>CHARACTER_SETS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>COLLATION_CHARACTER_SET_APPL&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>LICALBILITY&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>COLLATIONS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>COLUMN_PRIVILEGES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>COLUMNS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>ENGINES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>EVENTS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>FILES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>GLOBAL_STATUS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>GLOBAL_VARIABLES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>KEY_COLUMN_USAGE&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>PARTITIONS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>PLUGINS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>PROCESSLIST&lt;span style="color:#bbb"> &lt;/span>SCHEMATA&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>PROFILING&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>REFERENTIAL_CONSTRAINTS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>ROUTINES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>SCHEMA_PRIVILEGES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>SESSION_STATUS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>SESSION_VARIABLES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">STATISTICS&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>TABLE_CONSTRAINTS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>TABLE_PRIVILEGES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>TABLES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>TRIGGERS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>USER_PRIVILEGES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>VIEWS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="methods-of-accessing-the-information-schema">Methods of accessing the information schema&lt;/h3>
+&lt;h4 id="accessing-directly">Accessing directly&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#007020;font-weight:bold">SELECT&lt;/span>&lt;span style="color:#bbb"> &lt;/span>TABLE_SCHEMA,ENGINE,&lt;span style="color:#007020;font-weight:bold">COUNT&lt;/span>(&lt;span style="color:#666">*&lt;/span>)&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">FROM&lt;/span>&lt;span style="color:#bbb"> &lt;/span>INFORMATION_SCHEMA.TABLES&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">WHERE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>TABLE_SCHEMA&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">NOT&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">IN&lt;/span>(&lt;span style="color:#4070a0">&amp;#39;mysql&amp;#39;&lt;/span>,&lt;span style="color:#4070a0">&amp;#39;information_schema&amp;#39;&lt;/span>,&lt;span style="color:#4070a0">&amp;#39;performance_schema&amp;#39;&lt;/span>)&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">GROUP&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">BY&lt;/span>&lt;span style="color:#bbb"> &lt;/span>TABLE_SCHEMA,ENGINE;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#007020;font-weight:bold">SELECT&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">*&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">FROM&lt;/span>&lt;span style="color:#bbb"> &lt;/span>information_schema.global_status&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">WHERE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>VARIABLE_NAME&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">LIKE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#4070a0">&amp;#39;%qcache%&amp;#39;&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="using-show-statements">Using show statements&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#007020;font-weight:bold">SHOW&lt;/span>&lt;span style="color:#bbb"> &lt;/span>STATUS&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">LIKE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#4070a0">&amp;#39;%qcache%&amp;#39;&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="query-profiling">Query profiling&lt;/h2>
+&lt;h3 id="query-profiling-1">Query profiling&lt;/h3>
+&lt;p>The &lt;code>SHOW PROFILE&lt;/code> and &lt;code>SHOW PROFILES&lt;/code> statements display profiling information that indicates resource usage for statements executed during the current session&lt;/p></description></item><item><title>Lesson 1: Getting Started</title><link>https://uni.mariadb.org/dba/getting-started/</link><pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dba/getting-started/</guid><description>&lt;h1 id="getting-started">Getting started&lt;/h1>
+&lt;h2 id="learning-objectives">Learning Objectives&lt;/h2>
+&lt;ul>
+&lt;li>List the steps to deploy MariaDB Enterprise Server using distribution packages&lt;/li>
+&lt;li>Explain the benefits and challenges of upgrading MariaDB Enterprise Server, and list the steps you need to take before and after the upgrade&lt;/li>
+&lt;li>Know which tools and client utilities to use to perform common tasks such as managing users accounts and permissions, benchmarking, and backing up and restoring data&lt;/li>
+&lt;li>Change the default settings of MariaDB Enterprise Server while it&amp;rsquo;s running to make the server work better for your needs&lt;/li>
+&lt;li>Turn on and off server logs and use them to check the status and performance of MariaDB Enterprise Server&lt;/li>
+&lt;/ul>
+&lt;h2 id="deployment">Deployment&lt;/h2>
+&lt;h3 id="supported-operating-systems">Supported Operating Systems&lt;/h3>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Operating System&lt;/th>
+ &lt;th>ES10.6&lt;/th>
+ &lt;th>ES10.5&lt;/th>
+ &lt;th>ES10.4&lt;/th>
+ &lt;th>ES10.3&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>RHEL8 (x86_64 / ARM64)&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>RHEL7 (x86_64)&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>CentOS 7 (x86_64)&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>Ubuntu 20.04 (x86_64 / ARM64)&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>Ubuntu 18.04 (x86_64 / ARM64)&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>Debian 11 (x86_64 / ARM64)&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>No&lt;/td>
+ &lt;td>No&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>Debian 10 (x86_64 / ARM64)&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>Debian 9 (x86_64 / ARM64)&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>SLES15 (x86_64 / ARM64)&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>SLES12 (x86_64)&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>Windows (x86_64)&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;td>Yes&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h3 id="installation-methods-and-packages">Installation Methods and Packages&lt;/h3>
+&lt;h4 id="installation-tools">Installation Tools&lt;/h4>
+&lt;ul>
+&lt;li>Built and tested by experts&lt;/li>
+&lt;li>Installer (e.g., &lt;code>yum&lt;/code>)&lt;/li>
+&lt;li>Use up-to-date versions&lt;/li>
+&lt;/ul>
+&lt;h4 id="distribution-packages">Distribution Packages&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>(rpm, deb, pkg, dmg)&lt;/code>&lt;/li>
+&lt;li>Easy and quick to install&lt;/li>
+&lt;li>Need to configure manually&lt;/li>
+&lt;li>Possibly old versions&lt;/li>
+&lt;/ul>
+&lt;h4 id="docker">Docker&lt;/h4>
+&lt;ul>
+&lt;li>Enterprise Docker registry&lt;/li>
+&lt;li>Easy Docker installs&lt;/li>
+&lt;li>Maintained by MariaDB&lt;/li>
+&lt;/ul>
+&lt;p>The recommended way to install MariaDB is via MariaDB&amp;rsquo;s &lt;code>repository&lt;/code> in conjunction with your distribution&amp;rsquo;s package manager.&lt;/p></description></item><item><title>Lesson 2: Schema Objects</title><link>https://uni.mariadb.org/dba/schema-objects/</link><pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dba/schema-objects/</guid><description>&lt;h1 id="schema-objects">Schema Objects&lt;/h1>
+&lt;h2 id="learning-objectives">Learning Objectives&lt;/h2>
+&lt;ul>
+&lt;li>Identify and describe the schema objects available within MariaDB Enterprise Server&lt;/li>
+&lt;li>Demonstrate how to create and use databases, tables, and columns in MariaDB Enterprise Server&lt;/li>
+&lt;li>Compare and contrast the data types and built-in functions in MariaDB Enterprise Server, and explain their use cases&lt;/li>
+&lt;/ul>
+&lt;h3 id="collations-and-character-sets">Collations and Character Sets&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>A collation is a set of rules that defines how to compare and sort strings&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>A character set defines how and which characters are stored to support a particular language or languages&lt;/p></description></item><item><title>Lesson 3: Storage Engines</title><link>https://uni.mariadb.org/dba/storage-engines/</link><pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dba/storage-engines/</guid><description>&lt;h1 id="storage-engines">Storage Engines&lt;/h1>
+&lt;h2 id="learning-objectives">Learning Objectives&lt;/h2>
+&lt;ul>
+&lt;li>List the available storage engines in MariaDB Enterprise Server, and explain their use cases&lt;/li>
+&lt;li>Analyze and evaluate the features of the Aria and InnoDB storage engines&lt;/li>
+&lt;/ul>
+&lt;h3 id="storage-engines-1">Storage Engines&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#666">`&lt;/span>&lt;span style="color:#007020;font-weight:bold">SHOW&lt;/span>&lt;span style="color:#bbb"> &lt;/span>ENGINES;&lt;span style="color:#666">`&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#666">`&lt;/span>&lt;span style="color:#007020;font-weight:bold">CREATE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">TABLE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>table1&lt;span style="color:#bbb"> &lt;/span>(col1&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020">INT&lt;/span>)&lt;span style="color:#bbb"> &lt;/span>ENGINE&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>Aria;&lt;span style="color:#666">`&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#666">`&lt;/span>&lt;span style="color:#007020;font-weight:bold">ALTER&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">TABLE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>table1&lt;span style="color:#bbb"> &lt;/span>ENGINE&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>InnoDB;&lt;span style="color:#666">`&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>Multiple storage engines on a server and within a query are allowed&lt;/li>
+&lt;li>Determine storage medium (disk, memory, etc.)&lt;/li>
+&lt;li>Atomicity Consistency Isolation Durability (ACID)&lt;/li>
+&lt;li>Lock at certain levels (table, page, row)&lt;/li>
+&lt;li>Some offer special features (foreign keys, GIS, columnar data)&lt;/li>
+&lt;li>Some provide optimization&lt;/li>
+&lt;/ul>
+&lt;h3 id="acid-transactions">ACID Transactions&lt;/h3>
+&lt;h4 id="atomicity">Atomicity&lt;/h4>
+&lt;p>All transactions are done completely or rolled back&lt;/p></description></item><item><title>Lesson 4: Transactions</title><link>https://uni.mariadb.org/dba/transactions/</link><pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dba/transactions/</guid><description>&lt;h1 id="transactions">Transactions&lt;/h1>
+&lt;h2 id="learning-objectives">Learning Objectives&lt;/h2>
+&lt;ul>
+&lt;li>Define and describe what transactions are in a database environment&lt;/li>
+&lt;li>Show how to perform transactions and when to use savepoints in MariaDB&lt;/li>
+&lt;li>Explain and compare isolation levels and the types of isolation levels in MariaDB&lt;/li>
+&lt;/ul>
+&lt;h2 id="introduction-to-transactions">Introduction to Transactions&lt;/h2>
+&lt;h3 id="transactions-1">Transactions&lt;/h3>
+&lt;p>A transaction is a mechanism for grouping together multiple SQL statements into one atomic operation; an all or nothing proposition&lt;/p>
+&lt;p>&lt;strong>Atomicity&lt;/strong>&lt;br>
+All statements are executed successfully or are cancelled as a unit&lt;/p></description></item><item><title>Lesson 5: User Management</title><link>https://uni.mariadb.org/dba/user-management/</link><pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dba/user-management/</guid><description>&lt;h1 id="user-management">User Management&lt;/h1>
+&lt;h2 id="learning-objectives">Learning Objectives&lt;/h2>
+&lt;ul>
+&lt;li>Demonstrate how to create and manage users in MariaDB&lt;/li>
+&lt;li>Explain how to limit resource usage per user in MariaDB&lt;/li>
+&lt;li>Show how to assign and revoke privileges to users in MariaDB&lt;/li>
+&lt;/ul>
+&lt;h2 id="authentication-methods-and-user-accounts">Authentication Methods and User Accounts&lt;/h2>
+&lt;h3 id="authentication-methods">Authentication Methods&lt;/h3>
+&lt;ul>
+&lt;li>&lt;code>DEFAULT&lt;/code>&lt;/li>
+&lt;li>&lt;code>ed25519&lt;/code>&lt;/li>
+&lt;li>&lt;code>NAMED PIPE&lt;/code>&lt;/li>
+&lt;li>&lt;code>UNIX SOCKET&lt;/code>&lt;/li>
+&lt;li>&lt;code>GSSAPI&lt;/code>&lt;/li>
+&lt;li>&lt;code>PAM&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="default-authentication-method">Default Authentication Method&lt;/h3>
+&lt;ul>
+&lt;li>User ID / Passwords stored within database (&lt;code>mysql.global_priv&lt;/code>)&lt;/li>
+&lt;li>Passwords are encrypted (&lt;code>PASSWORD()&lt;/code> function)
+&lt;ul>
+&lt;li>Use &lt;code>SET PASSWORD=PASSWORD('new_password')&lt;/code> statement for password changes&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Easy for DBAs to control and manage users, roles and policies&lt;/li>
+&lt;li>Password strength checking set by DBA&lt;/li>
+&lt;li>Not tied to LDAP/AD/Operating System users&lt;/li>
+&lt;/ul>
+&lt;h3 id="ed25519">ed25519&lt;/h3>
+&lt;ul>
+&lt;li>Uses Elliptic Curve Digital Signature Algorithm (ECDSA)&lt;/li>
+&lt;li>More secure than default SHA-1 password hashing&lt;/li>
+&lt;li>Installed via a plugin - &lt;code>INSTALL SONAME 'auth_ed25519'&lt;/code>&lt;/li>
+&lt;li>&lt;code>CREATE USER username@hostname IDENTIFIED VIA ed25519 USING PASSWORD('secret');&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="named-pipe">Named Pipe&lt;/h3>
+&lt;ul>
+&lt;li>Used with Windows named pipe impersonation&lt;/li>
+&lt;li>Retrieves username from Windows with &lt;code>GetUserName()&lt;/code> function&lt;/li>
+&lt;li>Password is not required&lt;/li>
+&lt;li>Installed via plugin&lt;/li>
+&lt;li>&lt;code>CREATE USER username@hostname IDENTIFIED VIA named_pipe;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="unix-socket">Unix Socket&lt;/h3>
+&lt;ul>
+&lt;li>Uses operating system credentials to authenticate&lt;/li>
+&lt;li>Password is not required&lt;/li>
+&lt;li>Plugin installed by default&lt;/li>
+&lt;li>&lt;code>CREATE USER username@hostname IDENTIFIED VIA unix_socket;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="mariadb-user-accounts">MariaDB User Accounts&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>Authentication is based on user, host and password except with specific authentication plugins for example Unix socket, GSSAPI and PAM&lt;/p></description></item><item><title>Lesson 6: Backup and Restore</title><link>https://uni.mariadb.org/dba/backup-and-restore/</link><pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dba/backup-and-restore/</guid><description>&lt;h1 id="backup-and-restore">Backup and Restore&lt;/h1>
+&lt;h2 id="learning-objectives">Learning Objectives&lt;/h2>
+&lt;ul>
+&lt;li>Explain key backup principles and their importance, including the importance of verifying and testing backups&lt;/li>
+&lt;li>Demonstrate and compare how to create full backups using different backup methods such as &lt;code>MariaDB Backup&lt;/code> and &lt;code>mariadb-dump&lt;/code>&lt;/li>
+&lt;li>Apply and assess recovery methods to restore data in MariaDB&lt;/li>
+&lt;li>Design and implement a backup and recovery plan and schedule&lt;/li>
+&lt;/ul>
+&lt;h2 id="backing-up-data">Backing Up Data&lt;/h2>
+&lt;h3 id="backup-principles">Backup Principles&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>Helps ensure high availability&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Cannot prevent user errors&lt;/p></description></item></channel></rss>

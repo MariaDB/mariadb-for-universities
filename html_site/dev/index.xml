@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MariaDB Developer Course on MariaDB for Universities Program Course Material</title><link>https://uni.mariadb.org/dev/</link><description>Recent content in MariaDB Developer Course on MariaDB for Universities Program Course Material</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Thu, 10 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://uni.mariadb.org/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Lesson 1: Getting Started</title><link>https://uni.mariadb.org/dev/getting-started/</link><pubDate>Thu, 10 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dev/getting-started/</guid><description>&lt;h1 id="getting-started">Getting started&lt;/h1>
+&lt;h2 id="learning-objectives">Learning objectives&lt;/h2>
+&lt;ul>
+&lt;li>Discuss MariaDB&amp;rsquo;s client / server architecture&lt;/li>
+&lt;li>Gain an understanding of isolation levels and MariaDB&amp;rsquo;s storage engine concept&lt;/li>
+&lt;li>Utilize MariaDB connectors and utilities&lt;/li>
+&lt;li>Learn basic MariaDB administration tasks relating to server logs, user management, and backing up and restoring data&lt;/li>
+&lt;/ul>
+&lt;h2 id="architecture">Architecture&lt;/h2>
+&lt;h3 id="installation-methods-and-packages">Installation methods and packages&lt;/h3>
+&lt;h4 id="linux">Linux&lt;/h4>
+&lt;ul>
+&lt;li>MariaDB repositories&lt;/li>
+&lt;li>Distribution repositories&lt;/li>
+&lt;li>Binary tarballs&lt;/li>
+&lt;li>Docker Container Image&lt;/li>
+&lt;li>Source tarballs&lt;/li>
+&lt;/ul>
+&lt;h4 id="windows">Windows&lt;/h4>
+&lt;ul>
+&lt;li>MariaDB installer&lt;/li>
+&lt;li>Docker Container Image&lt;/li>
+&lt;li>Source tarballs&lt;/li>
+&lt;/ul>
+&lt;h4 id="macos">MacOS&lt;/h4>
+&lt;ul>
+&lt;li>Homebrew&lt;/li>
+&lt;li>Macports&lt;/li>
+&lt;li>Docker Container Image&lt;/li>
+&lt;li>Source tarballs&lt;/li>
+&lt;/ul>
+&lt;p>Only certain MariaDB repositories and installers provide MariaDB Enterprise Server. All other sources provide MariaDB Community Server.&lt;/p></description></item><item><title>Lesson 2: Schema objects</title><link>https://uni.mariadb.org/dev/schema-objects/</link><pubDate>Thu, 10 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dev/schema-objects/</guid><description>&lt;h1 id="schema-objects">Schema objects&lt;/h1>
+&lt;h2 id="learning-objectives">Learning objectives&lt;/h2>
+&lt;ul>
+&lt;li>Gain an understanding of schema objects available within MariaDB&lt;/li>
+&lt;li>Learn how to use and create databases and tables, including temporal data tables, and flexible and invisible columns&lt;/li>
+&lt;li>Discuss data types and built-in functions, and their use cases&lt;/li>
+&lt;li>Learn how to create and use views, triggers, events, and sequences&lt;/li>
+&lt;/ul>
+&lt;h2 id="databases-tables-and-default-schemas">Databases, tables and default schemas&lt;/h2>
+&lt;h3 id="case-sensitivity">Case sensitivity&lt;/h3>
+&lt;p>Depending on Operating System, File System and &lt;code>lower_case_table_names&lt;/code>&lt;/p>
+&lt;p>Set before starting a project (strongly recommended)!&lt;/p></description></item><item><title>Lesson 3: Database design</title><link>https://uni.mariadb.org/dev/database-design/</link><pubDate>Thu, 10 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dev/database-design/</guid><description>&lt;h1 id="database-design">Database design&lt;/h1>
+&lt;h2 id="learning-objectives">Learning objectives&lt;/h2>
+&lt;ul>
+&lt;li>Explain the purpose of data modeling and database design&lt;/li>
+&lt;li>Describe how MariaDB data types affect performance&lt;/li>
+&lt;li>Assign appropriate column options&lt;/li>
+&lt;/ul>
+&lt;h2 id="data-modeling-and-database-design">Data modeling and database design&lt;/h2>
+&lt;h3 id="database-mindset">Database mindset&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>Redundant data is eliminated&lt;/strong>&lt;br>
+Easier updating and maintenance&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Atomicity, Isolation, Consistency, Durability (ACID)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Field have explicit data types&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Flexible and easy to query programmatically&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Accessible by multiple remote, differing clients&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Multiple ways to view the same dataset&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Indexable&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="naming-convention">Naming convention&lt;/h3>
+&lt;p>Consistent, Descriptive Names Reduce Mistakes&lt;/p></description></item><item><title>Lesson 4: Data manipulation and extraction</title><link>https://uni.mariadb.org/dev/data-manipulation-and-extraction/</link><pubDate>Thu, 10 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dev/data-manipulation-and-extraction/</guid><description>&lt;h1 id="data-manipulation-and-extraction">Data manipulation and extraction&lt;/h1>
+&lt;h2 id="learning-objectives">Learning objectives&lt;/h2>
+&lt;ul>
+&lt;li>Know how to select, insert, load, change and delete data&lt;/li>
+&lt;li>Explain how to execute outer and inner joins, and join a table to itself&lt;/li>
+&lt;li>Know how to use correct &lt;code>SQL&lt;/code> syntax when creating subqueries within a statement, and demonstrate how to convert subqueries into joins&lt;/li>
+&lt;li>Describe and use window functions and common table expressions (&lt;code>CTEs&lt;/code>)&lt;/li>
+&lt;/ul>
+&lt;h2 id="selecting-data">Selecting data&lt;/h2>
+&lt;h3 id="select-statement">Select statement&lt;/h3>
+&lt;p>&lt;strong>Retrieves data from the table for the client&lt;/strong>&lt;/p></description></item><item><title>Lesson 5: Programming</title><link>https://uni.mariadb.org/dev/programming/</link><pubDate>Thu, 10 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dev/programming/</guid><description>&lt;h1 id="programming">Programming&lt;/h1>
+&lt;h2 id="learning-objectives">Learning objectives&lt;/h2>
+&lt;ul>
+&lt;li>Differentiate between stored procedures and stored functions using the native MariaDB SQL/PSM language&lt;/li>
+&lt;li>Use JSON document stores&lt;/li>
+&lt;li>Understand how to access MariaDB via APIs using both native and non-native MariaDB connectors&lt;/li>
+&lt;li>Set SQL modes to affect error output and use the SHOW WARNINGS and SHOW ERRORS statements to interpret error messages&lt;/li>
+&lt;/ul>
+&lt;h2 id="json">JSON&lt;/h2>
+&lt;h3 id="relational--json">Relational + JSON&lt;/h3>
+&lt;p>&lt;strong>How to use hybrid data models&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>Relational&lt;/strong>&lt;br>
+data integrity, transactions and reliability&lt;/p></description></item><item><title>Lesson 6: Metadata</title><link>https://uni.mariadb.org/dev/metadata/</link><pubDate>Thu, 10 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dev/metadata/</guid><description>&lt;h1 id="metadata">Metadata&lt;/h1>
+&lt;h2 id="learning-objectives">Learning objectives&lt;/h2>
+&lt;ul>
+&lt;li>List the various metadata access methods available&lt;/li>
+&lt;li>Understand the structure of the &lt;code>INFORMATION_SCHEMA&lt;/code>, and list the differences between the &lt;code>SHOW&lt;/code> statements and the &lt;code>INFORMATION_SCHEMA&lt;/code>&lt;/li>
+&lt;li>Use query profiling to improve query performance&lt;/li>
+&lt;li>Describe features of the performance schema&lt;/li>
+&lt;/ul>
+&lt;h2 id="information-schema">Information schema&lt;/h2>
+&lt;h3 id="information-schema-details">Information schema details&lt;/h3>
+&lt;ul>
+&lt;li>Pseudo database that holds metadata on schemas&lt;/li>
+&lt;li>Generated as needed&lt;/li>
+&lt;li>No on-disk presence&lt;/li>
+&lt;li>Read-only tables&lt;/li>
+&lt;li>Plugins can install additional information_schema tables (e.g. &lt;code>METADATA_LOCK_INFO&lt;/code>)&lt;/li>
+&lt;li>Useful for schema design, redesign and migration&lt;/li>
+&lt;li>Provides much more information than &lt;code>SHOW&lt;/code> statements and is ANSI/ISO SQL:2003&lt;/li>
+&lt;li>Do NOT automate queries in production as this can affect performance&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>CHARACTER_SETS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>COLLATION_CHARACTER_SET_APPL&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>LICALBILITY&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>COLLATIONS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>COLUMN_PRIVILEGES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>COLUMNS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>ENGINES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>EVENTS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>FILES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>GLOBAL_STATUS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>GLOBAL_VARIABLES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>KEY_COLUMN_USAGE&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>PARTITIONS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>PLUGINS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>PROCESSLIST&lt;span style="color:#bbb"> &lt;/span>SCHEMATA&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>PROFILING&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>REFERENTIAL_CONSTRAINTS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>ROUTINES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>SCHEMA_PRIVILEGES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>SESSION_STATUS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>SESSION_VARIABLES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">STATISTICS&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>TABLE_CONSTRAINTS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>TABLE_PRIVILEGES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>TABLES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>TRIGGERS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>USER_PRIVILEGES&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>VIEWS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="methods-of-accessing-the-information-schema">Methods of accessing the information schema&lt;/h3>
+&lt;h4 id="accessing-directly">Accessing directly&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#007020;font-weight:bold">SELECT&lt;/span>&lt;span style="color:#bbb"> &lt;/span>TABLE_SCHEMA,ENGINE,&lt;span style="color:#007020;font-weight:bold">COUNT&lt;/span>(&lt;span style="color:#666">*&lt;/span>)&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">FROM&lt;/span>&lt;span style="color:#bbb"> &lt;/span>INFORMATION_SCHEMA.TABLES&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">WHERE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>TABLE_SCHEMA&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">NOT&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">IN&lt;/span>(&lt;span style="color:#4070a0">&amp;#39;mysql&amp;#39;&lt;/span>,&lt;span style="color:#4070a0">&amp;#39;information_schema&amp;#39;&lt;/span>,&lt;span style="color:#4070a0">&amp;#39;performance_schema&amp;#39;&lt;/span>)&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">GROUP&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">BY&lt;/span>&lt;span style="color:#bbb"> &lt;/span>TABLE_SCHEMA,ENGINE;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#007020;font-weight:bold">SELECT&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">*&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">FROM&lt;/span>&lt;span style="color:#bbb"> &lt;/span>information_schema.global_status&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">WHERE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>VARIABLE_NAME&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">LIKE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#4070a0">&amp;#39;%qcache%&amp;#39;&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="using-show-statements">Using show statements&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#007020;font-weight:bold">SHOW&lt;/span>&lt;span style="color:#bbb"> &lt;/span>STATUS&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">LIKE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#4070a0">&amp;#39;%qcache%&amp;#39;&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="query-profiling">Query profiling&lt;/h2>
+&lt;h3 id="query-profiling-1">Query profiling&lt;/h3>
+&lt;p>The &lt;code>SHOW PROFILE&lt;/code> and &lt;code>SHOW PROFILES&lt;/code> statements display profiling information that indicates resource usage for statements executed during the current session&lt;/p></description></item></channel></rss>
