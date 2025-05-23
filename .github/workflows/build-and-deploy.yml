@@ -26,6 +26,10 @@ jobs:
       - name: Build Hugo site
         run: hugo --minify --destination html_site
 
+      - name: Check for links error
+        run: |
+          docker run --rm -t -v $(pwd):/src -w /src lycheeverse/lychee:latest --exclude "(github|gitlab|www.linkedin).com" -n -v html_site/**/*.html
+
       - name: Configure Git
         run: |
           git config --global user.name 'GitHub Actions'
