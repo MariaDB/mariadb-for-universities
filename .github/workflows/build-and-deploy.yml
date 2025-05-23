@@ -47,9 +47,9 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           
           # Deploy with rsync
-          rsync -avz --delete -e "ssh -p ${{ secrets.SERVER_HOST_PORT }} -i ~/.ssh/deploy_key" \
+          rsync -avz --delete -e "ssh -p ${{ secrets.SERVER_PORT }} -i ~/.ssh/deploy_key" \
             html_site/ \
-            ${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOST_IP }}:/var/www/uni.mariadb.org/
+            ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/var/www/uni.mariadb.org/
 
           # Cleanup SSH files
           rm -rf ~/.ssh/*
