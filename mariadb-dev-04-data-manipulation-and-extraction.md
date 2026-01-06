@@ -32,12 +32,10 @@ license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 Be careful of the overuse of functions in OLTP use cases where it may be better to add a column such as a virtual column that contains calculations already rendered
 
 ```sql
-SELECT CONCAT(name_first, SPACE(1), name_last) AS 'Name',
-
-(DAYOFYEAR(birthdate) - DAYOFYEAR(CURDATE())) / 12 AS 'Months to Birthday'
-
+SELECT
+    CONCAT(name_first, SPACE(1), name_last) AS 'Name',
+    (DAYOFYEAR(birthdate) - DAYOFYEAR(CURDATE())) / 12 AS 'Months to Birthday'
 FROM clients
-
 LIMIT 1;
 ```
 
@@ -53,7 +51,9 @@ Columns with Operators can be Specified to Filter Results
 SELECT Name, Population
 FROM City
 WHERE Population > 1000000;
+```
 
+```shell
 +-------------+------------+
 | Name        | Population |
 +-------------+------------+
@@ -95,7 +95,7 @@ WHERE CountryCode = 'FIN'
 LIMIT 2, 3;
 ```
 
-```sql
+```shell
 +-------------------+-----------+
 | Name              | District  |
 +-------------------+-----------+
@@ -109,25 +109,31 @@ LIMIT 2, 3;
 
 Data can be Ordered and Broken into Blocks
 
-`SELECT cols`
-`FROM table`
-`WHERE clause`
-`ORDER BY col`
-`LIMIT offset, count;`
+```sql
+SELECT cols
+FROM table
+WHERE clause
+ORDER BY col
+LIMIT offset, count;
+```
 
 Basic Syntax Example for `SELECT` Statement with `ORDER BY` Clause
 
-`SELECT Name, Population`
-`FROM City`
-`WHERE Population > 1000000`
-`ORDER BY Population`
-`LIMIT 0, 3;`
+```sql
+SELECT Name, Population
+FROM City
+WHERE Population > 1000000
+ORDER BY Population
+LIMIT 0, 3;
+```
 
+```shell
 | Name    | Population |
 |---------|------------|
 | Zapopan | 1,012,563  |
 | Napoli  | 1,002,079  |
 | Perm    | 1,070,162  |
+```
 
 ### Ascending and descending order
 
@@ -141,8 +147,9 @@ No descending indexes however B+ Tree indexes can be used to optimize sort or ra
 SELECT Name, District FROM City
 WHERE CountryCode = 'FIN'
 ORDER BY District DESC, Name ASC;
+```
 
-
+```shell
 | Name           | District         |
 |----------------|------------------|
 | Turku [Åbo]    | Varsinais-Suomi  |
@@ -162,7 +169,9 @@ Useful with Aggregate Functions to Create Sub-Groups
 SELECT Continent, SUM(Population)
 FROM Country
 GROUP BY Continent;
+```
 
+```shell
 +---------------+------------------+
 | Continent     | SUM(Population)  |
 +---------------+------------------+
@@ -327,7 +336,7 @@ Fast Option and No Screen Output
 Aborts on Errors by Default
 
 ```sh
-# mysql -u devuser -p world < /path/to/world.sql
+$ mysql -u devuser -p world < /path/to/world.sql
 ```
 
 ## Changing and deleting data
