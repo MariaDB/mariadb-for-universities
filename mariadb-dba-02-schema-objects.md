@@ -393,15 +393,23 @@ Stores information on:
 
 ### Methods of Accessing the Information Schema
 
-#### Accessing Directly
+**Accessing Directly (Using SELECT from relevant tables)**
 
 ```sql
-SELECT TABLE_SCHEMA,ENGINE,COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA NOT IN('mysql','information_schema','performance_schema') GROUP BY TABLE_SCHEMA,ENGINE;
+SELECT
+    TABLE_SCHEMA,
+    ENGINE,
+    COUNT(*)
+FROM information_schema.TABLES
+WHERE TABLE_SCHEMA NOT IN('mysql','information_schema','performance_schema')
+GROUP BY TABLE_SCHEMA, ENGINE;
 
-SELECT * FROM information_schema.global_status WHERE VARIABLE_NAME LIKE '%qcache%';
+SELECT *
+FROM information_schema.global_status
+WHERE VARIABLE_NAME LIKE '%qcache%';
 ```
 
-#### Using Show Statements
+**Using Show Statements**
 
 ```sql
 SHOW STATUS LIKE '%qcache%';
