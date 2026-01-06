@@ -96,7 +96,13 @@ Corresponds to a directory within the data directory
 
 All other objects reside within user-created databases however certain objects such as user accounts, roles, stored procedures and plugins reside within system databases.
 
-`CREATE DATABASE world;`
+```sql
+-- create new database with name 'world'
+CREATE DATABASE `world`;
+
+-- list of exists databases
+SHOW DATABASES;
+```
 
 ### Tables
 
@@ -147,10 +153,10 @@ Can specify DEFAULT value for column
 Only the primary key can be automatically incremented
 
 ```sql
-CREATE TABLE people
-
-(id INT AUTO_INCREMENT KEY,
-   name VARCHAR(20) DEFAULT 'unknown');
+CREATE TABLE people (
+    id INT AUTO_INCREMENT KEY,
+    name VARCHAR(20) DEFAULT 'unknown'
+);
 ```
 
 Columns can be NULL, unless defined NOT NULL
