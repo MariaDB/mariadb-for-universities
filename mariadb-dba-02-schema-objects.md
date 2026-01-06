@@ -622,8 +622,8 @@ SELECT * FROM city;
 
   ```sql
   CREATE TABLE country (
-      Continent ENUM('Asia','Europe','N America',
-      'Africa','Oceania','Antarctica','S America') );
+      Continent ENUM('Asia','Europe','N America','Africa','Oceania','Antarctica','S America')
+  );
   ```
 
 - **SET** is a specified list of string values
@@ -632,14 +632,13 @@ SELECT * FROM city;
   ```sql
   CREATE TABLE countrylanguage (
       CountryCode CHAR(3),
-      Language SET ('English','French','Mandarin','Spanish'));
+      Language SET ('English','French','Mandarin','Spanish')
+  );
 
   INSERT INTO countrylanguage VALUES
       ('CHN','Mandarin'),
       ('CAN','English,French');
   ```
-
-### Special Data Types
 
 - **INET6** is a data type for storing IPv6 IP addresses as well as IPv4
   - Stores as a BINARY(16)
