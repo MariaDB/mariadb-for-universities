@@ -269,8 +269,9 @@ MariaDB [(none)]> SHOW DATABASES;
 
 #### Finding Defaults
 
-```sh
-# mariadbd --print-defaults
+```shell
+$ mariadbd --print-defaults
+```
 
 mariadbd would have been started with the following arguments:
 - `--datadir=/data/mariadb`
@@ -278,7 +279,6 @@ mariadbd would have been started with the following arguments:
 - `--user=mysql`
 - `--symbolic_links=0`
 - `--local_infile=0`
-```
 
 #### Configuration File (server.cnf)
 
