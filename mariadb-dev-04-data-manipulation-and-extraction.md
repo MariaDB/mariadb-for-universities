@@ -442,17 +442,21 @@ Join and Other `WHERE` Conditions Mingled
 
 Without Constraints, the Result is a Full Cartesian Product
 
-`SELECT` cols  
-`FROM` table, table2  
-`WHERE` join-condition  
-`AND` other-condition;
+```sql
+SELECT cols  
+FROM table, table2  
+WHERE join-condition  
+AND other-condition;
+```
 
-Basic Syntax Example for Joining Tables
+Basic Syntax Example for Implicit Tables Joining
 
-`SELECT` City.Name, Country.Name, City.Population  
-`FROM` Country, City  
-`WHERE` CountryCode = Code  
-`AND` City.Population < 100000;
+```sql
+SELECT City.Name, Country.Name, City.Population  
+FROM Country, City  
+WHERE CountryCode = Code  
+AND City.Population < 100000;
+```
 
 Practical Example for Joining Tables within `WHERE` Clause
 
@@ -494,12 +498,12 @@ Practical Example for Joining Tables with `JOIN` Clause
 - Only returns rows when there is a match in both tables
 
 ```sql
-SELECT cols FROM
-table INNER JOIN
-table2
-ON join-condition
+SELECT cols
+FROM table
+INNER JOIN table2
+    ON join-condition
 WHERE
-other-conditions;
+    other-conditions;
 ```
 
 ### Outer joins
@@ -520,21 +524,24 @@ MariaDB does not support full outer join
 - It can be simulated using a `UNION` between `LEFT` and `RIGHT` joins
 
 ```sql
-SELECT cols FROM
-table LEFT JOIN
-table2
-ON join-condition
+SELECT cols
+FROM table
+LEFT JOIN table2
+    ON join-condition
 WHERE
-other-conditions;
+    other-conditions;
 ```
 
 ### Outer join example
 
-`SELECT cols FROM table LEFT JOIN table2 ON join-condition WHERE other-conditions;`
-
-`SELECT Country.Name as Country, City.Name as Capital FROM Country LEFT JOIN City ON Capital = City.Id WHERE Country.Name LIKE 'B%';`
-
 ```sql
+SELECT Country.Name as Country, City.Name as Capital
+FROM Country
+LEFT JOIN City ON Capital = City.Id
+WHERE Country.Name LIKE 'B%';
+```
+
+```shell
 +-------------------------------+--------------+
 | Country                       | Capital      |
 +-------------------------------+--------------+
@@ -636,8 +643,9 @@ WHERE CountryCode = (SELECT Code FROM Country WHERE Name = 'Finland');
 - NULL is Returned for an Empty Result Set
 
 ```sql
-SELECT Country.Name, 100 * CountryPopulation / 
-(SELECT SUM(Population) FROM Country) AS pct_world_pop 
+SELECT
+    Country.Name,
+    100 * CountryPopulation / (SELECT SUM(Population) FROM Country) AS pct_world_pop 
 FROM Country;
 
 +---------------------+--------------+
@@ -686,12 +694,14 @@ Can be used in a `FROM` clause with a table alias
 Use with `WHERE` and `IN`, `EXISTS`, `ANY`, `ALL` or `SOME`
 
 ```sql
-SELECT * FROM
-(SELECT Code, Name
- FROM Country
- WHERE IndepYear IS NOT NULL)
- AS independent_countries;
-
+SELECT *
+FROM (
+    SELECT Code, Name
+    FROM Country
+    WHERE IndepYear IS NOT NULL
+) AS independent_countries;
+```
+```shell
 +------+---------------+
 | Code | Name          |
 +------+---------------+
