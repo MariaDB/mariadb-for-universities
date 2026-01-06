@@ -324,13 +324,25 @@ innodb_buffer_pool_filename = ib_buffer_pool
 #### Global Variables
 
 - Global Variables are System Wide
-
-  `SHOW GLOBAL VARIABLES;`
-
 - Set in configuration file at start
+- Can be fetched with SHOW statement
+
+  ```sql
+  -- list of all global variables
+  SHOW GLOBAL VARIABLES;
+
+  -- get variable by name
+  SHOW GLOBAL VARIABLES WHERE Variable_name = '<valiabe_name>';
+
+  -- get variables by mask
+  SHOW GLOBAL VARIABLES LIKE 'innodb%';
+  ```
+
 - Can be changed with SET statement
 
-  `SET GLOBAL tmp_table_size = 32*1024*1024;`
+  ```sql
+  SET GLOBAL tmp_table_size = 32*1024*1024;
+  ```
 
   Only user accounts with the SUPER privilege can dynamically change global system variables.
 
@@ -338,7 +350,16 @@ innodb_buffer_pool_filename = ib_buffer_pool
 
 - SHOW GLOBAL STATUS provides Counters and Thresholds of Internal Statistics
 
-  `SHOW GLOBAL STATUS LIKE '%innodb_buffer_pool%';`
+  ```sql
+  -- get all status variables with values
+  SHOW GLOBAL STATUS;
+
+  -- get status variable by name 
+  SHOW GLOBAL STATUS WHERE Variable_name = 'Opened_tables';
+
+  -- get status variable by maask 
+  SHOW GLOBAL STATUS LIKE '%innodb_buffer_pool%';
+  ```
 
 - Check Status Variables to Decide on Adjustments to Global Variables
 
@@ -348,22 +369,26 @@ Global Variable Values are Defaults for New Sessions
 
 ```sql
 SHOW GLOBAL VARIABLES LIKE '%character_set_client%';
-+--------------------+-------+
-| Variable_name      | Value |
-+--------------------+-------+
+```
+```shell
++----------------------+--------+
+| Variable_name        | Value  |
++----------------------+--------+
 | character_set_client | latin1 |
-+--------------------+-------+
++----------------------+--------+
 ```
 
 Session Variables are Values for Current Session
 
 ```sql
 SHOW SESSION VARIABLES LIKE '%character_set_client%';
-+--------------------+-------+
-| Variable_name      | Value |
-+--------------------+-------+
+```
+```shell
++----------------------+-------+
+| Variable_name        | Value |
++----------------------+-------+
 | character_set_client | greek |
-+--------------------+-------+
++----------------------+-------+
 ```
 
 ## Log Files
