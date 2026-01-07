@@ -82,20 +82,26 @@ START TRANSACTION;   /* or BEGIN */
 ### An Example of a Transaction
 
 ```sql
-`START TRANSACTION;`  /* Start transaction with START TRANSACTION or BEGIN */
-…  /* Perform your SQL statements */
-`SAVEPOINT sp1;`  /* Set savepoints sp1 */
-…  
-`SAVEPOINT sp2;`  /* Set savepoints sp2 */
-…  
-`SAVEPOINT sp3;`  /* Set savepoints sp3 */
+START TRANSACTION;  /* Start transaction with START TRANSACTION or BEGIN */
 
-`RELEASE SAVEPOINT sp2;`  /* Deletes savepoint sp2 and all savepoints defined after which includes sp3 */
+/* Perform your SQL statements */
 
-`ROLLBACK TO sp1;`  /* If anything goes wrong, undo only up to some savepoint */
-`ROLLBACK;`  /* If anything goes wrong, undo all changes in the transaction */
+SAVEPOINT sp1;  /* Set savepoints sp1 */
 
-`COMMIT;`  /* Else if everything is successful, commit the changes */
+/* Perform more SQL statements */
+
+SAVEPOINT sp2;  /* Set savepoints sp2 */
+
+/* Perform more SQL statements */
+
+SAVEPOINT sp3;  /* Set savepoints sp3 */
+
+RELEASE SAVEPOINT sp2;  /* Deletes savepoint sp2 and all savepoints defined after which includes sp3 */
+
+ROLLBACK TO sp1;  /* If anything goes wrong, undo only up to some savepoint */
+ROLLBACK;  /* If anything goes wrong, undo all changes in the transaction */
+
+COMMIT;  /* Else if everything is successful, commit the changes */
 
 /* End of transaction */
 ```
