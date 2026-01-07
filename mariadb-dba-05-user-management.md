@@ -152,11 +152,9 @@ SET PASSWORD FOR 'user'@'host' = PASSWORD('mariadb2');
 #### The `ALTER USER` statement allows for easy modification of existing user accounts
 
 Changing a user's password can be rewritten to use the `ALTER USER` statement
-sql
+```sql
 ALTER USER CURRENT_USER() IDENTIFIED BY 'mariadb2';
 ```
-
-### Managing Users
 
 `ALTER USER` statement to limit the number of simultaneous connections
 
