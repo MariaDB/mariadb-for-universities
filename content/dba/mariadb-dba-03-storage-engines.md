@@ -22,11 +22,14 @@ license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 ### Storage Engines
 
 ```sql
-`SHOW ENGINES;`
+-- show supported storage engines
+SHOW ENGINES;
 
-`CREATE TABLE table1 (col1 INT) ENGINE = Aria;`
+-- create table using 'Aria' storage engine
+CREATE TABLE table1 (col1 INT) ENGINE = Aria;
 
-`ALTER TABLE table1 ENGINE = InnoDB;`
+-- change table storage engine to 'InnoDB'
+ALTER TABLE table1 ENGINE = InnoDB;
 ```
 
 - Multiple storage engines on a server and within a query are allowed

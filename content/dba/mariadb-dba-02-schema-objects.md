@@ -96,7 +96,13 @@ Corresponds to a directory within the data directory
 
 All other objects reside within user-created databases however certain objects such as user accounts, roles, stored procedures and plugins reside within system databases.
 
-`CREATE DATABASE world;`
+```sql
+-- create new database with name 'world'
+CREATE DATABASE `world`;
+
+-- list of exists databases
+SHOW DATABASES;
+```
 
 ### Tables
 
@@ -138,6 +144,23 @@ Index
 - Attribute of a table
 - Has potential for contention at scale
 
+### AUTO_INCREMENT
+
+- Use `LAST_INSERT_ID()` to obtain the value generated for the client connection
+- `SERIAL` is a synonym for `BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE`
+- In Aria the counter can be set back manually if the counter value wraps
+- InnoDB prepares `AUTO_INCREMENT` counters when MariaDB Server starts
+  - Single mutex on a table, behavior changed with `innodb_autoinc_lock_mode`
+
+| 0 | 1 | 2 |
+| :--- | :--- | :--- |
+| **Traditional** | **Consecutive** | **Interleaved** |
+| Default | | |
+| Holds table-level lock for all `INSERT`s until end of statement | Holds table-level lock for all bulk `INSERT`s (such as `LOAD DATA` or `INSERT ... SELECT`) until end of statement | No table-level locks are held ever |
+| | For simple `INSERT`s, no table-level lock held | Fastest and most scalable |
+| | | Not safe for statement-based replication |
+| | | Generated IDs are not always consecutive |
+
 ### Column Attributes
 
 Columns have strict type definitions
@@ -147,10 +170,10 @@ Can specify DEFAULT value for column
 Only the primary key can be automatically incremented
 
 ```sql
-CREATE TABLE people
-
-(id INT AUTO_INCREMENT KEY,
-   name VARCHAR(20) DEFAULT 'unknown');
+CREATE TABLE people (
+    id INT AUTO_INCREMENT KEY,
+    name VARCHAR(20) DEFAULT 'unknown'
+);
 ```
 
 Columns can be NULL, unless defined NOT NULL
@@ -392,15 +415,23 @@ Stores information on:
 
 ### Methods of Accessing the Information Schema
 
-#### Accessing Directly
+**Accessing Directly (Using SELECT from relevant tables)**
 
 ```sql
-SELECT TABLE_SCHEMA,ENGINE,COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA NOT IN('mysql','information_schema','performance_schema') GROUP BY TABLE_SCHEMA,ENGINE;
+SELECT
+    TABLE_SCHEMA,
+    ENGINE,
+    COUNT(*)
+FROM information_schema.TABLES
+WHERE TABLE_SCHEMA NOT IN('mysql','information_schema','performance_schema')
+GROUP BY TABLE_SCHEMA, ENGINE;
 
-SELECT * FROM information_schema.global_status WHERE VARIABLE_NAME LIKE '%qcache%';
+SELECT *
+FROM information_schema.global_status
+WHERE VARIABLE_NAME LIKE '%qcache%';
 ```
 
-#### Using Show Statements
+**Using Show Statements**
 
 ```sql
 SHOW STATUS LIKE '%qcache%';
@@ -457,25 +488,6 @@ The unsigned range is 0 to 4,294,967,295.
   - Strict Mode: errors are generated
 - `BIGINT` can enumerate more than all the ants on Earth and shouldn’t be your default choice
 - `TINYINT(1)` is used for `BOOLEAN` values and is aliased by the `BOOLEAN` type
-
-### AUTO_INCREMENT
-
-- Use `LAST_INSERT_ID()` to obtain the value generated for the client connection
-- `SERIAL` is a synonym for `BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE`
-- In Aria the counter can be set back manually if the counter value wraps
-- InnoDB prepares `AUTO_INCREMENT` counters when MariaDB Server starts
-  - Single mutex on a table, behavior changed with `innodb_autoinc_lock_mode`
-
-| 0 | 1 | 2 |
-|---|---|---|
-| **Traditional** | **Consecutive** | **Interleaved** |
-| default |  |  |
-| Holds table-level lock for all `INSERT`s until end of statement | Holds table-level lock for all bulk `INSERT`s (such as `LOAD DATA` or `INSERT ... SELECT`) until end of statement | No table-level locks are held ever |
-|  | For simple `INSERT`s, no table-level lock held | Fastest and most scalable |
-|  |  | Not safe for statement-based replication |
-|  |  | Generated IDs are not always consecutive |
-
-### Numeric Data Types
 
 - FLOAT
 - DOUBLE
