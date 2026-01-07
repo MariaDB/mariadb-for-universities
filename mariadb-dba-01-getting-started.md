@@ -105,8 +105,6 @@ When database installed correctly, you should to see output like below
 mariadb from 11.8.5-MariaDB, client 15.2 for debian-linux-gnu (x86_64) using  EditLine wrapper
 ```
 
-You should to see the installed MariaDB version and current timestamp
-
 ### Upgrading MariaDB
 
 #### What to Consider
