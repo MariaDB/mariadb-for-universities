@@ -78,7 +78,7 @@ This allows for further flexibility and avoids frequent changes to the table str
 
 The old `mysql.user` table is a view on `mysql.global_priv`
 
-```sql
+```shell
 MariaDB [(none)]> DESCRIBE mysql.global_priv;
 +-------+-------------+------+-----+---------+-------+
 | Field | Type        | Null | Key | Default | Extra |
