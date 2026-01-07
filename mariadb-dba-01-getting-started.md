@@ -491,8 +491,8 @@ log_slow_disabled_statements='admin,call,slave,sp'
 FLUSH LOGS;
 ```
 
-```sh
-# mariadb-admin flush-logs
+```shell
+$ mariadb-admin flush-logs
 ```
 
 An alternative method from the command-line
