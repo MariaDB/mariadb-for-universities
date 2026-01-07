@@ -41,7 +41,9 @@ Adopt a convention, such as always creating and referring to databases and table
 - Corresponds to directory within data directory
 - All other objects reside within a database except user accounts, roles and plugins
 
-`CREATE DATABASE world;`
+```sql
+CREATE DATABASE world;
+```
 
 ### Tables
 
@@ -74,9 +76,10 @@ Can specify DEFAULT value for column
 Only Primary Key can be automatically incremented
 
 ```sql
-CREATE TABLE people
-(id INT AUTO_INCREMENT KEY,
-    name VARCHAR(20) DEFAULT 'unknown');
+CREATE TABLE people (
+    id INT AUTO_INCREMENT KEY,
+    name VARCHAR(20) DEFAULT 'unknown'
+);
 ```
 
 Columns can be NULL, unless defined NOT NULL
@@ -244,7 +247,7 @@ Types: Binary, Numeric, String, Temporal, and User Defined
 Use the most suitable data type to store all possible, required values  
 Will truncate silently and rounds (`sql_mode`)
 
-```sql
+```shell
 MariaDB [(none)]> help INT;
 Name: 'INT'
 Description: INT[(M)] [UNSIGNED] [ZEROFILL]
@@ -368,7 +371,7 @@ Character set may be global or for schema, table, or column
 SELECT CURTIME(4);
 ```
 
-```sql
+```shell
 | CURTIME(4) |
 |------------|
 | 05:33:09.1061 |
@@ -476,7 +479,7 @@ SELECT NOW() + INTERVAL 1 DAY
        AS 'Day & Hour Earlier';
 ```
 
-```sql
+```shell
 +---------------------+
 | Day & Hour Earlier  |
 +---------------------+
@@ -573,11 +576,14 @@ Documentation on String Functions: [https://mariadb.com/kb/en/library/string-fun
 Used in queries and data manipulation statements
 
 ```sql
-SELECT domain, domain_count FROM
-( SELECT SUBSTRING(email_address, LOCATE('@', email_address) +1 ) AS domain,
-COUNT(*) AS domain_count
-FROM clients_email
-GROUP BY domain ) AS derived1
+SELECT domain, domain_count
+FROM (
+    SELECT
+        SUBSTRING(email_address, LOCATE('@', email_address) +1 ) AS domain,
+        COUNT(*) AS domain_count
+    FROM clients_email
+    GROUP BY domain
+) AS derived1
 WHERE domain_count > 200
 LIMIT 100;
 ```
@@ -602,14 +608,19 @@ Aggregate Functions Reduce a Set of Values to a Single Value
 ```sql
 SELECT COUNT(*)
 FROM City;
+```
+```shell
 +----------+
 | COUNT(*) |
 +----------+
 | 4079     |
 +----------+
-
+```
+```sql
 SELECT COUNT(DISTINCT CountryCode)
 FROM City;
+```
+```shell
 +-----------------------------+
 | COUNT(DISTINCT CountryCode) |
 +-----------------------------+
@@ -635,7 +646,7 @@ With an initial investment of $1,000 in 2009, calculate the value of the investm
 
 Calculating compound interest: Find each year's ROR:
 
-```sql
+```shell
 SELECT YEAR, 1+ROR AS multiplier, LOG(1+ROR) 
 FROM investment;
 +------+-----------+---------------------+
@@ -661,6 +672,8 @@ Calculating compound interest:
    ```sql
    SELECT SUM(LOG(1+ROR))
    FROM investment;
+   ```
+   ```shell
    +--------------------+
    | SUM(LOG(1+ROR))    |
    +--------------------+
@@ -673,6 +686,8 @@ Calculating compound interest:
    ```sql
    SELECT EXP(SUM(LOG(1+ROR)))
    FROM investment;
+   ```
+   ```shell
    +------------------------+
    | EXP(SUM(LOG(1+ROR)))   |
    +------------------------+
@@ -692,7 +707,8 @@ Calculating compound interest:
 
 ```sql
 SELECT EXP(SUM(LOG(1+ROR)))*1000 FROM investment;
-
+```
+```shell
 +-------------------------+
 | EXP(SUM(LOG(1+ROR)))*1000 |
 +-------------------------+
@@ -726,7 +742,7 @@ JOIN investment b ON (a.YEAR >= b.YEAR)
 ORDER BY a.YEAR, a.ROR;
 ```
 
-```sql
+```shell
 +------+----------+------------------+
 | YEAR | ROR      | balance          |
 +------+----------+------------------+
