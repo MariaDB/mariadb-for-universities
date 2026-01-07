@@ -73,12 +73,14 @@ Official package repositories are available on our website
 
 ### Starting and Stopping the Server
 
-`systemctl [start|stop|restart|status] mariadb`
+```shell
+$ systemctl [start|stop|restart|status] mariadb
+```
 
 Configure start and stop timeouts by creating a `timeout.conf` file
 
-```sh
-# vi /etc/systemd/system/mariadb.service.d/timeout.conf
+```shell
+$ vi /etc/systemd/system/mariadb.service.d/timeout.conf
 
 [Service]
 TimeoutStartSec=30min
@@ -87,9 +89,20 @@ TimeoutStopSec=30min
 
 Reload the systemd daemon
 
-```sh
-# systemctl daemon-reload
-# systemctl restart mariadb
+```shell
+$ systemctl daemon-reload
+$ systemctl restart mariadb
+```
+
+### Verify Your Installation
+Run the following command to check installed version:
+```bash
+mariadb --version
+```
+
+When database installed correctly, you should to see output like below 
+```shell
+mariadb from 11.8.5-MariaDB, client 15.2 for debian-linux-gnu (x86_64) using  EditLine wrapper
 ```
 
 ### Upgrading MariaDB
@@ -158,15 +171,15 @@ Set Global Client Connection Limit (`max_connections=n`)
 - Display MariaDB settings and status counters
 - Use as an Interactive Session, or Pipe SQL via Shell
 
-```sh
-# mariadb --user=root -p
+```shell
+$ mariadb --user root -p
 MariaDB [(none)]> SHOW DATABASES;
 ```
 
 ```sh
-# mariadb -p -u user_name --execute "SHOW DATABASES"
-# mariadb -e "CREATE DATABASE world"
-# mariadb world < /path/to/world.sql
+$ mariadb -p -u user_name --execute "SHOW DATABASES"
+$ mariadb -e "CREATE DATABASE world"
+$ mariadb world < /path/to/world.sql
 ```
 
 ### MariaDB-admin - Command-line Tool
@@ -179,14 +192,14 @@ MariaDB [(none)]> SHOW DATABASES;
 - Create and Drop Databases
 
 ```sh
-# mariadb-admin processlist
-# mariadb-admin kill 12345678
-# mariadb-admin -u root -p create ragnar
-# mariadb-admin extended-status
-# mariadb-admin variables
-# mariadb-admin ping
-# mariadb-admin status
-# mariadb-admin shutdown
+$ mariadb-admin processlist
+$ mariadb-admin kill 12345678
+$ mariadb-admin -u root -p create ragnar
+$ mariadb-admin extended-status
+$ mariadb-admin variables
+$ mariadb-admin ping
+$ mariadb-admin status
+$ mariadb-admin shutdown
 ```
 
 ### Other Client Utilities
@@ -478,8 +491,8 @@ log_slow_disabled_statements='admin,call,slave,sp'
 FLUSH LOGS;
 ```
 
-```sh
-# mariadb-admin flush-logs
+```shell
+$ mariadb-admin flush-logs
 ```
 
 An alternative method from the command-line
