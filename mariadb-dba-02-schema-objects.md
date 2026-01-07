@@ -1,4 +1,4 @@
----
+CREATE DATABASE world;view---
 title: "Lesson 2: Schema Objects"
 url: "/dba/schema-objects/"
 date: 2025-04-07
@@ -173,7 +173,7 @@ Columns can be NULL, unless defined NOT NULL
 
 Customers Table
 
-```sql
+```shell
 | ID | FirstName | LastName |
 |----|-----------|----------|
 | 1  | Alice     | Evans    |
@@ -182,12 +182,14 @@ Customers Table
 
 Addresses Table
 
-```sql
-| CustomerID | Address1        | City     |
-|------------|-----------------|----------|
-| 1          | 123 Main Street | Anytown  |
+```shell
+| CustomerID | Address1          | City    |
+|------------|-------------------|---------|
+| 1          | 123 Main Street   | Anytown |
 | 2          | 456 Spruce Street | Anyburg |
 ```
+
+Create CustomerAddresses View as select from Customers and Addresses tables:
 
 ```sql
 CREATE VIEW CustomerAddresses AS
@@ -198,12 +200,15 @@ FROM Customers c
 JOIN Addresses a ON c.id = a.CustomerId;
 ```
 
-CustomerAddresses View
+Fetch data from CustomerAddresses View
 
 ```sql
-| FullName    | FullAddress             |
-|-------------|-------------------------|
-| Alice Evans | 123 Main Street, Anytown|
+SELECT FullName, FullAddress FROM CustomerAddresses;
+```
+```shell
+| FullName    | FullAddress               |
+|-------------|---------------------------|
+| Alice Evans | 123 Main Street, Anytown  |
 | Bob Smith   | 456 Spruce Street, Anyburg|
 ```
 
