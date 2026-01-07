@@ -28,7 +28,11 @@ jobs:
 
       - name: Check for links error
         run: |
-          docker run --rm -t -v $(pwd):/src -w /src lycheeverse/lychee:latest --exclude "(github|gitlab|www.linkedin).com" -n -v html_site/**/*.html
+          docker run --rm -t -v $(pwd):/src -w /src lycheeverse/lychee:latest \
+            --base html_site \
+            --exclude "(github|gitlab|www.linkedin).com" \
+            --exclude "^javascript:" \
+            -n -v html_site/**/*.html
 
       - name: Configure Git
         run: |
