@@ -397,7 +397,7 @@ SELECT CURTIME(4);
 
 - **ENUM** is an enumerated list of string values
   - Holds one of the values listed
-  - Uses a 2-byte integer index
+  - Stored as 2-byte integer index, presented as value
 
   ```sql
   CREATE TABLE country (
@@ -425,7 +425,7 @@ SELECT CURTIME(4);
   ```sql
   CREATE TABLE ipaddress (address INET6);
   ```
-  
+
 ### Built-in functions
 
 Types: String, Date and Time, Aggregate, Numeric, Control Flow
