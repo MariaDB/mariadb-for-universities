@@ -583,11 +583,14 @@ Try this on [SQLize.online](https://sqlize.online/sql/mariadb118/7a04936ecb50e04
 
 ```sql
 SELECT CURTIME(4);
-+-------------+
-| CURTIME(4)  |
-+-------------+
+```
+
+```shell
++---------------+
+| CURTIME(4)    |
++---------------+
 | 05:33:09.1061 |
-+-------------+
++---------------+
 ```
 
 - `DATE` — from 1000-01-01 to 9999-12-31
@@ -638,17 +641,18 @@ SELECT
 ```sql
 SELECT * FROM city;
 
-+---------+------------------------------------------+
-| Name    | Info                                     |
-+---------+------------------------------------------+
-| New York| {"Population": "8008278", "Country":"USA"}|
-+---------+------------------------------------------+
++----------+--------------------------------------------+
+| Name     | Info                                       |
++----------+--------------------------------------------+
+| New York | {"Population": "8008278", "Country":"USA"} |
++----------+--------------------------------------------+
 ```
 
 ### Special Data Types
 
 - **ENUM** is an enumerated list of string values
   - Holds one of the values listed
+  - Stored as 2-byte integer index, presented as value
 
   ```sql
   CREATE TABLE country (
@@ -657,7 +661,7 @@ SELECT * FROM city;
   ```
 
 - **SET** is a specified list of string values
-  - Can hold one or more values
+  - Can hold one or more values from the defined set
 
   ```sql
   CREATE TABLE countrylanguage (

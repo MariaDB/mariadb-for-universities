@@ -386,33 +386,46 @@ SELECT CURTIME(4);
 ```
 
 ```shell
-| CURTIME(4) |
-|------------|
++---------------+
+| CURTIME(4)    |
++---------------+
 | 05:33:09.1061 |
++---------------+
 ```
 
 ### Special data types
 
-- `ENUM` is an enumerated list of string values
+- **ENUM** is an enumerated list of string values
+  - Holds one of the values listed
   - Uses a 2-byte integer index
+
   ```sql
   CREATE TABLE country (
-   Continent ENUM('Asia','Europe','N America',
-   'Africa','Oceania','Antarctica','S America') );
+      Continent ENUM('Asia','Europe','N America','Africa','Oceania','Antarctica','S America') 
+   );
   ```
 
-- `SET` is a specified list of string values
-  - Can hold multiple specified values
+- **SET** is a specified list of string values
+  - Can hold one or more values from the defined set
+  
   ```sql
   CREATE TABLE countrylanguage (
-   CountryCode CHAR(3),
-   Language SET('English','French','Mandarin') );
+      CountryCode CHAR(3),
+      Language SET('English','French','Mandarin') 
+  );
 
   INSERT INTO countrylanguage VALUES
-  ('CHN','Mandarin'),
-  ('CAN','English,French');
+      ('CHN','Mandarin'),
+      ('CAN','English,French');
   ```
 
+- **INET6** is a data type for storing IPv6 IP addresses as well as IPv4
+  - Stores as a BINARY(16)
+  
+  ```sql
+  CREATE TABLE ipaddress (address INET6);
+  ```
+  
 ### Built-in functions
 
 Types: String, Date and Time, Aggregate, Numeric, Control Flow
