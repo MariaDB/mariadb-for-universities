@@ -683,63 +683,61 @@ SELECT * FROM city;
 
 ## Built-in Functions
 
-### Manipulating Date and Time
+### MariaDB Date and Time Functions:
 
-**Functions for Date and Time Manipulation**
-
-- ADDDATE()
-- ADDTIME()
-- CONVERT_TZ()
-- `CURDATE()`
-- CURTIME()
-- DATE()
-- `DATE_ADD()`
-- `DATE_FORMAT()`
-- `DATE_SUB()`
-- DATEDIFF()
-- DAYNAME()
-- DAYOFMONTH()
-- DAYOFWEEK()
-- DAYOFYEAR()
-- EXTRACT()
-- FROM_DAYS()
-- FROM_UNIXTIME()
-- GET_FORMAT()
-- `HOUR()`
-- LAST_DAY()
-- MAKEDATE()
-- MAKETIME()
-- MICROSECOND()
-- `MINUTE()`
-- `MONTH()`
-- MONTHNAME()
-- `NOW()`
-- PERIOD_ADD()
-- PERIOD_DIFF()
-- QUARTER()
-- SEC_TO_TIME()
-- SECOND()
-- STR_TO_DATE()
-- SUBDATE()
-- SUBTIME()
-- SYSDATE()
-- TIME()
-- TIME_FORMAT()
-- TIME_TO_SEC()
-- TIMEDIFF()
-- TIMESTAMP()
-- TIMESTAMPADD()
-- TIMESTAMPDIFF()
-- TO_DAYS()
-- UNIX_TIMESTAMP()
-- UTC_DATE()
-- UTC_TIME()
-- UTC_TIMESTAMP()
-- WEEK()
-- WEEKDAY()
-- WEEKOFYEAR()
-- `YEAR()`
-- YEARMONTH()
+- **ADDDATE()** - Adds a time interval to a date value.
+- **ADDTIME()** - Adds a specialized time interval (hours, minutes, seconds, microseconds) to a time or datetime.
+- **CONVERT_TZ()** - Converts a datetime value from one time zone to another.
+- **CURDATE()** - Returns the current date in 'YYYY-MM-DD' or YYYYMMDD format.
+- **CURTIME()** - Returns the current time in 'HH:MM:SS' or HHMMSS format.
+- **DATE()** - Extracts the date part of a date or datetime expression.
+- **DATE_ADD()** - Adds a time interval (INTERVAL) to a date or datetime value.
+- **DATE_FORMAT()** - Formats a date value according to a specified format string.
+- **DATE_SUB()** - Subtracts a time interval (INTERVAL) from a date or datetime value.
+- **DATEDIFF()** - Returns the number of days between two date values.
+- **DAYNAME()** - Returns the name of the weekday for a given date.
+- **DAYOFMONTH()** - Returns the day of the month (1 through 31) for a date.
+- **DAYOFWEEK()** - Returns the weekday index (1 = Sunday, 2 = Monday, ..., 7 = Saturday).
+- **DAYOFYEAR()** - Returns the day of the year (1 through 366) for a date.
+- **EXTRACT()** - Extracts a specific part (e.g., YEAR, MONTH, DAY) from a date or datetime.
+- **FROM_DAYS()** - Converts a numeric day count (from year 0) into a date value.
+- **FROM_UNIXTIME()** - Converts a Unix timestamp into a date or datetime string.
+- **GET_FORMAT()** - Returns a format string for various date/time standards (ISO, USA, etc.).
+- **HOUR()** - Returns the hour part (0 through 23) of a given time or datetime.
+- **LAST_DAY()** - Returns the last day of the month for a given date value.
+- **MAKEDATE()** - Returns a date value generated from a year and a day of the year.
+- **MAKETIME()** - Returns a time value generated from hour, minute, and second components.
+- **MICROSECOND()** - Returns the microseconds (0 through 999999) from a time or datetime.
+- **MINUTE()** - Returns the minute part (0 through 59) of a given time or datetime.
+- **MONTH()** - Returns the month part (1 through 12) of a given date.
+- **MONTHNAME()** - Returns the full name of the month for a given date.
+- **NOW()** - Returns the current date and time when the statement began executing.
+- **PERIOD_ADD()** - Adds a specified number of months to a period (formatted as YYMM or YYYYMM).
+- **PERIOD_DIFF()** - Returns the number of months between two periods (formatted as YYMM or YYYYMM).
+- **QUARTER()** - Returns the quarter of the year (1 through 4) for a given date.
+- **SEC_TO_TIME()** - Converts a value in seconds into a 'HH:MM:SS' time format.
+- **SECOND()** - Returns the second part (0 through 59) of a given time or datetime.
+- **STR_TO_DATE()** - Converts a string into a date or datetime based on a format string.
+- **SUBDATE()** - Subtracts a time interval from a date value (synonym for DATE_SUB).
+- **SUBTIME()** - Subtracts a time interval from a time or datetime value.
+- **SYSDATE()** - Returns the current date and time at the exact moment the function is called.
+- **TIME()** - Extracts the time part of a given datetime or time expression.
+- **TIME_FORMAT()** - Formats a time value according to a specified format string.
+- **TIME_TO_SEC()** - Converts a time value into the total number of seconds.
+- **TIMEDIFF()** - Returns the difference between two time or datetime values.
+- **TIMESTAMP()** - Returns a datetime value from a date/datetime or adds a time to an expression.
+- **TIMESTAMPADD()** - Adds a specified interval (unit) to a date or datetime expression.
+- **TIMESTAMPDIFF()** - Returns the difference between two date or datetime expressions in a specified unit.
+- **TO_DAYS()** - Returns the number of days from year 0 to the given date.
+- **UNIX_TIMESTAMP()** - Returns a Unix timestamp (seconds since '1970-01-01 00:00:00' UTC).
+- **UTC_DATE()** - Returns the current UTC date.
+- **UTC_TIME()** - Returns the current UTC time.
+- **UTC_TIMESTAMP()** - Returns the current UTC date and time.
+- **WEEK()** - Returns the week number for a given date.
+- **WEEKDAY()** - Returns the weekday index (0 = Monday, 1 = Tuesday, ..., 6 = Sunday).
+- **WEEKOFYEAR()** - Returns the calendar week of the date (1 through 53).
+- **YEAR()** - Returns the year part of a given date.
+- **YEARMONTH()** - Returns the year and month value (often used as an extraction unit or in periodic calculations).
 
 ### Examples of Date and Time Functions
 
@@ -778,69 +776,68 @@ set dt=str_to_date(@dt1,'%d/%m/%Y');
 
 ### Manipulating Strings
 
-#### Functions For String Manipulation
+### MariaDB Functions For String Manipulation
 
-- ASCII()
-- BIN()
-- BINARY
-- BIT_LENGTH()
-- CAST()
-- CHAR()
-- CHARACTER_LENGTH()
-- CHAR_LENGTH()
-- COALESCE()
-- CONCAT()
-- CONCAT_WS()
-- CONVERT()
-- ELT()
-- EXPORT_SET()
-- EXTRACTVALUE()
-- FIELD()
-- FIND_IN_SET()
-- FORMAT()
-- FROM_BASE64()
-- HEX()
-- INSERT()
-- INSTR()
-- LCASE()
-- LEFT()
-- LENGTH()
-- LIKE
-- LOAD_FILE()
-- LOCATE()
-- LOWER()
-- LPAD()
-- LTRIM()
-- MAKE_SET()
-- MATCH AGAINST
-- MID()
-- NOT LIKE
-- NOT REGEXP
-- OCTET_LENGTH()
-- ORD()
-- POSITION()
-- QUOTE()
-- REGEXP()
-- REPEAT()
-- REPLACE()
-- REVERSE()
-- RIGHT()
-- RPAD()
-- RTRIM()
-- SOUNDEX()
-- SOUNDS LIKE
-- SPACE()
-- STRCMP()
-- SUBSTR()
-- SUBSTRING()
-- SUBSTRING_INDEX()
-- TO_BASE64()
-- TRIM()
-- UCASE()
-- UNHEX()
-- UNHEX()
-- UPPER()
-- WEIGHT_STRING()
+- **ASCII()** - Returns the numeric ASCII value of the leftmost character.
+- **BIN()** - Returns a string representation of the binary value of a number.
+- **BINARY** - Casts a string to a binary string.
+- **BIT_LENGTH()** - Returns the length of a string in bits.
+- **CAST()** - Converts a value from one data type to another.
+- **CHAR()** - Returns the character for each integer passed.
+- **CHARACTER_LENGTH()** - Returns the length of a string in characters.
+- **CHAR_LENGTH()** - Synonym for `CHARACTER_LENGTH()`.
+- **COALESCE()** - Returns the first non-NULL value in a list.
+- **CONCAT()** - Concatenates two or more strings.
+- **CONCAT_WS()** - Concatenates strings with a separator.
+- **CONVERT()** - Converts a value to a different data type or character set.
+- **ELT()** - Returns the string at the specified index from a list.
+- **EXPORT_SET()** - Returns a string where bits in a value determine the inclusion of "on" or "off" strings.
+- **EXTRACTVALUE()** - Extracts a value from an XML string using XPath.
+- **FIELD()** - Returns the index of a string within a list of strings.
+- **FIND_IN_SET()** - Returns the index of a string within a comma-separated list.
+- **FORMAT()** - Formats a number with a specific number of decimal places and locale.
+- **FROM_BASE64()** - Decodes a base64-encoded string.
+- **HEX()** - Returns a hexadecimal representation of a value.
+- **INSERT()** - Inserts a substring into a string at a specific position, replacing a number of characters.
+- **INSTR()** - Returns the position of the first occurrence of a substring.
+- **LCASE()** - Synonym for `LOWER()`.
+- **LEFT()** - Returns a specified number of characters from the left of a string.
+- **LENGTH()** - Returns the length of a string in bytes.
+- **LIKE** - Simple pattern matching using `%` and `_`.
+- **LOAD_FILE()** - Reads a file and returns the content as a string.
+- **LOCATE()** - Returns the position of the first occurrence of a substring.
+- **LOWER()** - Converts a string to lowercase.
+- **LPAD()** - Left-pads a string with another string to a certain length.
+- **LTRIM()** - Removes leading spaces from a string.
+- **MAKE_SET()** - Returns a comma-separated list of strings based on bits set in a value.
+- **MATCH AGAINST** - Performs full-text searches.
+- **MID()** - Synonym for `SUBSTRING()`.
+- **NOT LIKE** - Negation of the `LIKE` pattern matching.
+- **NOT REGEXP** - Negation of regular expression pattern matching.
+- **OCTET_LENGTH()** - Synonym for `LENGTH()`.
+- **ORD()** - Returns the character code for the leftmost character if it is a multi-byte character.
+- **POSITION()** - Synonym for `LOCATE()`.
+- **QUOTE()** - Escapes a string for use in a SQL statement.
+- **REGEXP()** - Pattern matching using regular expressions.
+- **REPEAT()** - Repeats a string a specified number of times.
+- **REPLACE()** - Replaces all occurrences of a substring with another.
+- **REVERSE()** - Reverses the characters in a string.
+- **RIGHT()** - Returns a specified number of characters from the right of a string.
+- **RPAD()** - Right-pads a string with another string to a certain length.
+- **RTRIM()** - Removes trailing spaces from a string.
+- **SOUNDEX()** - Returns a Soundex string for phonetically matching words.
+- **SOUNDS LIKE** - Compares two strings using Soundex.
+- **SPACE()** - Returns a string containing a specified number of spaces.
+- **STRCMP()** - Compares two strings and returns 0 if they are identical.
+- **SUBSTR()** - Synonym for `SUBSTRING()`.
+- **SUBSTRING()** - Extracts a substring from a string starting at a specific position.
+- **SUBSTRING_INDEX()** - Returns a substring from a string before a count of occurrences of a delimiter.
+- **TO_BASE64()** - Encodes a string into base64 format.
+- **TRIM()** - Removes leading and trailing spaces or other specified characters.
+- **UCASE()** - Synonym for `UPPER()`.
+- **UNHEX()** - Converts hexadecimal data into a binary string.
+- **UPPER()** - Converts a string to uppercase.
+- **WEIGHT_STRING()** - Returns the binary weight string of a value used for sorting.
 
 ### An Example of a String Function
 
@@ -861,43 +858,43 @@ LIMIT 100;
 
 ### Working with the JSON Data Type
 
-#### JSON Functions
+### MariaDB JSON Functions:
 
-`JSONPath Expressions`  
-`JSON_ARRAY`  
-`JSON_ARRAYAGG`  
-`JSON_ARRAY_APPEND`  
-`JSON_ARRAY_INSERT`  
-`JSON_COMPACT`  
-`JSON_CONTAINS`  
-`JSON_CONTAINS_PATH`  
-`JSON_DEPTH`  
-`JSON_DETAILED`  
-`JSON_EQUALS`  
-`JSON_EXISTS`  
-`JSON_EXTRACT`  
-`JSON_INSERT`  
-`JSON_KEYS`  
-`JSON_LENGTH`  
-`JSON_LOOSE`  
-`JSON_MERGE`  
-`JSON_MERGE_PATCH`  
-`JSON_MERGE_PRESERVE`  
-`JSON_NORMALIZE`  
-`JSON_OBJECT`  
-`JSON_OBJECTAGG`  
-`JSON_OVERLAPS`  
-`JSON_QUERY`  
-`JSON_QUOTE`  
-`JSON_REMOVE`  
-`JSON_REPLACE`  
-`JSON_SEARCH`  
-`JSON_SET`  
-`JSON_TABLE`  
-`JSON_TYPE`  
-`JSON_UNQUOTE`  
-`JSON_VALID`  
-`JSON_VALUE`
+- **JSONPath Expressions** - Notation used to address specific parts of a JSON document.
+- **JSON_ARRAY** - Creates a JSON array from a list of values.
+- **JSON_ARRAYAGG** - Aggregates a result set into a single JSON array.
+- **JSON_ARRAY_APPEND** - Appends values to the end of the indicated arrays within a JSON document.
+- **JSON_ARRAY_INSERT** - Inserts values into a JSON array at specified positions.
+- **JSON_COMPACT** - Removes all unnecessary whitespace from a JSON document to reduce its size.
+- **JSON_CONTAINS** - Returns 1 if a JSON document contains a specific object at a specific path, otherwise 0.
+- **JSON_CONTAINS_PATH** - Returns 1 if a JSON document contains data at the specified paths.
+- **JSON_DEPTH** - Returns the maximum depth of a JSON document.
+- **JSON_DETAILED** - Formats a JSON document with indentation and line breaks for human readability.
+- **JSON_EQUALS** - Returns 1 if two JSON documents are equivalent, otherwise 0.
+- **JSON_EXISTS** - Checks if a specific path exists within a JSON document.
+- **JSON_EXTRACT** - Returns data from a JSON document at the specified paths.
+- **JSON_INSERT** - Inserts values into a JSON document at specified paths without replacing existing values.
+- **JSON_KEYS** - Returns the keys of a JSON object as a JSON array.
+- **JSON_LENGTH** - Returns the number of elements in a JSON array or the number of members in a JSON object.
+- **JSON_LOOSE** - Normalizes a JSON document and adds minimal whitespace for a "loose" compact format.
+- **JSON_MERGE** - Alias for `JSON_MERGE_PRESERVE`; merges multiple JSON documents.
+- **JSON_MERGE_PATCH** - Merges documents following the RFC 7396 merge patch algorithm (replaces existing keys).
+- **JSON_MERGE_PRESERVE** - Merges multiple JSON documents, preserving all values and keys.
+- **JSON_NORMALIZE** - Normalizes a JSON document by removing extra whitespace and sorting keys.
+- **JSON_OBJECT** - Creates a JSON object from a provided list of key-value pairs.
+- **JSON_OBJECTAGG** - Aggregates key-value pairs from a result set into a single JSON object.
+- **JSON_OVERLAPS** - Returns 1 if two JSON documents share any common elements or key-value pairs.
+- **JSON_QUERY** - Extracts an object or internal array from a JSON document.
+- **JSON_QUOTE** - Quotes a string as a JSON value by adding surrounding double quotes and escaping characters.
+- **JSON_REMOVE** - Removes data from a JSON document at the specified paths.
+- **JSON_REPLACE** - Replaces existing values at specified paths in a JSON document.
+- **JSON_SEARCH** - Returns the path to a specific string within a JSON document.
+- **JSON_SET** - Inserts or updates values in a JSON document at the specified paths.
+- **JSON_TABLE** - A table function that converts JSON data into a relational table format.
+- **JSON_TYPE** - Returns the data type of a JSON value as a string.
+- **JSON_UNQUOTE** - Unquotes a JSON value and returns the result as a regular string.
+- **JSON_VALID** - Returns 1 if a string is a valid JSON document, otherwise 0.
+- **JSON_VALUE** - Extracts a scalar value (string, number, or boolean) from a JSON document.
 
 ### Examples of JSON Functions
 
