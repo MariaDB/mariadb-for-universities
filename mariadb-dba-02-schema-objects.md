@@ -503,44 +503,57 @@ The unsigned range is 0 to 4,294,967,295.
 - `REAL` is a synonym for `DOUBLE`
   - Unless in `REAL_AS_FLOAT` SQL mode
 
-### String Data Types 
+### String data types
 
-All String Data Types Have A Character Set
+MariaDB provides several string data types to store character data efficiently. These types are used for everything from single-character codes to large-scale text documents, and they are defined by their maximum length, character set, and collation.
 
-- CHAR
-- VARCHAR
-- TINYTEXT
-- TEXT
-- MEDIUMTEXT
-- LONGTEXT
-
-- **CHAR (n)** - Number of characters, not bytes, wide
+- `CHAR(n)` - Number of characters, not bytes, wide
   - Always stores n characters
   - Automatically pads with spaces for shorter strings
-- **VARCHAR (n)** - Variable length up to maximum n characters
-  - Changes to `CHAR` in implicit temporary tables and mysgld internal buffers
+- `VARCHAR(n)` - Variable length up to maximum n characters
+  - Changes to `CHAR` in Implicit Temporary Tables and mysqld internal buffers
   - 256 characters and longer treated as `TEXT`
   - For InnoDB, this maximum will depend on the row format
-- **TEXT** - Large text object
-  - Not supported by the `MEMORY` storage engine
+- `TEXT` - Large text object
+  - Up to 65,535 (2^16 - 1) characters
+  - Not supported by the `MEMORY` Storage Engine
   - MariaDB uses `ARIA` for implicit on-disk temporary tables
+- `TINYTEXT` - Text type limited up to 255 (2^8 - 1) characters
+- `MEDIUMTEXT` - Text type limited up to 16,777,215 (2^24 - 1) characters
+- `LONGTEXT` - Text type limited up to 4,294,967,295 (2^32 - 1) characters
 
+#### String data attributes
 
-### String Data Types 
+String columns are defined by a **Character Set** and a **Collation**. These can be inherited from the server or database, or set specifically at the table or column level.
 
-Character Set May Be Global or For Schema, Table, or Column
+- **Character Sets**: Determine how characters are encoded. Modern MariaDB (10.6+) defaults to `utf8mb4` for full Unicode support. Multi-byte sets provide broader character support but increase disk storage and memory requirements.
+- **Collations**: A set of rules for comparing and sorting strings. Modern MariaDB uses UCA (Unicode Collation Algorithm) based collations, such as `utf8mb4_uca1400_ai_ci`, which offer improved linguistic accuracy and can be overridden within specific queries.
 
-- CHAR
-- VARCHAR
-- TINYTEXT
-- TEXT
-- MEDIUMTEXT
-- LONGTEXT
+Column table and column collation may be defined on table creation. Example below shows couple of variants:
+```sql
+CREATE TABLE t (
+    -- colums with charset latin1 and defalult collation
+    latin_name text CHARSET latin1,
+    -- column with default charset and utf8mb4_general_ci collation
+    utf8mb4_name text COLLATE utf8mb4_general_ci,
+    -- column with certain charset and collation
+    utf8mb3_name text CHARSET utf8mb3 COLLATE utf8mb3_general_ci  
+);
+```
 
-- Multi-byte character sets increase disk storage and working memory requirements
-  - `UTF-8` requires 3 or 4 bytes per character
-- Collations (character order) affect string comparison
-- Collations can be changed for a query
+How to inspect Character Set and Collation? One of methods - call `CREATE TABLE <table name>;` command.
+```shell
+|-------|---------------------------------------------------------------------------------------|
+| Table | Create Table                                                                          |
+|-------|---------------------------------------------------------------------------------------|
+| t     | CREATE TABLE `t` (                                                                    |
+|       |   `latin_name` text CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,      |
+|       |   `utf8mb4_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,  |
+|       |   `utf8mb3_name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL   |
+|       | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci                 |
+```
+
+Try this on [SQLize.online](https://sqlize.online/sql/mariadb118/7a04936ecb50e04de1745033909387e4/)
 
 ### Binary Data Types
 
