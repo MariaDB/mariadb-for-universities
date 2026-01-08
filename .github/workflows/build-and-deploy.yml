@@ -1,0 +1,63 @@
+name: Build and Deploy Hugo Site
+
+on:
+  push:
+    branches:
+      - deploy
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout deploy branch
+        uses: actions/checkout@v4
+        with:
+          ref: deploy
+          fetch-depth: 0  # Fetch all history for proper git operations
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.136.5'
+          extended: false
+
+      - name: Build Hugo site
+        run: hugo --minify --destination html_site
+
+      - name: Check for links error
+        run: |
+          docker run --rm -t -v $(pwd):/src -w /src lycheeverse/lychee:latest \
+            --base html_site \
+            --exclude "(github|gitlab|www.linkedin).com" \
+            --exclude "^javascript:" \
+            -n -v html_site/**/*.html
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'github-actions@github.com'
+
+      - name: Commit and push if changed
+        run: |
+          git add html_site/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Build Hugo site [skip ci]" && git push)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to HZ server
+        run: |
+          # Set up SSH
+          mkdir -p ~/.ssh
+          echo "${{ secrets.KNOWN_HOST }}" > ~/.ssh/known_hosts
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          
+          # Deploy with rsync
+          rsync -avz --delete -e "ssh -p ${{ secrets.SERVER_PORT }} -i ~/.ssh/deploy_key" \
+            html_site/ \
+            ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/var/www/uni.mariadb.org/
+
+          # Cleanup SSH files
+          rm -rf ~/.ssh/*
