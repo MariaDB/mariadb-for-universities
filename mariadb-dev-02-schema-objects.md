@@ -533,68 +533,68 @@ set dts=str_to_date(@dt1,'%d/%m/%Y');
 
 ### Manipulating strings
 
-Functions for string manipulation
+### MariaDB Functions For String Manipulation
 
-- `ASCII()`
-- `BIN()`
-- `BINARY`
-- `BIT_LENGTH()`
-- `CAST()`
-- `CHAR()`
-- `CHARACTER_LENGTH()`
-- `CHAR_LENGTH()`
-- `CHR()`
-- `CONCAT()`
-- `CONCAT_WS()`
-- `CONVERT()`
-- `ELT()`
-- `EXPORT_SET()`
-- `EXTRACTVALUE()`
-- `FIELD()`
-- `FIND_IN_SET()`
-- `FORMAT()`
-- `FROM_BASE64()`
-- `HEX()`
-- `INSERT()`
-- `INSTR()`
-- `LCASE()`
-- `LEFT()`
-- `LENGTH()`
-- `LIKE`
-- `LOAD_FILE()`
-- `LOCATE()`
-- `LOWER()`
-- `LPAD()`
-- `LTRIM()`
-- `MAKE_SET()`
-- `MATCH AGAINST()`
-- `MID()`
-- `NOT LIKE`
-- `NOT REGEXP`
-- `OCTET_LENGTH()`
-- `ORD()`
-- `POSITION()`
-- `QUOTE()`
-- `REPEAT()`
-- `REPLACE()`
-- `REVERSE()`
-- `RIGHT()`
-- `RPAD()`
-- `RTRIM()`
-- `SOUNDEX()`
-- `SOUNDS LIKE`
-- `SPACE()`
-- `STRCMP()`
-- `SUBSTR()`
-- `SUBSTRING()`
-- `SUBSTRING_INDEX()`
-- `TO_BASE64()`
-- `TRIM()`
-- `UCASE()`
-- `UNHEX()`
-- `UPDATEXML()`
-- `UPPER()`
-- `WEIGHT_STRING()` 
+- **ASCII()** - Returns the numeric ASCII value of the leftmost character.
+- **BIN()** - Returns a string representation of the binary value of a number.
+- **BINARY** - Casts a string to a binary string.
+- **BIT_LENGTH()** - Returns the length of a string in bits.
+- **CAST()** - Converts a value from one data type to another.
+- **CHAR()** - Returns the character for each integer passed.
+- **CHARACTER_LENGTH()** - Returns the length of a string in characters.
+- **CHAR_LENGTH()** - Synonym for `CHARACTER_LENGTH()`.
+- **COALESCE()** - Returns the first non-NULL value in a list.
+- **CONCAT()** - Concatenates two or more strings.
+- **CONCAT_WS()** - Concatenates strings with a separator.
+- **CONVERT()** - Converts a value to a different data type or character set.
+- **ELT()** - Returns the string at the specified index from a list.
+- **EXPORT_SET()** - Returns a string where bits in a value determine the inclusion of "on" or "off" strings.
+- **EXTRACTVALUE()** - Extracts a value from an XML string using XPath.
+- **FIELD()** - Returns the index of a string within a list of strings.
+- **FIND_IN_SET()** - Returns the index of a string within a comma-separated list.
+- **FORMAT()** - Formats a number with a specific number of decimal places and locale.
+- **FROM_BASE64()** - Decodes a base64-encoded string.
+- **HEX()** - Returns a hexadecimal representation of a value.
+- **INSERT()** - Inserts a substring into a string at a specific position, replacing a number of characters.
+- **INSTR()** - Returns the position of the first occurrence of a substring.
+- **LCASE()** - Synonym for `LOWER()`.
+- **LEFT()** - Returns a specified number of characters from the left of a string.
+- **LENGTH()** - Returns the length of a string in bytes.
+- **LIKE** - Simple pattern matching using `%` and `_`.
+- **LOAD_FILE()** - Reads a file and returns the content as a string.
+- **LOCATE()** - Returns the position of the first occurrence of a substring.
+- **LOWER()** - Converts a string to lowercase.
+- **LPAD()** - Left-pads a string with another string to a certain length.
+- **LTRIM()** - Removes leading spaces from a string.
+- **MAKE_SET()** - Returns a comma-separated list of strings based on bits set in a value.
+- **MATCH AGAINST** - Performs full-text searches.
+- **MID()** - Synonym for `SUBSTRING()`.
+- **NOT LIKE** - Negation of the `LIKE` pattern matching.
+- **NOT REGEXP** - Negation of regular expression pattern matching.
+- **OCTET_LENGTH()** - Synonym for `LENGTH()`.
+- **ORD()** - Returns the character code for the leftmost character if it is a multi-byte character.
+- **POSITION()** - Synonym for `LOCATE()`.
+- **QUOTE()** - Escapes a string for use in a SQL statement.
+- **REGEXP()** - Pattern matching using regular expressions.
+- **REPEAT()** - Repeats a string a specified number of times.
+- **REPLACE()** - Replaces all occurrences of a substring with another.
+- **REVERSE()** - Reverses the characters in a string.
+- **RIGHT()** - Returns a specified number of characters from the right of a string.
+- **RPAD()** - Right-pads a string with another string to a certain length.
+- **RTRIM()** - Removes trailing spaces from a string.
+- **SOUNDEX()** - Returns a Soundex string for phonetically matching words.
+- **SOUNDS LIKE** - Compares two strings using Soundex.
+- **SPACE()** - Returns a string containing a specified number of spaces.
+- **STRCMP()** - Compares two strings and returns 0 if they are identical.
+- **SUBSTR()** - Synonym for `SUBSTRING()`.
+- **SUBSTRING()** - Extracts a substring from a string starting at a specific position.
+- **SUBSTRING_INDEX()** - Returns a substring from a string before a count of occurrences of a delimiter.
+- **TO_BASE64()** - Encodes a string into base64 format.
+- **TRIM()** - Removes leading and trailing spaces or other specified characters.
+- **UCASE()** - Synonym for `UPPER()`.
+- **UNHEX()** - Converts hexadecimal data into a binary string.
+- **UPPER()** - Converts a string to uppercase.
+- **WEIGHT_STRING()** - Returns the binary weight string of a value used for sorting.
 
 Documentation on String Functions: [https://mariadb.com/kb/en/library/string-functions/](https://mariadb.com/kb/en/library/string-functions/)
 
