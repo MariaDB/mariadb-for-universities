@@ -898,38 +898,41 @@ LIMIT 100;
 
 ### Examples of JSON Functions
 
-#### Used to pull a scalar value from JSON data
+#### `JSON_VALUE` Used to pull a scalar value from JSON data
 
 ```sql
-SELECT name, latitude, longitude, 
-JSON_VALUE(attr, '$.details.foodType') AS food_type 
+SELECT 
+    name, 
+    latitude, 
+    longitude, 
+    JSON_VALUE(attr, '$.details.foodType') AS food_type 
 FROM locations 
 WHERE type = 'R';
-
-
+```
+```shell
 | name   | latitude   | longitude   | food_type |
 |--------|------------|-------------|-----------|
 | Shogun | 34.1561131 | -118.131943 | Japanese  |
 ```
 
-#### Used to return entire JSON object data
+#### `JSON_QUERY` Used to return entire JSON object data
 
 ```sql
-SELECT name, latitude, longitude, 
-JSON_QUERY(attr, '$.details') AS details 
+SELECT 
+    name, 
+    latitude, 
+    longitude, 
+     JSON_QUERY(attr, '$.details') AS details 
 FROM locations 
-WHERE type = 'R'\G
-
-*************************** 1. row ***************************
-name: Shogun
-latitude: 34.156113
-longitude: -118.131943
-details: {"foodType": "Japanese", "menu": "https://www.restaurantshogun.com/menu/teppan-1-22.pdf"}
+WHERE type = 'R';
+```
+```shell
+| name   | latitude   | longitude   | details                                                                                   |
+|--------|------------|-------------|-------------------------------------------------------------------------------------------|
+| Shogun | 34.1561131 | -118.131943 | {"foodType": "Japanese", "menu": "https://www.restaurantshogun.com/menu/teppan-1-22.pdf"} |
 ```
 
-### Examples of JSON Functions
-
-#### Used to validate JSON values
+#### `JSON_VALID` Used to validate JSON values
 
 ```sql
 CREATE TABLE locations (
@@ -945,14 +948,14 @@ CREATE TABLE locations (
 );
 ```
 
-#### Used to insert fields
+#### `JSON_INSERT` Used to insert fields
 
 ```sql
 UPDATE locations
     SET attr = JSON_INSERT(attr,'$.nickname','The Bean') WHERE id = 8;
 ```
 
-#### Used to create new arrays
+#### `JSON_ARRAY` Used to create new arrays
 
 ```sql
 UPDATE locations
@@ -961,9 +964,7 @@ UPDATE locations
     WHERE id = 1;
 ```
 
-### Examples of JSON Functions
-
-Used to convert data
+#### `JSON_TABLE` Used to convert data
 
 ```sql
 SELECT l.name, d.food_type, d.menu
@@ -974,9 +975,10 @@ FROM locations AS l,
          menu VARCHAR(200) PATH '$.menu')
      ) AS d
 WHERE id = 2;
-
-| name   | food_type | menu                                                                 |
-|--------|-----------|----------------------------------------------------------------------|
+```
+```shell
+| name   | food_type | menu                                                  |
+|--------|-----------|-------------------------------------------------------|
 | Shogun | Japanese  | https://www.restaurantshogun.com/menu/teppan-1-22.pdf |
 ```
 
