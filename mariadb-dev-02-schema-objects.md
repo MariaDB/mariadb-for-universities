@@ -617,18 +617,38 @@ LIMIT 100;
 
 ### Aggregate functions
 
-Used for Summary Operations
+Aggregate functions perform a calculation on a set of values and return a single result. Typically used in conjunction with the `GROUP BY` clause, these functions allow you to summarize data across multiple rows.
 
-Aggregate Functions Reduce a Set of Values to a Single Value
-- AVG()
-- COUNT()
-- GROUP_CONCAT()
-- MAX()
-- MIN()
-- STD()
-- STDDEV
-- SUM()
-- VARIANCE()
+### Common MariaDB Aggregate Functions:
+
+- **AVG()** - Returns the average value of the argument.
+- **COUNT()** - Returns a count of the number of non-NULL values in the rows retrieved by a SELECT statement.
+- **SUM()** - Returns the sum of the argument.
+- **GROUP_CONCAT()** - Returns a string result with the concatenated non-NULL values from a group.
+- **MAX()** - Returns the maximum value of the argument.
+- **MIN()** - Returns the minimum value of the argument.
+- **STD()** - Returns the population standard deviation of the argument.
+- **STDDEV()** - An Oracle-compatible synonym for STD(), returning the population standard deviation.
+- **VARIANCE()** - Returns the population standard variance of the argument.
+### Aggregation function examples
+
+**Without GROUP BY:**
+Returns a single summary row for all selected rows.
+
+```sql
+SELECT COUNT(*), AVG(Population), MAX(Population) 
+FROM City;
+```
+
+**With GROUP BY:**
+Groups the outcome by one or more columns to provide summaries for each group.
+
+```sql
+SELECT CountryCode, SUM(Population) AS TotalPopulation
+FROM City
+GROUP BY CountryCode;
+```
+
 
 `DISTINCT` Removes Duplicate Values before Aggregation (e.g., with `COUNT()` and `GROUP_CONCAT()`)
 
