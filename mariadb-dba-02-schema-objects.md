@@ -839,6 +839,8 @@ set dt=str_to_date(@dt1,'%d/%m/%Y');
 - **UPPER()** - Converts a string to uppercase.
 - **WEIGHT_STRING()** - Returns the binary weight string of a value used for sorting.
 
+Documentation on String Functions: [https://mariadb.com/kb/en/library/string-functions/](https://mariadb.com/kb/en/library/string-functions/)
+
 ### An Example of a String Function
 
 Used in Queries and Data Manipulation Statements
