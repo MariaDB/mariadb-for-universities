@@ -503,44 +503,57 @@ The unsigned range is 0 to 4,294,967,295.
 - `REAL` is a synonym for `DOUBLE`
   - Unless in `REAL_AS_FLOAT` SQL mode
 
-### String Data Types 
+### String data types
 
-All String Data Types Have A Character Set
+MariaDB provides several string data types to store character data efficiently. These types are used for everything from single-character codes to large-scale text documents, and they are defined by their maximum length, character set, and collation.
 
-- CHAR
-- VARCHAR
-- TINYTEXT
-- TEXT
-- MEDIUMTEXT
-- LONGTEXT
-
-- **CHAR (n)** - Number of characters, not bytes, wide
+- `CHAR(n)` - Number of characters, not bytes, wide
   - Always stores n characters
   - Automatically pads with spaces for shorter strings
-- **VARCHAR (n)** - Variable length up to maximum n characters
-  - Changes to `CHAR` in implicit temporary tables and mysgld internal buffers
+- `VARCHAR(n)` - Variable length up to maximum n characters
+  - Changes to `CHAR` in Implicit Temporary Tables and mysqld internal buffers
   - 256 characters and longer treated as `TEXT`
   - For InnoDB, this maximum will depend on the row format
-- **TEXT** - Large text object
-  - Not supported by the `MEMORY` storage engine
+- `TEXT` - Large text object
+  - Up to 65,535 (2^16 - 1) characters
+  - Not supported by the `MEMORY` Storage Engine
   - MariaDB uses `ARIA` for implicit on-disk temporary tables
+- `TINYTEXT` - Text type limited up to 255 (2^8 - 1) characters
+- `MEDIUMTEXT` - Text type limited up to 16,777,215 (2^24 - 1) characters
+- `LONGTEXT` - Text type limited up to 4,294,967,295 (2^32 - 1) characters
 
+#### String data attributes
 
-### String Data Types 
+String columns are defined by a **Character Set** and a **Collation**. These can be inherited from the server or database, or set specifically at the table or column level.
 
-Character Set May Be Global or For Schema, Table, or Column
+- **Character Sets**: Determine how characters are encoded. Modern MariaDB (10.6+) defaults to `utf8mb4` for full Unicode support. Multi-byte sets provide broader character support but increase disk storage and memory requirements.
+- **Collations**: A set of rules for comparing and sorting strings. Modern MariaDB uses UCA (Unicode Collation Algorithm) based collations, such as `utf8mb4_uca1400_ai_ci`, which offer improved linguistic accuracy and can be overridden within specific queries.
 
-- CHAR
-- VARCHAR
-- TINYTEXT
-- TEXT
-- MEDIUMTEXT
-- LONGTEXT
+Column table and column collation may be defined on table creation. Example below shows couple of variants:
+```sql
+CREATE TABLE t (
+    -- colums with charset latin1 and defalult collation
+    latin_name text CHARSET latin1,
+    -- column with default charset and utf8mb4_general_ci collation
+    utf8mb4_name text COLLATE utf8mb4_general_ci,
+    -- column with certain charset and collation
+    utf8mb3_name text CHARSET utf8mb3 COLLATE utf8mb3_general_ci  
+);
+```
 
-- Multi-byte character sets increase disk storage and working memory requirements
-  - `UTF-8` requires 3 or 4 bytes per character
-- Collations (character order) affect string comparison
-- Collations can be changed for a query
+How to inspect Character Set and Collation? One of methods - call `CREATE TABLE <table name>;` command.
+```shell
+|-------|---------------------------------------------------------------------------------------|
+| Table | Create Table                                                                          |
+|-------|---------------------------------------------------------------------------------------|
+| t     | CREATE TABLE `t` (                                                                    |
+|       |   `latin_name` text CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,      |
+|       |   `utf8mb4_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,  |
+|       |   `utf8mb3_name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL   |
+|       | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci                 |
+```
+
+Try this on [SQLize.online](https://sqlize.online/sql/mariadb118/7a04936ecb50e04de1745033909387e4/)
 
 ### Binary Data Types
 
@@ -570,11 +583,14 @@ Character Set May Be Global or For Schema, Table, or Column
 
 ```sql
 SELECT CURTIME(4);
-+-------------+
-| CURTIME(4)  |
-+-------------+
+```
+
+```shell
++---------------+
+| CURTIME(4)    |
++---------------+
 | 05:33:09.1061 |
-+-------------+
++---------------+
 ```
 
 - `DATE` — from 1000-01-01 to 9999-12-31
@@ -625,17 +641,18 @@ SELECT
 ```sql
 SELECT * FROM city;
 
-+---------+------------------------------------------+
-| Name    | Info                                     |
-+---------+------------------------------------------+
-| New York| {"Population": "8008278", "Country":"USA"}|
-+---------+------------------------------------------+
++----------+--------------------------------------------+
+| Name     | Info                                       |
++----------+--------------------------------------------+
+| New York | {"Population": "8008278", "Country":"USA"} |
++----------+--------------------------------------------+
 ```
 
 ### Special Data Types
 
 - **ENUM** is an enumerated list of string values
   - Holds one of the values listed
+  - Stored as 2-byte integer index, presented as value
 
   ```sql
   CREATE TABLE country (
@@ -644,7 +661,7 @@ SELECT * FROM city;
   ```
 
 - **SET** is a specified list of string values
-  - Can hold one or more values
+  - Can hold one or more values from the defined set
 
   ```sql
   CREATE TABLE countrylanguage (
@@ -666,63 +683,61 @@ SELECT * FROM city;
 
 ## Built-in Functions
 
-### Manipulating Date and Time
+### MariaDB Date and Time Functions:
 
-**Functions for Date and Time Manipulation**
-
-- ADDDATE()
-- ADDTIME()
-- CONVERT_TZ()
-- `CURDATE()`
-- CURTIME()
-- DATE()
-- `DATE_ADD()`
-- `DATE_FORMAT()`
-- `DATE_SUB()`
-- DATEDIFF()
-- DAYNAME()
-- DAYOFMONTH()
-- DAYOFWEEK()
-- DAYOFYEAR()
-- EXTRACT()
-- FROM_DAYS()
-- FROM_UNIXTIME()
-- GET_FORMAT()
-- `HOUR()`
-- LAST_DAY()
-- MAKEDATE()
-- MAKETIME()
-- MICROSECOND()
-- `MINUTE()`
-- `MONTH()`
-- MONTHNAME()
-- `NOW()`
-- PERIOD_ADD()
-- PERIOD_DIFF()
-- QUARTER()
-- SEC_TO_TIME()
-- SECOND()
-- STR_TO_DATE()
-- SUBDATE()
-- SUBTIME()
-- SYSDATE()
-- TIME()
-- TIME_FORMAT()
-- TIME_TO_SEC()
-- TIMEDIFF()
-- TIMESTAMP()
-- TIMESTAMPADD()
-- TIMESTAMPDIFF()
-- TO_DAYS()
-- UNIX_TIMESTAMP()
-- UTC_DATE()
-- UTC_TIME()
-- UTC_TIMESTAMP()
-- WEEK()
-- WEEKDAY()
-- WEEKOFYEAR()
-- `YEAR()`
-- YEARMONTH()
+- **ADDDATE()** - Adds a time interval to a date value.
+- **ADDTIME()** - Adds a specialized time interval (hours, minutes, seconds, microseconds) to a time or datetime.
+- **CONVERT_TZ()** - Converts a datetime value from one time zone to another.
+- **CURDATE()** - Returns the current date in 'YYYY-MM-DD' or YYYYMMDD format.
+- **CURTIME()** - Returns the current time in 'HH:MM:SS' or HHMMSS format.
+- **DATE()** - Extracts the date part of a date or datetime expression.
+- **DATE_ADD()** - Adds a time interval (INTERVAL) to a date or datetime value.
+- **DATE_FORMAT()** - Formats a date value according to a specified format string.
+- **DATE_SUB()** - Subtracts a time interval (INTERVAL) from a date or datetime value.
+- **DATEDIFF()** - Returns the number of days between two date values.
+- **DAYNAME()** - Returns the name of the weekday for a given date.
+- **DAYOFMONTH()** - Returns the day of the month (1 through 31) for a date.
+- **DAYOFWEEK()** - Returns the weekday index (1 = Sunday, 2 = Monday, ..., 7 = Saturday).
+- **DAYOFYEAR()** - Returns the day of the year (1 through 366) for a date.
+- **EXTRACT()** - Extracts a specific part (e.g., YEAR, MONTH, DAY) from a date or datetime.
+- **FROM_DAYS()** - Converts a numeric day count (from year 0) into a date value.
+- **FROM_UNIXTIME()** - Converts a Unix timestamp into a date or datetime string.
+- **GET_FORMAT()** - Returns a format string for various date/time standards (ISO, USA, etc.).
+- **HOUR()** - Returns the hour part (0 through 23) of a given time or datetime.
+- **LAST_DAY()** - Returns the last day of the month for a given date value.
+- **MAKEDATE()** - Returns a date value generated from a year and a day of the year.
+- **MAKETIME()** - Returns a time value generated from hour, minute, and second components.
+- **MICROSECOND()** - Returns the microseconds (0 through 999999) from a time or datetime.
+- **MINUTE()** - Returns the minute part (0 through 59) of a given time or datetime.
+- **MONTH()** - Returns the month part (1 through 12) of a given date.
+- **MONTHNAME()** - Returns the full name of the month for a given date.
+- **NOW()** - Returns the current date and time when the statement began executing.
+- **PERIOD_ADD()** - Adds a specified number of months to a period (formatted as YYMM or YYYYMM).
+- **PERIOD_DIFF()** - Returns the number of months between two periods (formatted as YYMM or YYYYMM).
+- **QUARTER()** - Returns the quarter of the year (1 through 4) for a given date.
+- **SEC_TO_TIME()** - Converts a value in seconds into a 'HH:MM:SS' time format.
+- **SECOND()** - Returns the second part (0 through 59) of a given time or datetime.
+- **STR_TO_DATE()** - Converts a string into a date or datetime based on a format string.
+- **SUBDATE()** - Subtracts a time interval from a date value (synonym for DATE_SUB).
+- **SUBTIME()** - Subtracts a time interval from a time or datetime value.
+- **SYSDATE()** - Returns the current date and time at the exact moment the function is called.
+- **TIME()** - Extracts the time part of a given datetime or time expression.
+- **TIME_FORMAT()** - Formats a time value according to a specified format string.
+- **TIME_TO_SEC()** - Converts a time value into the total number of seconds.
+- **TIMEDIFF()** - Returns the difference between two time or datetime values.
+- **TIMESTAMP()** - Returns a datetime value from a date/datetime or adds a time to an expression.
+- **TIMESTAMPADD()** - Adds a specified interval (unit) to a date or datetime expression.
+- **TIMESTAMPDIFF()** - Returns the difference between two date or datetime expressions in a specified unit.
+- **TO_DAYS()** - Returns the number of days from year 0 to the given date.
+- **UNIX_TIMESTAMP()** - Returns a Unix timestamp (seconds since '1970-01-01 00:00:00' UTC).
+- **UTC_DATE()** - Returns the current UTC date.
+- **UTC_TIME()** - Returns the current UTC time.
+- **UTC_TIMESTAMP()** - Returns the current UTC date and time.
+- **WEEK()** - Returns the week number for a given date.
+- **WEEKDAY()** - Returns the weekday index (0 = Monday, 1 = Tuesday, ..., 6 = Sunday).
+- **WEEKOFYEAR()** - Returns the calendar week of the date (1 through 53).
+- **YEAR()** - Returns the year part of a given date.
+- **YEARMONTH()** - Returns the year and month value (often used as an extraction unit or in periodic calculations).
 
 ### Examples of Date and Time Functions
 
@@ -761,69 +776,70 @@ set dt=str_to_date(@dt1,'%d/%m/%Y');
 
 ### Manipulating Strings
 
-#### Functions For String Manipulation
+### MariaDB Functions For String Manipulation
 
-- ASCII()
-- BIN()
-- BINARY
-- BIT_LENGTH()
-- CAST()
-- CHAR()
-- CHARACTER_LENGTH()
-- CHAR_LENGTH()
-- COALESCE()
-- CONCAT()
-- CONCAT_WS()
-- CONVERT()
-- ELT()
-- EXPORT_SET()
-- EXTRACTVALUE()
-- FIELD()
-- FIND_IN_SET()
-- FORMAT()
-- FROM_BASE64()
-- HEX()
-- INSERT()
-- INSTR()
-- LCASE()
-- LEFT()
-- LENGTH()
-- LIKE
-- LOAD_FILE()
-- LOCATE()
-- LOWER()
-- LPAD()
-- LTRIM()
-- MAKE_SET()
-- MATCH AGAINST
-- MID()
-- NOT LIKE
-- NOT REGEXP
-- OCTET_LENGTH()
-- ORD()
-- POSITION()
-- QUOTE()
-- REGEXP()
-- REPEAT()
-- REPLACE()
-- REVERSE()
-- RIGHT()
-- RPAD()
-- RTRIM()
-- SOUNDEX()
-- SOUNDS LIKE
-- SPACE()
-- STRCMP()
-- SUBSTR()
-- SUBSTRING()
-- SUBSTRING_INDEX()
-- TO_BASE64()
-- TRIM()
-- UCASE()
-- UNHEX()
-- UNHEX()
-- UPPER()
-- WEIGHT_STRING()
+- **ASCII()** - Returns the numeric ASCII value of the leftmost character.
+- **BIN()** - Returns a string representation of the binary value of a number.
+- **BINARY** - Casts a string to a binary string.
+- **BIT_LENGTH()** - Returns the length of a string in bits.
+- **CAST()** - Converts a value from one data type to another.
+- **CHAR()** - Returns the character for each integer passed.
+- **CHARACTER_LENGTH()** - Returns the length of a string in characters.
+- **CHAR_LENGTH()** - Synonym for `CHARACTER_LENGTH()`.
+- **COALESCE()** - Returns the first non-NULL value in a list.
+- **CONCAT()** - Concatenates two or more strings.
+- **CONCAT_WS()** - Concatenates strings with a separator.
+- **CONVERT()** - Converts a value to a different data type or character set.
+- **ELT()** - Returns the string at the specified index from a list.
+- **EXPORT_SET()** - Returns a string where bits in a value determine the inclusion of "on" or "off" strings.
+- **EXTRACTVALUE()** - Extracts a value from an XML string using XPath.
+- **FIELD()** - Returns the index of a string within a list of strings.
+- **FIND_IN_SET()** - Returns the index of a string within a comma-separated list.
+- **FORMAT()** - Formats a number with a specific number of decimal places and locale.
+- **FROM_BASE64()** - Decodes a base64-encoded string.
+- **HEX()** - Returns a hexadecimal representation of a value.
+- **INSERT()** - Inserts a substring into a string at a specific position, replacing a number of characters.
+- **INSTR()** - Returns the position of the first occurrence of a substring.
+- **LCASE()** - Synonym for `LOWER()`.
+- **LEFT()** - Returns a specified number of characters from the left of a string.
+- **LENGTH()** - Returns the length of a string in bytes.
+- **LIKE** - Simple pattern matching using `%` and `_`.
+- **LOAD_FILE()** - Reads a file and returns the content as a string.
+- **LOCATE()** - Returns the position of the first occurrence of a substring.
+- **LOWER()** - Converts a string to lowercase.
+- **LPAD()** - Left-pads a string with another string to a certain length.
+- **LTRIM()** - Removes leading spaces from a string.
+- **MAKE_SET()** - Returns a comma-separated list of strings based on bits set in a value.
+- **MATCH AGAINST** - Performs full-text searches.
+- **MID()** - Synonym for `SUBSTRING()`.
+- **NOT LIKE** - Negation of the `LIKE` pattern matching.
+- **NOT REGEXP** - Negation of regular expression pattern matching.
+- **OCTET_LENGTH()** - Synonym for `LENGTH()`.
+- **ORD()** - Returns the character code for the leftmost character if it is a multi-byte character.
+- **POSITION()** - Synonym for `LOCATE()`.
+- **QUOTE()** - Escapes a string for use in a SQL statement.
+- **REGEXP()** - Pattern matching using regular expressions.
+- **REPEAT()** - Repeats a string a specified number of times.
+- **REPLACE()** - Replaces all occurrences of a substring with another.
+- **REVERSE()** - Reverses the characters in a string.
+- **RIGHT()** - Returns a specified number of characters from the right of a string.
+- **RPAD()** - Right-pads a string with another string to a certain length.
+- **RTRIM()** - Removes trailing spaces from a string.
+- **SOUNDEX()** - Returns a Soundex string for phonetically matching words.
+- **SOUNDS LIKE** - Compares two strings using Soundex.
+- **SPACE()** - Returns a string containing a specified number of spaces.
+- **STRCMP()** - Compares two strings and returns 0 if they are identical.
+- **SUBSTR()** - Synonym for `SUBSTRING()`.
+- **SUBSTRING()** - Extracts a substring from a string starting at a specific position.
+- **SUBSTRING_INDEX()** - Returns a substring from a string before a count of occurrences of a delimiter.
+- **TO_BASE64()** - Encodes a string into base64 format.
+- **TRIM()** - Removes leading and trailing spaces or other specified characters.
+- **UCASE()** - Synonym for `UPPER()`.
+- **UNHEX()** - Converts hexadecimal data into a binary string.
+- **UPPER()** - Converts a string to uppercase.
+- **WEIGHT_STRING()** - Returns the binary weight string of a value used for sorting.
+
+Documentation on String Functions: [https://mariadb.com/kb/en/library/string-functions/](https://mariadb.com/kb/en/library/string-functions/)
 
 ### An Example of a String Function
 
@@ -844,78 +860,81 @@ LIMIT 100;
 
 ### Working with the JSON Data Type
 
-#### JSON Functions
+### MariaDB JSON Functions:
 
-`JSONPath Expressions`  
-`JSON_ARRAY`  
-`JSON_ARRAYAGG`  
-`JSON_ARRAY_APPEND`  
-`JSON_ARRAY_INSERT`  
-`JSON_COMPACT`  
-`JSON_CONTAINS`  
-`JSON_CONTAINS_PATH`  
-`JSON_DEPTH`  
-`JSON_DETAILED`  
-`JSON_EQUALS`  
-`JSON_EXISTS`  
-`JSON_EXTRACT`  
-`JSON_INSERT`  
-`JSON_KEYS`  
-`JSON_LENGTH`  
-`JSON_LOOSE`  
-`JSON_MERGE`  
-`JSON_MERGE_PATCH`  
-`JSON_MERGE_PRESERVE`  
-`JSON_NORMALIZE`  
-`JSON_OBJECT`  
-`JSON_OBJECTAGG`  
-`JSON_OVERLAPS`  
-`JSON_QUERY`  
-`JSON_QUOTE`  
-`JSON_REMOVE`  
-`JSON_REPLACE`  
-`JSON_SEARCH`  
-`JSON_SET`  
-`JSON_TABLE`  
-`JSON_TYPE`  
-`JSON_UNQUOTE`  
-`JSON_VALID`  
-`JSON_VALUE`
+- **JSONPath Expressions** - Notation used to address specific parts of a JSON document.
+- **JSON_ARRAY** - Creates a JSON array from a list of values.
+- **JSON_ARRAYAGG** - Aggregates a result set into a single JSON array.
+- **JSON_ARRAY_APPEND** - Appends values to the end of the indicated arrays within a JSON document.
+- **JSON_ARRAY_INSERT** - Inserts values into a JSON array at specified positions.
+- **JSON_COMPACT** - Removes all unnecessary whitespace from a JSON document to reduce its size.
+- **JSON_CONTAINS** - Returns 1 if a JSON document contains a specific object at a specific path, otherwise 0.
+- **JSON_CONTAINS_PATH** - Returns 1 if a JSON document contains data at the specified paths.
+- **JSON_DEPTH** - Returns the maximum depth of a JSON document.
+- **JSON_DETAILED** - Formats a JSON document with indentation and line breaks for human readability.
+- **JSON_EQUALS** - Returns 1 if two JSON documents are equivalent, otherwise 0.
+- **JSON_EXISTS** - Checks if a specific path exists within a JSON document.
+- **JSON_EXTRACT** - Returns data from a JSON document at the specified paths.
+- **JSON_INSERT** - Inserts values into a JSON document at specified paths without replacing existing values.
+- **JSON_KEYS** - Returns the keys of a JSON object as a JSON array.
+- **JSON_LENGTH** - Returns the number of elements in a JSON array or the number of members in a JSON object.
+- **JSON_LOOSE** - Normalizes a JSON document and adds minimal whitespace for a "loose" compact format.
+- **JSON_MERGE** - Alias for `JSON_MERGE_PRESERVE`; merges multiple JSON documents.
+- **JSON_MERGE_PATCH** - Merges documents following the RFC 7396 merge patch algorithm (replaces existing keys).
+- **JSON_MERGE_PRESERVE** - Merges multiple JSON documents, preserving all values and keys.
+- **JSON_NORMALIZE** - Normalizes a JSON document by removing extra whitespace and sorting keys.
+- **JSON_OBJECT** - Creates a JSON object from a provided list of key-value pairs.
+- **JSON_OBJECTAGG** - Aggregates key-value pairs from a result set into a single JSON object.
+- **JSON_OVERLAPS** - Returns 1 if two JSON documents share any common elements or key-value pairs.
+- **JSON_QUERY** - Extracts an object or internal array from a JSON document.
+- **JSON_QUOTE** - Quotes a string as a JSON value by adding surrounding double quotes and escaping characters.
+- **JSON_REMOVE** - Removes data from a JSON document at the specified paths.
+- **JSON_REPLACE** - Replaces existing values at specified paths in a JSON document.
+- **JSON_SEARCH** - Returns the path to a specific string within a JSON document.
+- **JSON_SET** - Inserts or updates values in a JSON document at the specified paths.
+- **JSON_TABLE** - A table function that converts JSON data into a relational table format.
+- **JSON_TYPE** - Returns the data type of a JSON value as a string.
+- **JSON_UNQUOTE** - Unquotes a JSON value and returns the result as a regular string.
+- **JSON_VALID** - Returns 1 if a string is a valid JSON document, otherwise 0.
+- **JSON_VALUE** - Extracts a scalar value (string, number, or boolean) from a JSON document.
 
 ### Examples of JSON Functions
 
-#### Used to pull a scalar value from JSON data
+#### `JSON_VALUE` Used to pull a scalar value from JSON data
 
 ```sql
-SELECT name, latitude, longitude, 
-JSON_VALUE(attr, '$.details.foodType') AS food_type 
+SELECT 
+    name, 
+    latitude, 
+    longitude, 
+    JSON_VALUE(attr, '$.details.foodType') AS food_type 
 FROM locations 
 WHERE type = 'R';
-
-
+```
+```shell
 | name   | latitude   | longitude   | food_type |
 |--------|------------|-------------|-----------|
 | Shogun | 34.1561131 | -118.131943 | Japanese  |
 ```
 
-#### Used to return entire JSON object data
+#### `JSON_QUERY` Used to return entire JSON object data
 
 ```sql
-SELECT name, latitude, longitude, 
-JSON_QUERY(attr, '$.details') AS details 
+SELECT 
+    name, 
+    latitude, 
+    longitude, 
+     JSON_QUERY(attr, '$.details') AS details 
 FROM locations 
-WHERE type = 'R'\G
-
-*************************** 1. row ***************************
-name: Shogun
-latitude: 34.156113
-longitude: -118.131943
-details: {"foodType": "Japanese", "menu": "https://www.restaurantshogun.com/menu/teppan-1-22.pdf"}
+WHERE type = 'R';
+```
+```shell
+| name   | latitude   | longitude   | details                                                                                   |
+|--------|------------|-------------|-------------------------------------------------------------------------------------------|
+| Shogun | 34.1561131 | -118.131943 | {"foodType": "Japanese", "menu": "https://www.restaurantshogun.com/menu/teppan-1-22.pdf"} |
 ```
 
-### Examples of JSON Functions
-
-#### Used to validate JSON values
+#### `JSON_VALID` Used to validate JSON values
 
 ```sql
 CREATE TABLE locations (
@@ -931,14 +950,14 @@ CREATE TABLE locations (
 );
 ```
 
-#### Used to insert fields
+#### `JSON_INSERT` Used to insert fields
 
 ```sql
 UPDATE locations
     SET attr = JSON_INSERT(attr,'$.nickname','The Bean') WHERE id = 8;
 ```
 
-#### Used to create new arrays
+#### `JSON_ARRAY` Used to create new arrays
 
 ```sql
 UPDATE locations
@@ -947,9 +966,7 @@ UPDATE locations
     WHERE id = 1;
 ```
 
-### Examples of JSON Functions
-
-Used to convert data
+#### `JSON_TABLE` Used to convert data
 
 ```sql
 SELECT l.name, d.food_type, d.menu
@@ -960,9 +977,10 @@ FROM locations AS l,
          menu VARCHAR(200) PATH '$.menu')
      ) AS d
 WHERE id = 2;
-
-| name   | food_type | menu                                                                 |
-|--------|-----------|----------------------------------------------------------------------|
+```
+```shell
+| name   | food_type | menu                                                  |
+|--------|-----------|-------------------------------------------------------|
 | Shogun | Japanese  | https://www.restaurantshogun.com/menu/teppan-1-22.pdf |
 ```
 

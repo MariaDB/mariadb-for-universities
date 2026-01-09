@@ -306,7 +306,7 @@ URL: https://mariadb.com/kb/en/mariadb/data-types-numeric-data-types/
 
 ### String data types
 
-All String Data Types Have A Character Set
+MariaDB provides several string data types to store character data efficiently. These types are used for everything from single-character codes to large-scale text documents, and they are defined by their maximum length, character set, and collation.
 
 - `CHAR(n)` - Number of characters, not bytes, wide
   - Always stores n characters
@@ -316,31 +316,45 @@ All String Data Types Have A Character Set
   - 256 characters and longer treated as `TEXT`
   - For InnoDB, this maximum will depend on the row format
 - `TEXT` - Large text object
+  - Up to 65,535 (2^16 - 1) characters
   - Not supported by the `MEMORY` Storage Engine
   - MariaDB uses `ARIA` for implicit on-disk temporary tables
+- `TINYTEXT` - Text type limited up to 255 (2^8 - 1) characters
+- `MEDIUMTEXT` - Text type limited up to 16,777,215 (2^24 - 1) characters
+- `LONGTEXT` - Text type limited up to 4,294,967,295 (2^32 - 1) characters
 
-- `CHAR`
-- `VARCHAR`
-- `TINYTEXT`
-- `TEXT`
-- `MEDIUMTEXT`
-- `LONGTEXT`
+#### String data attributes
 
-### String data types
+String columns are defined by a **Character Set** and a **Collation**. These can be inherited from the server or database, or set specifically at the table or column level.
 
-Character set may be global or for schema, table, or column
+- **Character Sets**: Determine how characters are encoded. Modern MariaDB (10.6+) defaults to `utf8mb4` for full Unicode support. Multi-byte sets provide broader character support but increase disk storage and memory requirements.
+- **Collations**: A set of rules for comparing and sorting strings. Modern MariaDB uses UCA (Unicode Collation Algorithm) based collations, such as `utf8mb4_uca1400_ai_ci`, which offer improved linguistic accuracy and can be overridden within specific queries.
 
-- `CHAR`
-- `VARCHAR`
-- `TINYTEXT`
-- `TEXT`
-- `MEDIUMTEXT`
-- `LONGTEXT`
+Column table and column collation may be defined on table creation. Example below shows couple of variants:
+```sql
+CREATE TABLE t (
+    -- colums with charset latin1 and defalult collation
+    latin_name text CHARSET latin1,
+    -- column with default charset and utf8mb4_general_ci collation
+    utf8mb4_name text COLLATE utf8mb4_general_ci,
+    -- column with certain charset and collation
+    utf8mb3_name text CHARSET utf8mb3 COLLATE utf8mb3_general_ci  
+);
+```
 
-- Multi-byte character sets increase disk storage and working memory requirements
-  - `UTF-8` requires 3 or 4 bytes per character
-- Collations affect string comparison (character order)
-- Collations can be changed for a query
+How to inspect Character Set and Collation? One of methods - call `CREATE TABLE <table name>;` command.
+```shell
+|-------|---------------------------------------------------------------------------------------|
+| Table | Create Table                                                                          |
+|-------|---------------------------------------------------------------------------------------|
+| t     | CREATE TABLE `t` (                                                                    |
+|       |   `latin_name` text CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,      |
+|       |   `utf8mb4_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,  |
+|       |   `utf8mb3_name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL   |
+|       | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci                 |
+```
+
+Try this on [SQLize.online](https://sqlize.online/sql/mariadb118/7a04936ecb50e04de1745033909387e4/)
 
 ### Binary data types
 
@@ -372,31 +386,44 @@ SELECT CURTIME(4);
 ```
 
 ```shell
-| CURTIME(4) |
-|------------|
++---------------+
+| CURTIME(4)    |
++---------------+
 | 05:33:09.1061 |
++---------------+
 ```
 
 ### Special data types
 
-- `ENUM` is an enumerated list of string values
-  - Uses a 2-byte integer index
+- **ENUM** is an enumerated list of string values
+  - Holds one of the values listed
+  - Stored as 2-byte integer index, presented as value
+
   ```sql
   CREATE TABLE country (
-   Continent ENUM('Asia','Europe','N America',
-   'Africa','Oceania','Antarctica','S America') );
+      Continent ENUM('Asia','Europe','N America','Africa','Oceania','Antarctica','S America') 
+   );
   ```
 
-- `SET` is a specified list of string values
-  - Can hold multiple specified values
+- **SET** is a specified list of string values
+  - Can hold one or more values from the defined set
+  
   ```sql
   CREATE TABLE countrylanguage (
-   CountryCode CHAR(3),
-   Language SET('English','French','Mandarin') );
+      CountryCode CHAR(3),
+      Language SET('English','French','Mandarin') 
+  );
 
   INSERT INTO countrylanguage VALUES
-  ('CHN','Mandarin'),
-  ('CAN','English,French');
+      ('CHN','Mandarin'),
+      ('CAN','English,French');
+  ```
+
+- **INET6** is a data type for storing IPv6 IP addresses as well as IPv4
+  - Stores as a BINARY(16)
+  
+  ```sql
+  CREATE TABLE ipaddress (address INET6);
   ```
 
 ### Built-in functions
@@ -506,68 +533,68 @@ set dts=str_to_date(@dt1,'%d/%m/%Y');
 
 ### Manipulating strings
 
-Functions for string manipulation
+### MariaDB Functions For String Manipulation
 
-- `ASCII()`
-- `BIN()`
-- `BINARY`
-- `BIT_LENGTH()`
-- `CAST()`
-- `CHAR()`
-- `CHARACTER_LENGTH()`
-- `CHAR_LENGTH()`
-- `CHR()`
-- `CONCAT()`
-- `CONCAT_WS()`
-- `CONVERT()`
-- `ELT()`
-- `EXPORT_SET()`
-- `EXTRACTVALUE()`
-- `FIELD()`
-- `FIND_IN_SET()`
-- `FORMAT()`
-- `FROM_BASE64()`
-- `HEX()`
-- `INSERT()`
-- `INSTR()`
-- `LCASE()`
-- `LEFT()`
-- `LENGTH()`
-- `LIKE`
-- `LOAD_FILE()`
-- `LOCATE()`
-- `LOWER()`
-- `LPAD()`
-- `LTRIM()`
-- `MAKE_SET()`
-- `MATCH AGAINST()`
-- `MID()`
-- `NOT LIKE`
-- `NOT REGEXP`
-- `OCTET_LENGTH()`
-- `ORD()`
-- `POSITION()`
-- `QUOTE()`
-- `REPEAT()`
-- `REPLACE()`
-- `REVERSE()`
-- `RIGHT()`
-- `RPAD()`
-- `RTRIM()`
-- `SOUNDEX()`
-- `SOUNDS LIKE`
-- `SPACE()`
-- `STRCMP()`
-- `SUBSTR()`
-- `SUBSTRING()`
-- `SUBSTRING_INDEX()`
-- `TO_BASE64()`
-- `TRIM()`
-- `UCASE()`
-- `UNHEX()`
-- `UPDATEXML()`
-- `UPPER()`
-- `WEIGHT_STRING()` 
+- **ASCII()** - Returns the numeric ASCII value of the leftmost character.
+- **BIN()** - Returns a string representation of the binary value of a number.
+- **BINARY** - Casts a string to a binary string.
+- **BIT_LENGTH()** - Returns the length of a string in bits.
+- **CAST()** - Converts a value from one data type to another.
+- **CHAR()** - Returns the character for each integer passed.
+- **CHARACTER_LENGTH()** - Returns the length of a string in characters.
+- **CHAR_LENGTH()** - Synonym for `CHARACTER_LENGTH()`.
+- **COALESCE()** - Returns the first non-NULL value in a list.
+- **CONCAT()** - Concatenates two or more strings.
+- **CONCAT_WS()** - Concatenates strings with a separator.
+- **CONVERT()** - Converts a value to a different data type or character set.
+- **ELT()** - Returns the string at the specified index from a list.
+- **EXPORT_SET()** - Returns a string where bits in a value determine the inclusion of "on" or "off" strings.
+- **EXTRACTVALUE()** - Extracts a value from an XML string using XPath.
+- **FIELD()** - Returns the index of a string within a list of strings.
+- **FIND_IN_SET()** - Returns the index of a string within a comma-separated list.
+- **FORMAT()** - Formats a number with a specific number of decimal places and locale.
+- **FROM_BASE64()** - Decodes a base64-encoded string.
+- **HEX()** - Returns a hexadecimal representation of a value.
+- **INSERT()** - Inserts a substring into a string at a specific position, replacing a number of characters.
+- **INSTR()** - Returns the position of the first occurrence of a substring.
+- **LCASE()** - Synonym for `LOWER()`.
+- **LEFT()** - Returns a specified number of characters from the left of a string.
+- **LENGTH()** - Returns the length of a string in bytes.
+- **LIKE** - Simple pattern matching using `%` and `_`.
+- **LOAD_FILE()** - Reads a file and returns the content as a string.
+- **LOCATE()** - Returns the position of the first occurrence of a substring.
+- **LOWER()** - Converts a string to lowercase.
+- **LPAD()** - Left-pads a string with another string to a certain length.
+- **LTRIM()** - Removes leading spaces from a string.
+- **MAKE_SET()** - Returns a comma-separated list of strings based on bits set in a value.
+- **MATCH AGAINST** - Performs full-text searches.
+- **MID()** - Synonym for `SUBSTRING()`.
+- **NOT LIKE** - Negation of the `LIKE` pattern matching.
+- **NOT REGEXP** - Negation of regular expression pattern matching.
+- **OCTET_LENGTH()** - Synonym for `LENGTH()`.
+- **ORD()** - Returns the character code for the leftmost character if it is a multi-byte character.
+- **POSITION()** - Synonym for `LOCATE()`.
+- **QUOTE()** - Escapes a string for use in a SQL statement.
+- **REGEXP()** - Pattern matching using regular expressions.
+- **REPEAT()** - Repeats a string a specified number of times.
+- **REPLACE()** - Replaces all occurrences of a substring with another.
+- **REVERSE()** - Reverses the characters in a string.
+- **RIGHT()** - Returns a specified number of characters from the right of a string.
+- **RPAD()** - Right-pads a string with another string to a certain length.
+- **RTRIM()** - Removes trailing spaces from a string.
+- **SOUNDEX()** - Returns a Soundex string for phonetically matching words.
+- **SOUNDS LIKE** - Compares two strings using Soundex.
+- **SPACE()** - Returns a string containing a specified number of spaces.
+- **STRCMP()** - Compares two strings and returns 0 if they are identical.
+- **SUBSTR()** - Synonym for `SUBSTRING()`.
+- **SUBSTRING()** - Extracts a substring from a string starting at a specific position.
+- **SUBSTRING_INDEX()** - Returns a substring from a string before a count of occurrences of a delimiter.
+- **TO_BASE64()** - Encodes a string into base64 format.
+- **TRIM()** - Removes leading and trailing spaces or other specified characters.
+- **UCASE()** - Synonym for `UPPER()`.
+- **UNHEX()** - Converts hexadecimal data into a binary string.
+- **UPPER()** - Converts a string to uppercase.
+- **WEIGHT_STRING()** - Returns the binary weight string of a value used for sorting.
 
 Documentation on String Functions: [https://mariadb.com/kb/en/library/string-functions/](https://mariadb.com/kb/en/library/string-functions/)
 
@@ -590,18 +617,38 @@ LIMIT 100;
 
 ### Aggregate functions
 
-Used for Summary Operations
+Aggregate functions perform a calculation on a set of values and return a single result. Typically used in conjunction with the `GROUP BY` clause, these functions allow you to summarize data across multiple rows.
 
-Aggregate Functions Reduce a Set of Values to a Single Value
-- AVG()
-- COUNT()
-- GROUP_CONCAT()
-- MAX()
-- MIN()
-- STD()
-- STDDEV
-- SUM()
-- VARIANCE()
+### Common MariaDB Aggregate Functions:
+
+- **AVG()** - Returns the average value of the argument.
+- **COUNT()** - Returns a count of the number of non-NULL values in the rows retrieved by a SELECT statement.
+- **SUM()** - Returns the sum of the argument.
+- **GROUP_CONCAT()** - Returns a string result with the concatenated non-NULL values from a group.
+- **MAX()** - Returns the maximum value of the argument.
+- **MIN()** - Returns the minimum value of the argument.
+- **STD()** - Returns the population standard deviation of the argument.
+- **STDDEV()** - An Oracle-compatible synonym for STD(), returning the population standard deviation.
+- **VARIANCE()** - Returns the population standard variance of the argument.
+### Aggregation function examples
+
+**Without GROUP BY:**
+Returns a single summary row for all selected rows.
+
+```sql
+SELECT COUNT(*), AVG(Population), MAX(Population) 
+FROM City;
+```
+
+**With GROUP BY:**
+Groups the outcome by one or more columns to provide summaries for each group.
+
+```sql
+SELECT CountryCode, SUM(Population) AS TotalPopulation
+FROM City
+GROUP BY CountryCode;
+```
+
 
 `DISTINCT` Removes Duplicate Values before Aggregation (e.g., with `COUNT()` and `GROUP_CONCAT()`)
 
