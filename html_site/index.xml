@@ -273,31 +273,21 @@ data integrity, transactions and reliability&lt;/p></description></item><item><t
 &lt;li>Easy Docker installs&lt;/li>
 &lt;li>Maintained by MariaDB&lt;/li>
 &lt;/ul>
-&lt;p>The recommended way to install MariaDB is via MariaDB&amp;rsquo;s &lt;code>repository&lt;/code> in conjunction with your distribution&amp;rsquo;s package manager.&lt;/p></description></item><item><title>Lesson 2: Schema Objects</title><link>https://uni.mariadb.org/dba/schema-objects/</link><pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dba/schema-objects/</guid><description>&lt;h1 id="schema-objects">Schema Objects&lt;/h1>
-&lt;h2 id="learning-objectives">Learning Objectives&lt;/h2>
-&lt;ul>
-&lt;li>Identify and describe the schema objects available within MariaDB Enterprise Server&lt;/li>
-&lt;li>Demonstrate how to create and use databases, tables, and columns in MariaDB Enterprise Server&lt;/li>
-&lt;li>Compare and contrast the data types and built-in functions in MariaDB Enterprise Server, and explain their use cases&lt;/li>
-&lt;/ul>
-&lt;h3 id="collations-and-character-sets">Collations and Character Sets&lt;/h3>
-&lt;ul>
-&lt;li>
-&lt;p>A collation is a set of rules that defines how to compare and sort strings&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>A character set defines how and which characters are stored to support a particular language or languages&lt;/p></description></item><item><title>Lesson 3: Storage Engines</title><link>https://uni.mariadb.org/dba/storage-engines/</link><pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dba/storage-engines/</guid><description>&lt;h1 id="storage-engines">Storage Engines&lt;/h1>
+&lt;p>The recommended way to install MariaDB is via MariaDB&amp;rsquo;s &lt;code>repository&lt;/code> in conjunction with your distribution&amp;rsquo;s package manager.&lt;/p></description></item><item><title>Lesson 3: Storage Engines</title><link>https://uni.mariadb.org/dba/storage-engines/</link><pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dba/storage-engines/</guid><description>&lt;h1 id="storage-engines">Storage Engines&lt;/h1>
 &lt;h2 id="learning-objectives">Learning Objectives&lt;/h2>
 &lt;ul>
 &lt;li>List the available storage engines in MariaDB Enterprise Server, and explain their use cases&lt;/li>
 &lt;li>Analyze and evaluate the features of the Aria and InnoDB storage engines&lt;/li>
 &lt;/ul>
 &lt;h3 id="storage-engines-1">Storage Engines&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#666">`&lt;/span>&lt;span style="color:#007020;font-weight:bold">SHOW&lt;/span>&lt;span style="color:#bbb"> &lt;/span>ENGINES;&lt;span style="color:#666">`&lt;/span>&lt;span style="color:#bbb">
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#60a0b0;font-style:italic">-- show supported storage engines
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#60a0b0;font-style:italic">&lt;/span>&lt;span style="color:#007020;font-weight:bold">SHOW&lt;/span>&lt;span style="color:#bbb"> &lt;/span>ENGINES;&lt;span style="color:#bbb">
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#666">`&lt;/span>&lt;span style="color:#007020;font-weight:bold">CREATE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">TABLE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>table1&lt;span style="color:#bbb"> &lt;/span>(col1&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020">INT&lt;/span>)&lt;span style="color:#bbb"> &lt;/span>ENGINE&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>Aria;&lt;span style="color:#666">`&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#60a0b0;font-style:italic">-- create table using &amp;#39;Aria&amp;#39; storage engine
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#60a0b0;font-style:italic">&lt;/span>&lt;span style="color:#007020;font-weight:bold">CREATE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">TABLE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>table1&lt;span style="color:#bbb"> &lt;/span>(col1&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020">INT&lt;/span>)&lt;span style="color:#bbb"> &lt;/span>ENGINE&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>Aria;&lt;span style="color:#bbb">
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#666">`&lt;/span>&lt;span style="color:#007020;font-weight:bold">ALTER&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">TABLE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>table1&lt;span style="color:#bbb"> &lt;/span>ENGINE&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>InnoDB;&lt;span style="color:#666">`&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#60a0b0;font-style:italic">-- change table storage engine to &amp;#39;InnoDB&amp;#39;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#60a0b0;font-style:italic">&lt;/span>&lt;span style="color:#007020;font-weight:bold">ALTER&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#007020;font-weight:bold">TABLE&lt;/span>&lt;span style="color:#bbb"> &lt;/span>table1&lt;span style="color:#bbb"> &lt;/span>ENGINE&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>InnoDB;&lt;span style="color:#bbb">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
 &lt;li>Multiple storage engines on a server and within a query are allowed&lt;/li>
 &lt;li>Determine storage medium (disk, memory, etc.)&lt;/li>
@@ -388,4 +378,26 @@ All statements are executed successfully or are cancelled as a unit&lt;/p></desc
 &lt;p>Helps ensure high availability&lt;/p>
 &lt;/li>
 &lt;li>
-&lt;p>Cannot prevent user errors&lt;/p></description></item></channel></rss>
+&lt;p>Cannot prevent user errors&lt;/p></description></item><item><title/><link>https://uni.mariadb.org/dba/mariadb-dba-02-schema-objects/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://uni.mariadb.org/dba/mariadb-dba-02-schema-objects/</guid><description>&lt;h2 id="license_url-httpscreativecommonsorglicensesby-nc-sa40">CREATE DATABASE world;view&amp;mdash;
+title: &amp;ldquo;Lesson 2: Schema Objects&amp;rdquo;
+url: &amp;ldquo;/dba/schema-objects/&amp;rdquo;
+date: 2025-04-07
+description: &amp;gt;
+categories: []
+tags: []
+weight: 2
+toc: true
+license_note: &amp;ldquo;For academic and non-commercial usage, licensed under CC BY-NC-SA 4.0 by MariaDB plc.&amp;rdquo;
+license: &amp;ldquo;CC BY-NC-SA 4.0&amp;rdquo;
+license_url: &amp;ldquo;&lt;a href="https://creativecommons.org/licenses/by-nc-sa/4.0/%22">https://creativecommons.org/licenses/by-nc-sa/4.0/&amp;quot;&lt;/a>&lt;/h2>
+&lt;h1 id="schema-objects">Schema Objects&lt;/h1>
+&lt;h2 id="learning-objectives">Learning Objectives&lt;/h2>
+&lt;ul>
+&lt;li>Identify and describe the schema objects available within MariaDB Enterprise Server&lt;/li>
+&lt;li>Demonstrate how to create and use databases, tables, and columns in MariaDB Enterprise Server&lt;/li>
+&lt;li>Compare and contrast the data types and built-in functions in MariaDB Enterprise Server, and explain their use cases&lt;/li>
+&lt;/ul>
+&lt;h3 id="collations-and-character-sets">Collations and Character Sets&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>A collation is a set of rules that defines how to compare and sort strings&lt;/p></description></item></channel></rss>
