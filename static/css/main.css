@@ -324,3 +324,8 @@ img[src$='#floatright']
        //etc. etc.
 }
 
+.highlight pre {
+    padding: 8px;
+    margin: 8px;
+}
+
