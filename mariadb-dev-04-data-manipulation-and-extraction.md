@@ -27,19 +27,40 @@ license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 
 **Retrieves data from the table for the client**
 
-**Can calculate and use functions**
+The `SELECT` statement is designed to retrieve data from a database. In its simplest form, it retrieves all data from a table and returns it to the client. 
 
-Be careful of the overuse of functions in OLTP use cases where it may be better to add a column such as a virtual column that contains calculations already rendered
+```sql
+SELECT * FROM some_table;
+```
+
+In practice, you should avoid using `*` in `SELECT` statements. A better approach is to specify a list of necessary column names:
+
+```sql
+SELECT first_name, last_name, birthday FROM employees;
+```
+
+Explicitly naming columns reduces network traffic, improves performance, and prevents errors related to column ordering when the table structure changes.
+
+
+**Calculations and functions in select**
+The `SELECT` statement can include arithmetic calculations and both built-in and user-defined functions. These operations can involve one or multiple columns and are evaluated for each row individually.
+
+**Example: Retrieving data with calculations and functions**
 
 ```sql
 SELECT
-    CONCAT(name_first, SPACE(1), name_last) AS 'Name',
-    (DAYOFYEAR(birthdate) - DAYOFYEAR(CURDATE())) / 12 AS 'Months to Birthday'
-FROM clients
-LIMIT 1;
+    id,
+    email,
+    -- Arithmetic calculation
+    (dayly_salary * days_worked) + bonus AS total_payment,
+    -- String function to generate full name
+    CONCAT(name_first, ' ', name_last) AS full_name,
+    -- Date function to calculate age
+    TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age
+FROM employees;
 ```
 
-An Example of Retrieving Data, Calculating, and Using Functions with a `SELECT` Statement
+Avoid overusing functions in high-concurrency (OLTP) environments, as it may impact performance. In such cases, using generated (virtual) columns to store pre-calculated values is often more efficient.
 
 ### Where clause
 
