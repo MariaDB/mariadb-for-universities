@@ -739,6 +739,8 @@ SELECT * FROM city;
 - **YEAR()** - Returns the year part of a given date.
 - **YEARMONTH()** - Returns the year and month value (often used as an extraction unit or in periodic calculations).
 
+[Documentation on Date and Time Functions](https://mariadb.com/docs/server/reference/sql-functions/date-time-functions)
+
 ### Examples of Date and Time Functions
 
 **Used in Queries and Data Manipulation Statements**
