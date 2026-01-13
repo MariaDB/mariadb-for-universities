@@ -63,10 +63,9 @@ FROM employees;
 Avoid overusing functions in high-concurrency (OLTP) environments, as it may impact performance. In such cases, using generated (virtual) columns to store pre-calculated values is often more efficient.
 
 ### Where clause
+The `WHERE` clause filters the results of a data query based on a specified condition. This condition is a logical operation that evaluates to true or false for each record in the set. Conditions can include columns, comparison operators, calculations, and functions. The `WHERE` clause is also used in `UPDATE` and `DELETE` statements to limit which records are modified or removed.
 
-Used with `SELECT`, `UPDATE`, and `DELETE` Statements
-
-Columns with Operators can be Specified to Filter Results
+**Basic Example: Filters results using columns and operators**
 
 ```sql
 SELECT Name, Population
@@ -75,33 +74,57 @@ WHERE Population > 1000000;
 ```
 
 ```shell
-+-------------+------------+
-| Name        | Population |
-+-------------+------------+
-| Kabul       | 1780000    |
-| Alger       | 2168000    |
-| Luanda      | 2022000    |
-| Buenos Aires| 2982146    |
-| La Matanza  | 1266461    |
-| ...         |            |
++--------------+------------+
+| Name         | Population |
++--------------+------------+
+| Kabul        | 1780000    |
+| Alger        | 2168000    |
+| Luanda       | 2022000    |
+| Buenos Aires | 2982146    |
+| La Matanza   | 1266461    |
+| ...          |            |
 ```
 
-Basic Example for `SELECT` Statement using `WHERE` Clause
+### Comparison Operators
+The `WHERE` clause supports several comparison operators:
 
-### Operators
+- `=`, `>`, `<`, `>=`, `<=`, `<>`, `!=` — Basic comparison operators, applicable to all data types.
+- `LIKE`, `NOT LIKE` — Used with strings to match patterns using wildcards (`%` and `_`).
+- `IS NULL`, `IS NOT NULL` — Tests whether a value is or is not `NULL`.
+- `BETWEEN x AND y` — Checks if a value falls within a specified inclusive range.
+- `IN (a, b, c)` — Checks if a value matches any value in a provided list.
 
-The `WHERE` Clause Allows For Several Operators
+These operators allow flexible filtering of query results based on various conditions.
 
-| Arithmetic | Comparison |
-|------------|------------|
-| -          | AND, &&    | IS, =         | LIKE       |
-| +          | OR, \|\|   | <             | IS         |
-| *          | XOR        | <=            | IS NOT     |
-| /          | >=         | IS NULL, ISNULL| IS NOT NULL|
-| %          | >          | <> , <>, !=     | IN         |
-|            |            | INTERVAL      |
-|            |            | BETWEEN ... AND|
-|            |            | NOT BETWEEN ... AND|
+### Conditions combinations
+The group of conditions can be combined using logical operators:
+Logical operators are used to combine multiple conditions in a `WHERE` clause:
+
+- `AND` - Returns `TRUE` only if **all** combined conditions are true.
+- `OR` - Returns `TRUE` if **at least one** of the combined conditions is true.
+- `NOT` - Reverses the result of a condition; returns `TRUE` if the condition is false.
+
+### Logical operator evaluation order
+MariaDB evaluates logical operators in the following order: `AND`, then `OR`, and finally `NOT`. You can change the order of evaluation by using parentheses to group conditions.
+
+**Example:**
+
+```sql
+SELECT name, population
+FROM city
+WHERE population > 1000000
+  AND country_code = 'FIN'
+  OR name LIKE 'H%';
+```
+
+**Example: Changing evaluation order with parentheses**
+
+```sql
+SELECT Namnamee, population
+FROM city
+WHERE population > 1000000 AND (country_code = 'FIN' OR name LIKE 'H%');
+```
+Try both examples to output diff.
 
 ### Limit clause
 
