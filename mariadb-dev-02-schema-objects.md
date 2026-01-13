@@ -434,67 +434,63 @@ Secondary functions such as Bit Functions and Operators, Encryption, Hashing and
 
 Special Functions such as Dynamic Columns, Geographic, JSON, Spider and Window Functions
 
-### Manipulating date & time
+### MariaDB Date and Time Functions:
 
-Functions for date and time manipulation
+- **ADDDATE()** - Adds a time interval to a date value.
+- **ADDTIME()** - Adds a specialized time interval (hours, minutes, seconds, microseconds) to a time or datetime.
+- **CONVERT_TZ()** - Converts a datetime value from one time zone to another.
+- **CURDATE()** - Returns the current date in 'YYYY-MM-DD' or YYYYMMDD format.
+- **CURTIME()** - Returns the current time in 'HH:MM:SS' or HHMMSS format.
+- **DATE()** - Extracts the date part of a date or datetime expression.
+- **DATE_ADD()** - Adds a time interval (INTERVAL) to a date or datetime value.
+- **DATE_FORMAT()** - Formats a date value according to a specified format string.
+- **DATE_SUB()** - Subtracts a time interval (INTERVAL) from a date or datetime value.
+- **DATEDIFF()** - Returns the number of days between two date values.
+- **DAYNAME()** - Returns the name of the weekday for a given date.
+- **DAYOFMONTH()** - Returns the day of the month (1 through 31) for a date.
+- **DAYOFWEEK()** - Returns the weekday index (1 = Sunday, 2 = Monday, ..., 7 = Saturday).
+- **DAYOFYEAR()** - Returns the day of the year (1 through 366) for a date.
+- **EXTRACT()** - Extracts a specific part (e.g., YEAR, MONTH, DAY) from a date or datetime.
+- **FROM_DAYS()** - Converts a numeric day count (from year 0) into a date value.
+- **FROM_UNIXTIME()** - Converts a Unix timestamp into a date or datetime string.
+- **GET_FORMAT()** - Returns a format string for various date/time standards (ISO, USA, etc.).
+- **HOUR()** - Returns the hour part (0 through 23) of a given time or datetime.
+- **LAST_DAY()** - Returns the last day of the month for a given date value.
+- **MAKEDATE()** - Returns a date value generated from a year and a day of the year.
+- **MAKETIME()** - Returns a time value generated from hour, minute, and second components.
+- **MICROSECOND()** - Returns the microseconds (0 through 999999) from a time or datetime.
+- **MINUTE()** - Returns the minute part (0 through 59) of a given time or datetime.
+- **MONTH()** - Returns the month part (1 through 12) of a given date.
+- **MONTHNAME()** - Returns the full name of the month for a given date.
+- **NOW()** - Returns the current date and time when the statement began executing.
+- **PERIOD_ADD()** - Adds a specified number of months to a period (formatted as YYMM or YYYYMM).
+- **PERIOD_DIFF()** - Returns the number of months between two periods (formatted as YYMM or YYYYMM).
+- **QUARTER()** - Returns the quarter of the year (1 through 4) for a given date.
+- **SEC_TO_TIME()** - Converts a value in seconds into a 'HH:MM:SS' time format.
+- **SECOND()** - Returns the second part (0 through 59) of a given time or datetime.
+- **STR_TO_DATE()** - Converts a string into a date or datetime based on a format string.
+- **SUBDATE()** - Subtracts a time interval from a date value (synonym for DATE_SUB).
+- **SUBTIME()** - Subtracts a time interval from a time or datetime value.
+- **SYSDATE()** - Returns the current date and time at the exact moment the function is called.
+- **TIME()** - Extracts the time part of a given datetime or time expression.
+- **TIME_FORMAT()** - Formats a time value according to a specified format string.
+- **TIME_TO_SEC()** - Converts a time value into the total number of seconds.
+- **TIMEDIFF()** - Returns the difference between two time or datetime values.
+- **TIMESTAMP()** - Returns a datetime value from a date/datetime or adds a time to an expression.
+- **TIMESTAMPADD()** - Adds a specified interval (unit) to a date or datetime expression.
+- **TIMESTAMPDIFF()** - Returns the difference between two date or datetime expressions in a specified unit.
+- **TO_DAYS()** - Returns the number of days from year 0 to the given date.
+- **UNIX_TIMESTAMP()** - Returns a Unix timestamp (seconds since '1970-01-01 00:00:00' UTC).
+- **UTC_DATE()** - Returns the current UTC date.
+- **UTC_TIME()** - Returns the current UTC time.
+- **UTC_TIMESTAMP()** - Returns the current UTC date and time.
+- **WEEK()** - Returns the week number for a given date.
+- **WEEKDAY()** - Returns the weekday index (0 = Monday, 1 = Tuesday, ..., 6 = Sunday).
+- **WEEKOFYEAR()** - Returns the calendar week of the date (1 through 53).
+- **YEAR()** - Returns the year part of a given date.
+- **YEARMONTH()** - Returns the year and month value (often used as an extraction unit or in periodic calculations).
 
-```sql
-ADDDATE()
-ADDTIME()
-CONVERT_TZ()
-CURDATE()
-CURTIME()
-DATE()
-DATE_ADD()
-DATE_FORMAT()
-DATE_SUB()
-DATEDIFF()
-DAYNAME()
-DAYOFMONTH()
-DAYOFWEEK()
-DAYOFYEAR()
-EXTRACT()
-FROM_DAYS()
-FROM_UNIXTIME()
-GET_FORMAT()
-HOUR()
-LAST_DAY()
-MAKEDATE()
-MAKETIME()
-MICROSECOND()
-MINUTE()
-MONTH()
-MONTHNAME()
-NOW()
-PERIOD_ADD()
-PERIOD_DIFF()
-QUARTER()
-SEC_TO_TIME()
-SECOND()
-STR_TO_DATE()
-SUBDATE()
-SUBTIME()
-SYSDATE()
-TIME()
-TIME_FORMAT()
-TIME_TO_SEC()
-TIMEDIFF()
-TIMESTAMP()
-TIMESTAMPADD()
-TIMESTAMPDIFF()
-TO_DAYS()
-UNIX_TIMESTAMP()
-UTC_DATE()
-UTC_TIME()
-UTC_TIMESTAMP()
-WEEK()
-WEEKDAY()
-WEEKOFYEAR()
-YEAR()
-YEARWEEK()
-```
-
-Documentation on Date and Time Functions: [https://mariadb.com/kb/en/mariadb/date-and-time-functions/](https://mariadb.com/kb/en/mariadb/date-and-time-functions/)
+[Documentation on Date and Time Functions](https://mariadb.com/docs/server/reference/sql-functions/date-time-functions)
 
 ### Examples of date & time functions
 
