@@ -841,7 +841,7 @@ set dt=str_to_date(@dt1,'%d/%m/%Y');
 - **UPPER()** - Converts a string to uppercase.
 - **WEIGHT_STRING()** - Returns the binary weight string of a value used for sorting.
 
-Documentation on String Functions: [https://mariadb.com/kb/en/library/string-functions/](https://mariadb.com/kb/en/library/string-functions/)
+[Documentation on String Functions](https://mariadb.com/kb/en/library/string-functions/)
 
 ### An Example of a String Function
 
@@ -899,6 +899,8 @@ LIMIT 100;
 - **JSON_UNQUOTE** - Unquotes a JSON value and returns the result as a regular string.
 - **JSON_VALID** - Returns 1 if a string is a valid JSON document, otherwise 0.
 - **JSON_VALUE** - Extracts a scalar value (string, number, or boolean) from a JSON document.
+
+[Documentation on JSON Functions](https://mariadb.com/docs/server/reference/sql-functions/special-functions/json-functions)
 
 ### Examples of JSON Functions
 
