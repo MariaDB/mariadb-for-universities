@@ -247,7 +247,7 @@ GROUP BY Continent;
 | North America |     482993000    |
 | Africa        |     784475000    |
 | Oceania       |      30401150    |
-| Antarctica    |              0    |
+| Antarctica    |             0    |
 | South America |     345780000    |
 +---------------+------------------+
 ```
