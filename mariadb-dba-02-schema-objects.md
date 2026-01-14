@@ -34,7 +34,7 @@ license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 
 ### Listing Character Sets
 
-```sql
+```shell
 MariaDB [(none)]> SHOW CHARACTER SET;
 
 | Charset | Description                 | Default collation | Maxlen |
@@ -53,7 +53,7 @@ MariaDB [(none)]> SHOW CHARACTER SET;
 
 ### Listing Collations
 
-```sql
+```shell
 MariaDB [(none)]> SHOW COLLATION LIKE 'utf8%';
 +-----------------------+---------+-----+---------+----------+---------+
 | Collation             | Charset | Id  | Default | Compiled | Sortlen |
@@ -699,7 +699,7 @@ SELECT * FROM city;
 
   ```sql
   CREATE TABLE country (
-      Continent ENUM('Asia','Europe','N America','Africa','Oceania','Antarctica','S America')
+      continent ENUM('Asia','Europe','N America','Africa','Oceania','Antarctica','S America')
   );
   ```
 
@@ -707,12 +707,12 @@ SELECT * FROM city;
   - Can hold one or more values from the defined set
 
   ```sql
-  CREATE TABLE countrylanguage (
-      CountryCode CHAR(3),
-      Language SET ('English','French','Mandarin','Spanish')
+  CREATE TABLE country_languages (
+      country_code CHAR(3),
+      language SET ('English','French','Mandarin','Spanish')
   );
 
-  INSERT INTO countrylanguage VALUES
+  INSERT INTO country_languages VALUES
       ('CHN','Mandarin'),
       ('CAN','English,French');
   ```
@@ -721,7 +721,10 @@ SELECT * FROM city;
   - Stores as a BINARY(16)
   
   ```sql
-  CREATE TABLE ipaddress (address INET6);
+  CREATE TABLE ip_address (
+      id INT AUTO_INCREMENT PRIMARY KEY, 
+      address INET6
+  );
   ```
 
 - **VECTOR(N)** - data type enables MariaDB Server to store and query fixed-length arrays of numeric values, supporting use cases such as AI embeddings and similarity search.  
@@ -825,10 +828,10 @@ WHERE col5 = CURDATE();
 **Used in Bulk Load**
 
 ```sql
-load data local infile '/tmp/test.csv' into
-table test fields terminated by ','
-ignore 1 lines (id,@dt1)
-set dt=str_to_date(@dt1,'%d/%m/%Y');
+LOAD DATA LOCAL infile '/tmp/test.csv' 
+INTO TABLE test FIELDS TERMINATED BY ','
+IGNORE 1 LINES (id,@dt1)
+SET dt=str_to_date(@dt1,'%d/%m/%Y');
 ```
 
 ### Manipulating Strings
@@ -1042,6 +1045,27 @@ WHERE id = 2;
 |--------|-----------|-------------------------------------------------------|
 | Shogun | Japanese  | https://www.restaurantshogun.com/menu/teppan-1-22.pdf |
 ```
+
+### MariaDB Vector Functions
+
+- **VEC_DISTANCE(v1, v2)** - Compute the distance between two vectors (commonly Euclidean/L2 by default).
+- **VEC_DISTANCE_COSINE(v1, v2)** - Compute cosine-based distance (1 - cosine similarity).
+- **VEC_DISTANCE_EUCLIDEAN(v1, v2)** - Explicit Euclidean (L2) distance between vectors.
+- **VEC_FROMTEXT(s)** - Parse a textual vector record (e.g. '[0.1,0.2,...]') into a `VECTOR(N)` value.
+- **VEC_TOTEXT(v)** - Render a vector value as text for display or export.
+
+**Vector Functions Example**
+
+```sql
+SELECT id,
+       VEC_DISTANCE(v, VEC_FROMTEXT('[0.1,0.2,0.3,0.4,0.5]')) AS dist
+FROM vectors
+ORDER BY dist
+LIMIT 5;
+```
+
+Note: function availability and precise names can differ between MariaDB versions and builds. Use `SHOW FUNCTIONS` or consult your server documentation for exact signatures and index helper functions for nearest-neighbour searches.
+
 
 ## Lesson Summary
 
