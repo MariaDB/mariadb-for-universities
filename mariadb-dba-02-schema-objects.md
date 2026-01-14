@@ -84,7 +84,7 @@ Usually case sensitive by default on Linux, but not on Windows and MacOS
 
 Adopt a convention such as always creating and referring to databases and tables using lowercase names
 
-Most are limited to 64 characters
+Most identifiers (database, table, and column names) are limited to 64 characters
 
 ### Databases
 
@@ -165,9 +165,9 @@ Index
 
 Columns have strict type definitions
 
-Can specify DEFAULT value for column
+Can specify a `DEFAULT` value for a column
 
-Only the primary key can be automatically incremented
+Only one column per table can be declared `AUTO_INCREMENT`; it must be indexed (commonly the `PRIMARY KEY`).
 
 ```sql
 CREATE TABLE people (
@@ -303,8 +303,6 @@ Basic syntax example for `ALTER TABLE` statement
 
 *mariadb-dump* does not read historical rows from versioned tables, and so historical data will not be backed up.
 
-### Temporal Tables
-
 #### System-Versioned Example
 
 ```sql
@@ -395,7 +393,6 @@ Stores information on:
   GLOBAL_VARIABLES  
   KEY_COLUMN_USAGE  
   PARTITIONS  
-  PLUGINS  
   PLUGINS  
   PROCESSLIST SCHEMATA  
   PROFILING  
@@ -558,10 +555,10 @@ String columns are defined by a **Character Set** and a **Collation**. These can
 - **Character Sets**: Determine how characters are encoded. Modern MariaDB (10.6+) defaults to `utf8mb4` for full Unicode support. Multi-byte sets provide broader character support but increase disk storage and memory requirements.
 - **Collations**: A set of rules for comparing and sorting strings. Modern MariaDB uses UCA (Unicode Collation Algorithm) based collations, such as `utf8mb4_uca1400_ai_ci`, which offer improved linguistic accuracy and can be overridden within specific queries.
 
-Column table and column collation may be defined on table creation. Example below shows couple of variants:
+Table and column character set and collation may be defined at table creation. The example below shows a couple of variants:
 ```sql
 CREATE TABLE t (
-    -- colums with charset latin1 and defalult collation
+    -- columns with charset latin1 and default collation
     latin_name text CHARSET latin1,
     -- column with default charset and utf8mb4_general_ci collation
     utf8mb4_name text COLLATE utf8mb4_general_ci,
@@ -586,12 +583,31 @@ Try this on [SQLize.online](https://sqlize.online/sql/mariadb118/7a04936ecb50e04
 
 ### Binary Data Types
 
-- BINARY
-- VARBINARY
-- TINYBLOB
-- BLOB
-- MEDIUMBLOB
-- LONGBLOB
+Binary data types in MariaDB are used to store raw binary data, such as files, images, or any data that does not represent text. Unlike character types, binary types do not interpret or encode the data—they simply store bytes as-is. The main binary data types are:
+
+- **BINARY(n)**: Fixed-length binary string. Always stores exactly `n` bytes, padding with `0x00` if the input is shorter.
+- **VARBINARY(n)**: Variable-length binary string, up to `n` bytes. Only uses as much space as needed for the data.
+- **TINYBLOB**, **BLOB**, **MEDIUMBLOB**, **LONGBLOB**: Used for storing large amounts of binary data. The main difference between these types is the maximum amount of data they can store:
+  - `TINYBLOB`: Up to 255 bytes
+  - `BLOB`: Up to 65,535 bytes (64 KB)
+  - `MEDIUMBLOB`: Up to 16,777,215 bytes (16 MB)
+  - `LONGBLOB`: Up to 4,294,967,295 bytes (4 GB)
+
+**Key points:**
+- Binary columns use the `binary` character set and collation, which means no character encoding or collation rules are applied.
+- BLOB types are often used for storing files or large binary objects, but storing large files in the database can impact performance and memory usage.
+- Binary data is included in transactions, replication, and backups.
+- Unlike text types, binary types are compared byte-by-byte, not by character value.
+
+**Example:**
+```sql
+CREATE TABLE files (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  filename VARCHAR(255),
+  data LONGBLOB
+);
+```
+
 
 - `BINARY`, `VARBINARY` and `BLOBs` can contain data with bytes from the whole range from 0 - 255
 - Uses a special character set and collation called "binary"
