@@ -507,20 +507,20 @@ The unsigned range is 0 to 4,294,967,295.
 
 MariaDB provides several string data types to store character data efficiently. These types are used for everything from single-character codes to large-scale text documents, and they are defined by their maximum length, character set, and collation.
 
-- `CHAR(n)` - Number of characters, not bytes, wide
+- **CHAR(n)** - Number of characters, not bytes, wide
   - Always stores n characters
   - Automatically pads with spaces for shorter strings
-- `VARCHAR(n)` - Variable length up to maximum n characters
+- **VARCHAR(n)** - Variable length up to maximum n characters
   - Changes to `CHAR` in Implicit Temporary Tables and mysqld internal buffers
   - 256 characters and longer treated as `TEXT`
   - For InnoDB, this maximum will depend on the row format
-- `TEXT` - Large text object
+- **TEXT** - Large text object
   - Up to 65,535 (2^16 - 1) characters
   - Not supported by the `MEMORY` Storage Engine
   - MariaDB uses `ARIA` for implicit on-disk temporary tables
-- `TINYTEXT` - Text type limited up to 255 (2^8 - 1) characters
-- `MEDIUMTEXT` - Text type limited up to 16,777,215 (2^24 - 1) characters
-- `LONGTEXT` - Text type limited up to 4,294,967,295 (2^32 - 1) characters
+- **TINYTEXT** - Text type limited up to 255 (2^8 - 1) characters
+- **MEDIUMTEXT** - Text type limited up to 16,777,215 (2^24 - 1) characters
+- **LONGTEXT** - Text type limited up to 4,294,967,295 (2^32 - 1) characters
 
 #### String data attributes
 
