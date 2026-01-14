@@ -455,14 +455,23 @@ SHOW STATUS LIKE '%qcache%';
 
 ## Data Types
 
-### Data Types
+MariaDB supports a wide variety of data types to efficiently store and manage different kinds of information. Choosing the most appropriate data type for each column is essential for ensuring data integrity, optimizing storage, and improving query performance. The main categories of data types in MariaDB are:
 
-Types: Binary, Numeric, String, Temporal, and User Defined
+- **Numeric**: For storing numbers, including integers and floating-point values.
+- **String**: For storing text and character data.
+- **Binary**: For storing raw binary data such as files or images.
+- **Temporal**: For storing dates, times, and timestamps.
+- **JSON**: For storing and querying structured JSON documents, enabling flexible and semi-structured data storage.
+- **VECTOR**: For storing fixed-length arrays of numeric values, supporting use cases such as AI embeddings and similarity search.
+- **User-Defined**: For custom types such as ENUM, SET, or spatial types.
 
-Use the most suitable data type to store all possible, required values  
-Will truncate silently and round depending on `sql_mode`
+When defining columns, always select the data type that best matches the range and nature of the values you need to store. Using an inappropriate type can lead to wasted space, loss of precision, or unexpected behavior.
 
-```sql
+MariaDB's behavior when handling out-of-range or invalid values is influenced by the `sql_mode` system variable. In the default mode, MariaDB may silently truncate or round values that do not fit the column's data type. However, enabling strict SQL modes (such as `STRICT_TRANS_TABLES`) will cause errors to be thrown instead, helping to enforce data integrity.
+
+For example, the `INT` type is commonly used for integer values:
+
+```shell
 MariaDB [(none)]> help INT;
 Name: 'INT'
 Description: INT[(M)] [UNSIGNED] [ZEROFILL]
@@ -471,6 +480,8 @@ A normal-size integer.
 The signed range is -2,147,483,648 to 2,147,483,647.
 The unsigned range is 0 to 4,294,967,295.
 ```
+
+Refer to the documentation for each data type to understand its storage requirements, valid ranges, and behavior under different SQL modes.
 
 ### Numeric Data Types
 
