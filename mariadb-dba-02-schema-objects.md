@@ -602,9 +602,9 @@ Binary data types in MariaDB are used to store raw binary data, such as files, i
 **Example:**
 ```sql
 CREATE TABLE files (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  filename VARCHAR(255),
-  data LONGBLOB
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    filename VARCHAR(255),
+    data LONGBLOB
 );
 ```
 
@@ -809,7 +809,7 @@ SELECT NOW() + INTERVAL 1 DAY
        AS 'Day & Hour Earlier';
 ```
 
-```sql
+```shell
 +---------------------+
 | Day & Hour Earlier  |
 +---------------------+
@@ -986,7 +986,7 @@ SELECT
     name, 
     latitude, 
     longitude, 
-     JSON_QUERY(attr, '$.details') AS details 
+    JSON_QUERY(attr, '$.details') AS details 
 FROM locations 
 WHERE type = 'R';
 ```
@@ -1016,16 +1016,16 @@ CREATE TABLE locations (
 
 ```sql
 UPDATE locations
-    SET attr = JSON_INSERT(attr,'$.nickname','The Bean') WHERE id = 8;
+SET attr = JSON_INSERT(attr, '$.nickname', 'The Bean') 
+WHERE id = 8;
 ```
 
 #### `JSON_ARRAY` Used to create new arrays
 
 ```sql
 UPDATE locations
-    SET attr = JSON_INSERT(attr, '$.foodTypes',
-    JSON_ARRAY('Asian', 'Mexican'))
-    WHERE id = 1;
+SET attr = JSON_INSERT(attr, '$.foodTypes', JSON_ARRAY('Asian', 'Mexican'))
+WHERE id = 1;
 ```
 
 #### `JSON_TABLE` Used to convert data
@@ -1033,11 +1033,12 @@ UPDATE locations
 ```sql
 SELECT l.name, d.food_type, d.menu
 FROM locations AS l,
-     JSON_TABLE(l.attr,
+    JSON_TABLE(l.attr,
        '$' COLUMNS(
-         food_type VARCHAR(25) PATH '$.foodType',
-         menu VARCHAR(200) PATH '$.menu')
-     ) AS d
+            food_type VARCHAR(25) PATH '$.foodType',
+            menu VARCHAR(200) PATH '$.menu'
+        )
+    ) AS d
 WHERE id = 2;
 ```
 ```shell
@@ -1057,8 +1058,9 @@ WHERE id = 2;
 **Vector Functions Example**
 
 ```sql
-SELECT id,
-       VEC_DISTANCE(v, VEC_FROMTEXT('[0.1,0.2,0.3,0.4,0.5]')) AS dist
+SELECT 
+    id,
+    VEC_DISTANCE(v, VEC_FROMTEXT('[0.1,0.2,0.3,0.4,0.5]')) AS dist
 FROM vectors
 ORDER BY dist
 LIMIT 5;
