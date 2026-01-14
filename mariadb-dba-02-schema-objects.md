@@ -474,34 +474,52 @@ The unsigned range is 0 to 4,294,967,295.
 
 ### Numeric Data Types
 
-- TINYINT
-- SMALLINT
-- MEDIUMINT
-- INTEGER,INT
-- BIGINT
+MariaDB provides several types for storing numerical data. All numeric types support the `UNSIGNED` attribute, which allows you to store only non-negative values and thus increases the upper limit for each type. By default, signed types reserve one bit for the sign, so using `UNSIGNED` enables a larger positive range within the same storage size.
 
-- Use `UNSIGNED` when appropriate
-- `INT(n)` specifies display precision, not storage precision
-- Size and precision is storage engine dependent
-- Define handling of out-of-range values with `sql_mode`
-  - Default Mode: values are truncated silently
-  - Strict Mode: errors are generated
-- `BIGINT` can enumerate more than all the ants on Earth and shouldn’t be your default choice
-- `TINYINT(1)` is used for `BOOLEAN` values and is aliased by the `BOOLEAN` type
+#### Integer Types
 
-- FLOAT
-- DOUBLE
-- DECIMAL
-- NUMERIC
-- REAL
+- **TINYINT** – 1 byte, range: -128 to 127 (signed), 0 to 255 (unsigned)
+- **SMALLINT** – 2 bytes, range: -32,768 to 32,767 (signed), 0 to 65,535 (unsigned)
+- **MEDIUMINT** – 3 bytes, range: -8,388,608 to 8,388,607 (signed), 0 to 16,777,215 (unsigned)
+- **INT**, **INTEGER** – 4 bytes, range: -2,147,483,648 to 2,147,483,647 (signed), 0 to 4,294,967,295 (unsigned)
+- **BIGINT** – 8 bytes, range: -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 (signed), 0 to 18,446,744,073,709,551,615 (unsigned)
 
-- `FLOAT` and `DOUBLE` are approximate types
-  - Uses 4 and 8 bytes IEEE storage format
-- `DECIMAL (m, d)` maximum total number of digits, number of digits after decimal point
-  - An Exact Value type, up to 65 digits precision, 4 bytes storage for each multiple of nine digits
-- `NUMERIC` is a synonym for `DECIMAL`
-- `REAL` is a synonym for `DOUBLE`
-  - Unless in `REAL_AS_FLOAT` SQL mode
+**Notes:**
+- Use `UNSIGNED` when negative values are not needed.
+- `INT(n)` specifies display width, not storage size or precision.
+- Actual storage and precision may vary by storage engine.
+- Out-of-range values are handled according to `sql_mode`:
+  - **Default:** Values are truncated silently.
+  - **Strict:** Errors are generated.
+- `TINYINT(1)` is commonly used for Boolean values and is aliased by the `BOOLEAN` type.
+- `BIGINT` provides a very large range and should be used only when necessary.
+
+#### Floating Point and Fixed-Point Types
+
+- **FLOAT** – 4 bytes, approximate value, single precision
+- **DOUBLE** – 8 bytes, approximate value, double precision
+- **DECIMAL(m, d)** – exact value, user-defined precision (up to 65 digits), stores numbers as strings for accuracy
+- **NUMERIC** – synonym for `DECIMAL`
+- **REAL** – synonym for `DOUBLE` (unless `REAL_AS_FLOAT` SQL mode is enabled)
+
+**Notes:**
+- `FLOAT` and `DOUBLE` are approximate types and may introduce rounding errors.
+- `DECIMAL` is an exact type, suitable for storing monetary or other precise values.
+- `DECIMAL(m, d)` specifies the maximum total number of digits (`m`) and the number of digits after the decimal point (`d`).
+- Use `DECIMAL` or `NUMERIC` for financial data or where exact precision is required.
+
+**Example:**
+
+```sql
+CREATE TABLE numbers_example (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    small_num TINYINT,
+    big_num BIGINT UNSIGNED,
+    price DECIMAL(10,2),
+    ratio FLOAT,
+    measurement DOUBLE
+);
+```
 
 ### String data types
 
