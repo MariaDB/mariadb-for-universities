@@ -72,7 +72,7 @@ MariaDB [(none)]> SHOW COLLATION LIKE 'utf8%';
 +-----------------------+---------+-----+---------+----------+---------+
 ```
 
-## Databases, Tables, and Default Schemas
+## Databases, Tables and Default Schemas
 
 ### Case Sensitivity
 
@@ -575,34 +575,32 @@ Try this on [SQLize.online](https://sqlize.online/sql/mariadb118/7a04936ecb50e04
 
 ### Temporal Data Types
 
-- DATE
-- TIME
-- DATETIME
-- TIMESTAMP
-- YEAR
+- **DATE**  
+  - Stores dates in the format `YYYY-MM-DD`, with a range from `'0000-00-00'` to `'9999-12-31'`.
+- **TIME** [(<microsecond precision>)]  
+  - Stores time values in the format `hh:mm:ss` (optionally with fractional seconds).
+  - Range: `-838:59:59.000000` to `838:59:59.000000`.
+  - Microsecond precision can be specified from 0 to 6 (default is 0).
+- **DATETIME** [(<microsecond precision>)]  
+  - Stores date and time in the format `YYYY-MM-DD HH:MM:SS` (optionally with fractional seconds).
+  - Range: `'0000-00-00 00:00:00'` to `'9999-12-31 23:59:59.999999'`.
+  - Microsecond precision can be specified from 0 to 6 (default is 0).
+- **TIMESTAMP**  
+  - Stores date and time as the number of seconds since `'1970-01-01 00:00:00'` UTC (Unix timestamp).
+- **YEAR**  
+  - Stores a year value as a 4-digit number, with a range from `1901` to `2155`.
 
 ```sql
-SELECT CURTIME(4);
+CREATE TABLE employees (
+    name VARCHAR(35) NOT NULL,
+    birthday DATE,
+    stage_from YEAR,
+    working_hours_from TIME,
+    working_hours_to TIME,
+    updated_at DATETIME(6),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
-
-```shell
-+---------------+
-| CURTIME(4)    |
-+---------------+
-| 05:33:09.1061 |
-+---------------+
-```
-
-- `DATE` — from 1000-01-01 to 9999-12-31
-  - YYYY-MM-DD
-- `TIME` [(<microsecond precision>)]
-  - from -838:59:59 to 838:59:59
-- `DATETIME` [(<microsecond precision>)]
-  - Same ranges as `DATE` and `TIME` above
-  - YYYY-MM-DD HH:mm:ss
-- `TIMESTAMP` — Unix timestamp, in seconds from 1970-01-01
-  - Many applications store `UNIX_TIMESTAMP()` values in unsigned integer field
-- `YEAR` — Accepts YYYY
 
 ### JSON Data Type
 
@@ -614,16 +612,16 @@ SELECT CURTIME(4);
 
 ```sql
 CREATE TABLE city (
-  Name VARCHAR(35) NOT NULL,
-  Info JSON DEFAULT NULL
+    name VARCHAR(35) NOT NULL,
+    info JSON DEFAULT NULL
 );
 
 INSERT INTO city VALUES (
-  'New York',
-  JSON_OBJECT(
-    'Population','8008278',
-    'Country', 'USA'
-  )
+    'New York',
+    JSON_OBJECT(
+        'Population','8008278',
+        'Country', 'USA'
+    )
 );
 ```
 
@@ -679,6 +677,18 @@ SELECT * FROM city;
   
   ```sql
   CREATE TABLE ipaddress (address INET6);
+  ```
+
+- **VECTOR(N)** - data type enables MariaDB Server to store and query fixed-length arrays of numeric values, supporting use cases such as AI embeddings and similarity search.  
+  - `N` specifies the number of dimensions (elements) in the vector, with a maximum of 16,383.  
+  - The dimension count (`N`) should match the output size of your embedding algorithm.
+
+  ```sql
+  CREATE TABLE vectors (
+      id INT AUTO_INCREMENT PRIMARY KEY, 
+      v VECTOR(5) NOT NULL,
+      VECTOR INDEX (v)
+  );
   ```
 
 ## Built-in Functions
