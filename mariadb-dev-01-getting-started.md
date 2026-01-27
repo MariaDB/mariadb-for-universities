@@ -43,8 +43,6 @@ license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 - Docker Container Image
 - Source tarballs
 
-Only certain MariaDB repositories and installers provide MariaDB Enterprise Server. All other sources provide MariaDB Community Server.
-
 ### Isolation levels
 
 When two or more transactions occur at the same time, the isolation level defines the degree at which a transaction is isolated from the resource or data modifications made by other transactions.
