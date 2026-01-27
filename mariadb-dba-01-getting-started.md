@@ -16,11 +16,11 @@ license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 
 ## Learning Objectives
 
-- List the steps to deploy MariaDB Enterprise Server using distribution packages
-- Explain the benefits and challenges of upgrading MariaDB Enterprise Server, and list the steps you need to take before and after the upgrade
+- List the steps to deploy MariaDB Server using distribution packages
+- Explain the benefits and challenges of upgrading MariaDB Server, and list the steps you need to take before and after the upgrade
 - Know which tools and client utilities to use to perform common tasks such as managing users accounts and permissions, benchmarking, and backing up and restoring data
-- Change the default settings of MariaDB Enterprise Server while it's running to make the server work better for your needs
-- Turn on and off server logs and use them to check the status and performance of MariaDB Enterprise Server
+- Change the default settings of MariaDB Server while it's running to make the server work better for your needs
+- Turn on and off server logs and use them to check the status and performance of MariaDB Server
 
 ## Deployment
 
@@ -54,7 +54,7 @@ license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 - Possibly old versions
 
 #### Docker
-- Enterprise Docker registry
+- Docker registry
 - Easy Docker installs
 - Maintained by MariaDB
 
@@ -511,9 +511,9 @@ An alternative method from the command-line
 
 ## Lesson Summary
 
-- List the steps to deploy MariaDB Enterprise Server using distribution packages
-- Explain the benefits and challenges of upgrading MariaDB Enterprise Server, and list the steps you need to take before and after the upgrade
+- List the steps to deploy MariaDB Server using distribution packages
+- Explain the benefits and challenges of upgrading MariaDB Server, and list the steps you need to take before and after the upgrade
 - Know which tools and client utilities to use to perform common tasks such as managing users accounts and permissions, benchmarking, and backing up and restoring data
-- Change the default settings of MariaDB Enterprise Server while it's running to make the server work better for your needs
-- Turn on and off server logs and use them to check the status and performance of MariaDB Enterprise Server
+- Change the default settings of MariaDB Server while it's running to make the server work better for your needs
+- Turn on and off server logs and use them to check the status and performance of MariaDB Server
 

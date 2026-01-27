@@ -16,7 +16,7 @@ license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 
 ## Learning Objectives
 
-- List the available storage engines in MariaDB Enterprise Server, and explain their use cases
+- List the available storage engines in MariaDB Server, and explain their use cases
 - Analyze and evaluate the features of the Aria and InnoDB storage engines
 
 ### Storage Engines
@@ -61,7 +61,7 @@ Completed transactions are permanently recorded
 
 Optimize for a wide variety of workloads with a single database platform
 
-- MariaDB Enterprise Server
+- MariaDB Server
 - SQL API
 - Pluggable Storage Engine APIs
 
@@ -114,6 +114,6 @@ Optimize for a wide variety of workloads with a single database platform
 
 ## Lesson Summary
 
-- List the available storage engines in `MariaDB Enterprise Server`, and explain their use cases
+- List the available storage engines in `MariaDB Server`, and explain their use cases
 - Analyze and evaluate the features of the `Aria` and `InnoDB` storage engines
 

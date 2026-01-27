@@ -16,9 +16,9 @@ license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 
 ## Learning Objectives
 
-- Identify and describe the schema objects available within MariaDB Enterprise Server
-- Demonstrate how to create and use databases, tables, and columns in MariaDB Enterprise Server
-- Compare and contrast the data types and built-in functions in MariaDB Enterprise Server, and explain their use cases
+- Identify and describe the schema objects available within MariaDB Server
+- Demonstrate how to create and use databases, tables, and columns in MariaDB Server
+- Compare and contrast the data types and built-in functions in MariaDB Server, and explain their use cases
 
 ### Collations and Character Sets
 
@@ -986,8 +986,8 @@ WHERE id = 2;
 
 ## Lesson Summary
 
-- Identify and describe the schema objects available within MariaDB Enterprise Server
-- Demonstrate how to create and use databases, tables, and columns in MariaDB Enterprise Server
-- Compare and contrast the data types and built-in functions in MariaDB Enterprise Server, and explain their use cases
+- Identify and describe the schema objects available within MariaDB Server
+- Demonstrate how to create and use databases, tables, and columns in MariaDB Server
+- Compare and contrast the data types and built-in functions in MariaDB Server, and explain their use cases
 
 
