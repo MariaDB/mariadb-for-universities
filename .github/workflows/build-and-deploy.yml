@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - deploy
+  pull_request:
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
@@ -29,17 +30,19 @@ jobs:
       - name: Check for links error
         run: |
           docker run --rm -t -v $(pwd):/src -w /src lycheeverse/lychee:latest \
-            --base html_site \
+            --root-dir /src/html_site \
             --exclude "(github|gitlab|www.linkedin).com" \
             --exclude "^javascript:" \
             -n -v html_site/**/*.html
 
       - name: Configure Git
+        if: github.event_name != 'pull_request'
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'github-actions@github.com'
 
       - name: Commit and push if changed
+        if: github.event_name != 'pull_request'
         run: |
           git add html_site/
           git diff --quiet && git diff --staged --quiet || (git commit -m "Build Hugo site [skip ci]" && git push)
@@ -47,6 +50,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to HZ server
+        if: github.event_name != 'pull_request'
         run: |
           # Set up SSH
           mkdir -p ~/.ssh
