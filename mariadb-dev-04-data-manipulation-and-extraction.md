@@ -27,25 +27,45 @@ license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 
 **Retrieves data from the table for the client**
 
-**Can calculate and use functions**
+The `SELECT` statement is designed to retrieve data from a database. In its simplest form, it retrieves all data from a table and returns it to the client. 
 
-Be careful of the overuse of functions in OLTP use cases where it may be better to add a column such as a virtual column that contains calculations already rendered
+```sql
+SELECT * FROM some_table;
+```
+
+In practice, you should avoid using `*` in `SELECT` statements. A better approach is to specify a list of necessary column names:
+
+```sql
+SELECT first_name, last_name, birthday FROM employees;
+```
+
+Explicitly naming columns reduces network traffic, improves performance, and prevents errors related to column ordering when the table structure changes.
+
+
+**Calculations and functions in select**
+The `SELECT` statement can include arithmetic calculations and both built-in and user-defined functions. These operations can involve one or multiple columns and are evaluated for each row individually.
+
+**Example: Retrieving data with calculations and functions**
 
 ```sql
 SELECT
-    CONCAT(name_first, SPACE(1), name_last) AS 'Name',
-    (DAYOFYEAR(birthdate) - DAYOFYEAR(CURDATE())) / 12 AS 'Months to Birthday'
-FROM clients
-LIMIT 1;
+    id,
+    email,
+    -- Arithmetic calculation
+    (dayly_salary * days_worked) + bonus AS total_payment,
+    -- String function to generate full name
+    CONCAT(name_first, ' ', name_last) AS full_name,
+    -- Date function to calculate age
+    TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age
+FROM employees;
 ```
 
-An Example of Retrieving Data, Calculating, and Using Functions with a `SELECT` Statement
+Avoid overusing functions in high-concurrency (OLTP) environments, as it may impact performance. In such cases, using generated (virtual) columns to store pre-calculated values is often more efficient.
 
 ### Where clause
+The `WHERE` clause filters the results of a data query based on a specified condition. This condition is a logical operation that evaluates to true or false for each record in the set. Conditions can include columns, comparison operators, calculations, and functions. The `WHERE` clause is also used in `UPDATE` and `DELETE` statements to limit which records are modified or removed.
 
-Used with `SELECT`, `UPDATE`, and `DELETE` Statements
-
-Columns with Operators can be Specified to Filter Results
+**Basic Example: Filters results using columns and operators**
 
 ```sql
 SELECT Name, Population
@@ -54,33 +74,57 @@ WHERE Population > 1000000;
 ```
 
 ```shell
-+-------------+------------+
-| Name        | Population |
-+-------------+------------+
-| Kabul       | 1780000    |
-| Alger       | 2168000    |
-| Luanda      | 2022000    |
-| Buenos Aires| 2982146    |
-| La Matanza  | 1266461    |
-| ...         |            |
++--------------+------------+
+| Name         | Population |
++--------------+------------+
+| Kabul        | 1780000    |
+| Alger        | 2168000    |
+| Luanda       | 2022000    |
+| Buenos Aires | 2982146    |
+| La Matanza   | 1266461    |
+| ...          |            |
 ```
 
-Basic Example for `SELECT` Statement using `WHERE` Clause
+### Comparison Operators
+The `WHERE` clause supports several comparison operators:
 
-### Operators
+- `=`, `>`, `<`, `>=`, `<=`, `<>`, `!=` — Basic comparison operators, applicable to all data types.
+- `LIKE`, `NOT LIKE` — Used with strings to match patterns using wildcards (`%` and `_`).
+- `IS NULL`, `IS NOT NULL` — Tests whether a value is or is not `NULL`.
+- `BETWEEN x AND y` — Checks if a value falls within a specified inclusive range.
+- `IN (a, b, c)` — Checks if a value matches any value in a provided list.
 
-The `WHERE` Clause Allows For Several Operators
+These operators allow flexible filtering of query results based on various conditions.
 
-| Arithmetic | Comparison |
-|------------|------------|
-| -          | AND, &&    | IS, =         | LIKE       |
-| +          | OR, \|\|   | <             | IS         |
-| *          | XOR        | <=            | IS NOT     |
-| /          | >=         | IS NULL, ISNULL| IS NOT NULL|
-| %          | >          | <> , <>, !=     | IN         |
-|            |            | INTERVAL      |
-|            |            | BETWEEN ... AND|
-|            |            | NOT BETWEEN ... AND|
+### Conditions combinations
+The group of conditions can be combined using logical operators:
+Logical operators are used to combine multiple conditions in a `WHERE` clause:
+
+- `AND` - Returns `TRUE` only if **all** combined conditions are true.
+- `OR` - Returns `TRUE` if **at least one** of the combined conditions is true.
+- `NOT` - Reverses the result of a condition; returns `TRUE` if the condition is false.
+
+### Logical operator evaluation order
+MariaDB evaluates logical operators in the following order: `AND`, then `OR`, and finally `NOT`. You can change the order of evaluation by using parentheses to group conditions.
+
+**Example:**
+
+```sql
+SELECT name, population
+FROM city
+WHERE population > 1000000
+  AND country_code = 'FIN'
+  OR name LIKE 'H%';
+```
+
+**Example: Changing evaluation order with parentheses**
+
+```sql
+SELECT Namnamee, population
+FROM city
+WHERE population > 1000000 AND (country_code = 'FIN' OR name LIKE 'H%');
+```
+Try both examples to output diff.
 
 ### Limit clause
 
@@ -105,60 +149,83 @@ LIMIT 2, 3;
 +-------------------+-----------+
 ```
 
-### Order by and limit clause
+### Order fetched data
 
-Data can be Ordered and Broken into Blocks
+By default results of `SELECT` query are not sorted and its order depends on inner data storage representation. For grantee order of selected rows we must use `ORDER BY` clause. Below the basic example of such query:
 
 ```sql
-SELECT cols
+SELECT col_1, col_2, col_3
 FROM table
 WHERE clause
-ORDER BY col
-LIMIT offset, count;
+ORDER BY col_1;
 ```
+By default, the dataset is sorted in ascending order based on the values in `col_1`. The sorting is determined by the data type of the column: numbers are ordered from smallest to largest, dates from earliest to latest, and strings according to the collation rules.
 
-Basic Syntax Example for `SELECT` Statement with `ORDER BY` Clause
+To explicitly specify the sort direction, use the `ASC` (ascending) or `DESC` (descending) keyword after the column name. The `ORDER BY` clause also allows sorting by multiple columns, separated by commas. You can set a different sort order for each column. Sorting is performed in the order the columns are listed: first by the initial column, then by the next column for rows with equal values in the previous column, and so on. If all values in the first column are unique, additional columns do not affect the order.
+> **Note:** The column(s) specified in the `ORDER BY` clause do not need to appear in the `SELECT` list. You can sort by any column in the table, even if it is not included in the output.
+
+**Example: Sorting by multiple columns with different directions**
 
 ```sql
-SELECT Name, Population
-FROM City
-WHERE Population > 1000000
-ORDER BY Population
-LIMIT 0, 3;
+SELECT name, district
+FROM city
+ORDER BY district DESC, population ASC;
+```
+
+### Output Limitation
+
+By default, a `SELECT` statement fetches all rows from a table. To restrict the number of rows returned, use the `LIMIT N` clause, which limits the output to N rows. `LIMIT` can be used with or without `ORDER BY`.
+
+```sql
+SELECT name, district
+FROM city
+LIMIT 3;
+```
+
+When using `LIMIT` without sorting, the returned rows are unpredictable and suitable only for sampling. In most cases, `LIMIT` is combined with `ORDER BY` to retrieve a specific subset of data.
+
+```sql
+-- Find the top 10 cities by population
+SELECT name, population
+FROM city
+ORDER BY population DESC
+LIMIT 10;
+```
+
+To skip a number of rows before returning results, use the `OFFSET K` clause after `LIMIT`. MariaDB also supports the shorthand syntax `LIMIT K, N`, where K is the offset and N is the row count.
+
+```sql
+-- Find second 10 cities by population
+SELECT name, population
+FROM city
+ORDER BY population DESC
+LIMIT 10 OFFSET 10;
+-- Short syntax
+SELECT name, population
+FROM city
+ORDER BY population DESC
+LIMIT 10, 10;
+```
+
+Limiting output can be combined with filtering using `WHERE`:
+
+```sql
+-- Find the top 5 Finnish cities by population
+SELECT name, population
+FROM city
+WHERE country_code = 'FIN'
+ORDER BY population DESC
+LIMIT 5;
 ```
 
 ```shell
-| Name    | Population |
-|---------|------------|
-| Zapopan | 1,012,563  |
-| Napoli  | 1,002,079  |
-| Perm    | 1,070,162  |
-```
-
-### Ascending and descending order
-
-Add the `ASC` or `DESC` Options to Order Results in Ascending or Descending Order
-
-Multiple Columns Allowed
-
-No descending indexes however B+ Tree indexes can be used to optimize sort or range based queries
-
-```sql
-SELECT Name, District FROM City
-WHERE CountryCode = 'FIN'
-ORDER BY District DESC, Name ASC;
-```
-
-```shell
-| Name           | District         |
-|----------------|------------------|
-| Turku [Åbo]    | Varsinais-Suomi  |
-| Lahti          | Päijät-Häme      |
-| Oulu           | Pohjois-Pohjanmaa|
-| Tampere        | Pirkanmaa        |
-| Espoo          | Newmaa           |
-| Helsinki [Helsingfors]| Newmaa     |
-| Vantaa         | Newmaa           |
+| name     | population |
+|----------|------------|
+| Helsinki | 684,018    |
+| Espoo    | 320,931    |
+| Tampere  | 320,931    |
+| Vantaa   | 251,269    |
+| Oulu     | 251,269    |
 ```
 
 ### Group by clause
@@ -180,7 +247,7 @@ GROUP BY Continent;
 | North America |     482993000    |
 | Africa        |     784475000    |
 | Oceania       |      30401150    |
-| Antarctica    |              0    |
+| Antarctica    |             0    |
 | South America |     345780000    |
 +---------------+------------------+
 ```

@@ -34,7 +34,7 @@ license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 
 ### Listing Character Sets
 
-```sql
+```shell
 MariaDB [(none)]> SHOW CHARACTER SET;
 
 | Charset | Description                 | Default collation | Maxlen |
@@ -53,7 +53,7 @@ MariaDB [(none)]> SHOW CHARACTER SET;
 
 ### Listing Collations
 
-```sql
+```shell
 MariaDB [(none)]> SHOW COLLATION LIKE 'utf8%';
 +-----------------------+---------+-----+---------+----------+---------+
 | Collation             | Charset | Id  | Default | Compiled | Sortlen |
@@ -72,7 +72,7 @@ MariaDB [(none)]> SHOW COLLATION LIKE 'utf8%';
 +-----------------------+---------+-----+---------+----------+---------+
 ```
 
-## Databases, Tables, and Default Schemas
+## Databases, Tables and Default Schemas
 
 ### Case Sensitivity
 
@@ -84,7 +84,7 @@ Usually case sensitive by default on Linux, but not on Windows and MacOS
 
 Adopt a convention such as always creating and referring to databases and tables using lowercase names
 
-Most are limited to 64 characters
+Most identifiers (database, table, and column names) are limited to 64 characters
 
 ### Databases
 
@@ -165,9 +165,9 @@ Index
 
 Columns have strict type definitions
 
-Can specify DEFAULT value for column
+Can specify a `DEFAULT` value for a column
 
-Only the primary key can be automatically incremented
+Only one column per table can be declared `AUTO_INCREMENT`; it must be indexed (commonly the `PRIMARY KEY`).
 
 ```sql
 CREATE TABLE people (
@@ -303,8 +303,6 @@ Basic syntax example for `ALTER TABLE` statement
 
 *mariadb-dump* does not read historical rows from versioned tables, and so historical data will not be backed up.
 
-### Temporal Tables
-
 #### System-Versioned Example
 
 ```sql
@@ -396,7 +394,6 @@ Stores information on:
   KEY_COLUMN_USAGE  
   PARTITIONS  
   PLUGINS  
-  PLUGINS  
   PROCESSLIST SCHEMATA  
   PROFILING  
   REFERENTIAL_CONSTRAINTS  
@@ -455,14 +452,23 @@ SHOW STATUS LIKE '%qcache%';
 
 ## Data Types
 
-### Data Types
+MariaDB supports a wide variety of data types to efficiently store and manage different kinds of information. Choosing the most appropriate data type for each column is essential for ensuring data integrity, optimizing storage, and improving query performance. The main categories of data types in MariaDB are:
 
-Types: Binary, Numeric, String, Temporal, and User Defined
+- **Numeric**: For storing numbers, including integers and floating-point values.
+- **String**: For storing text and character data.
+- **Binary**: For storing raw binary data such as files or images.
+- **Temporal**: For storing dates, times, and timestamps.
+- **JSON**: For storing and querying structured JSON documents, enabling flexible and semi-structured data storage.
+- **VECTOR**: For storing fixed-length arrays of numeric values, supporting use cases such as AI embeddings and similarity search.
+- **User-Defined**: For custom types such as ENUM, SET, or spatial types.
 
-Use the most suitable data type to store all possible, required values  
-Will truncate silently and round depending on `sql_mode`
+When defining columns, always select the data type that best matches the range and nature of the values you need to store. Using an inappropriate type can lead to wasted space, loss of precision, or unexpected behavior.
 
-```sql
+MariaDB's behavior when handling out-of-range or invalid values is influenced by the `sql_mode` system variable. In the default mode, MariaDB may silently truncate or round values that do not fit the column's data type. However, enabling strict SQL modes (such as `STRICT_TRANS_TABLES`) will cause errors to be thrown instead, helping to enforce data integrity.
+
+For example, the `INT` type is commonly used for integer values:
+
+```shell
 MariaDB [(none)]> help INT;
 Name: 'INT'
 Description: INT[(M)] [UNSIGNED] [ZEROFILL]
@@ -472,55 +478,75 @@ The signed range is -2,147,483,648 to 2,147,483,647.
 The unsigned range is 0 to 4,294,967,295.
 ```
 
+Refer to the documentation for each data type to understand its storage requirements, valid ranges, and behavior under different SQL modes.
+
 ### Numeric Data Types
 
-- TINYINT
-- SMALLINT
-- MEDIUMINT
-- INTEGER,INT
-- BIGINT
+MariaDB provides several types for storing numerical data. All numeric types support the `UNSIGNED` attribute, which allows you to store only non-negative values and thus increases the upper limit for each type. By default, signed types reserve one bit for the sign, so using `UNSIGNED` enables a larger positive range within the same storage size.
 
-- Use `UNSIGNED` when appropriate
-- `INT(n)` specifies display precision, not storage precision
-- Size and precision is storage engine dependent
-- Define handling of out-of-range values with `sql_mode`
-  - Default Mode: values are truncated silently
-  - Strict Mode: errors are generated
-- `BIGINT` can enumerate more than all the ants on Earth and shouldn’t be your default choice
-- `TINYINT(1)` is used for `BOOLEAN` values and is aliased by the `BOOLEAN` type
+#### Integer Types
 
-- FLOAT
-- DOUBLE
-- DECIMAL
-- NUMERIC
-- REAL
+- **TINYINT** – 1 byte, range: -128 to 127 (signed), 0 to 255 (unsigned)
+- **SMALLINT** – 2 bytes, range: -32,768 to 32,767 (signed), 0 to 65,535 (unsigned)
+- **MEDIUMINT** – 3 bytes, range: -8,388,608 to 8,388,607 (signed), 0 to 16,777,215 (unsigned)
+- **INT**, **INTEGER** – 4 bytes, range: -2,147,483,648 to 2,147,483,647 (signed), 0 to 4,294,967,295 (unsigned)
+- **BIGINT** – 8 bytes, range: -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 (signed), 0 to 18,446,744,073,709,551,615 (unsigned)
 
-- `FLOAT` and `DOUBLE` are approximate types
-  - Uses 4 and 8 bytes IEEE storage format
-- `DECIMAL (m, d)` maximum total number of digits, number of digits after decimal point
-  - An Exact Value type, up to 65 digits precision, 4 bytes storage for each multiple of nine digits
-- `NUMERIC` is a synonym for `DECIMAL`
-- `REAL` is a synonym for `DOUBLE`
-  - Unless in `REAL_AS_FLOAT` SQL mode
+**Notes:**
+- Use `UNSIGNED` when negative values are not needed.
+- `INT(n)` specifies display width, not storage size or precision.
+- Actual storage and precision may vary by storage engine.
+- Out-of-range values are handled according to `sql_mode`:
+  - **Default:** Values are truncated silently.
+  - **Strict:** Errors are generated.
+- `TINYINT(1)` is commonly used for Boolean values and is aliased by the `BOOLEAN` type.
+- `BIGINT` provides a very large range and should be used only when necessary.
+
+#### Floating Point and Fixed-Point Types
+
+- **FLOAT** – 4 bytes, approximate value, single precision
+- **DOUBLE** – 8 bytes, approximate value, double precision
+- **DECIMAL(m, d)** – exact value, user-defined precision (up to 65 digits), stores numbers as strings for accuracy
+- **NUMERIC** – synonym for `DECIMAL`
+- **REAL** – synonym for `DOUBLE` (unless `REAL_AS_FLOAT` SQL mode is enabled)
+
+**Notes:**
+- `FLOAT` and `DOUBLE` are approximate types and may introduce rounding errors.
+- `DECIMAL` is an exact type, suitable for storing monetary or other precise values.
+- `DECIMAL(m, d)` specifies the maximum total number of digits (`m`) and the number of digits after the decimal point (`d`).
+- Use `DECIMAL` or `NUMERIC` for financial data or where exact precision is required.
+
+**Example:**
+
+```sql
+CREATE TABLE numbers_example (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    small_num TINYINT,
+    big_num BIGINT UNSIGNED,
+    price DECIMAL(10,2),
+    ratio FLOAT,
+    measurement DOUBLE
+);
+```
 
 ### String data types
 
 MariaDB provides several string data types to store character data efficiently. These types are used for everything from single-character codes to large-scale text documents, and they are defined by their maximum length, character set, and collation.
 
-- `CHAR(n)` - Number of characters, not bytes, wide
+- **CHAR(n)** - Number of characters, not bytes, wide
   - Always stores n characters
   - Automatically pads with spaces for shorter strings
-- `VARCHAR(n)` - Variable length up to maximum n characters
+- **VARCHAR(n)** - Variable length up to maximum n characters
   - Changes to `CHAR` in Implicit Temporary Tables and mysqld internal buffers
   - 256 characters and longer treated as `TEXT`
   - For InnoDB, this maximum will depend on the row format
-- `TEXT` - Large text object
+- **TEXT** - Large text object
   - Up to 65,535 (2^16 - 1) characters
   - Not supported by the `MEMORY` Storage Engine
   - MariaDB uses `ARIA` for implicit on-disk temporary tables
-- `TINYTEXT` - Text type limited up to 255 (2^8 - 1) characters
-- `MEDIUMTEXT` - Text type limited up to 16,777,215 (2^24 - 1) characters
-- `LONGTEXT` - Text type limited up to 4,294,967,295 (2^32 - 1) characters
+- **TINYTEXT** - Text type limited up to 255 (2^8 - 1) characters
+- **MEDIUMTEXT** - Text type limited up to 16,777,215 (2^24 - 1) characters
+- **LONGTEXT** - Text type limited up to 4,294,967,295 (2^32 - 1) characters
 
 #### String data attributes
 
@@ -529,10 +555,10 @@ String columns are defined by a **Character Set** and a **Collation**. These can
 - **Character Sets**: Determine how characters are encoded. Modern MariaDB (10.6+) defaults to `utf8mb4` for full Unicode support. Multi-byte sets provide broader character support but increase disk storage and memory requirements.
 - **Collations**: A set of rules for comparing and sorting strings. Modern MariaDB uses UCA (Unicode Collation Algorithm) based collations, such as `utf8mb4_uca1400_ai_ci`, which offer improved linguistic accuracy and can be overridden within specific queries.
 
-Column table and column collation may be defined on table creation. Example below shows couple of variants:
+Table and column character set and collation may be defined at table creation. The example below shows a couple of variants:
 ```sql
 CREATE TABLE t (
-    -- colums with charset latin1 and defalult collation
+    -- columns with charset latin1 and default collation
     latin_name text CHARSET latin1,
     -- column with default charset and utf8mb4_general_ci collation
     utf8mb4_name text COLLATE utf8mb4_general_ci,
@@ -557,12 +583,31 @@ Try this on [SQLize.online](https://sqlize.online/sql/mariadb118/7a04936ecb50e04
 
 ### Binary Data Types
 
-- BINARY
-- VARBINARY
-- TINYBLOB
-- BLOB
-- MEDIUMBLOB
-- LONGBLOB
+Binary data types in MariaDB are used to store raw binary data, such as files, images, or any data that does not represent text. Unlike character types, binary types do not interpret or encode the data—they simply store bytes as-is. The main binary data types are:
+
+- **BINARY(n)**: Fixed-length binary string. Always stores exactly `n` bytes, padding with `0x00` if the input is shorter.
+- **VARBINARY(n)**: Variable-length binary string, up to `n` bytes. Only uses as much space as needed for the data.
+- **TINYBLOB**, **BLOB**, **MEDIUMBLOB**, **LONGBLOB**: Used for storing large amounts of binary data. The main difference between these types is the maximum amount of data they can store:
+  - `TINYBLOB`: Up to 255 bytes
+  - `BLOB`: Up to 65,535 bytes (64 KB)
+  - `MEDIUMBLOB`: Up to 16,777,215 bytes (16 MB)
+  - `LONGBLOB`: Up to 4,294,967,295 bytes (4 GB)
+
+**Key points:**
+- Binary columns use the `binary` character set and collation, which means no character encoding or collation rules are applied.
+- BLOB types are often used for storing files or large binary objects, but storing large files in the database can impact performance and memory usage.
+- Binary data is included in transactions, replication, and backups.
+- Unlike text types, binary types are compared byte-by-byte, not by character value.
+
+**Example:**
+```sql
+CREATE TABLE files (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    filename VARCHAR(255),
+    data LONGBLOB
+);
+```
+
 
 - `BINARY`, `VARBINARY` and `BLOBs` can contain data with bytes from the whole range from 0 - 255
 - Uses a special character set and collation called "binary"
@@ -575,34 +620,32 @@ Try this on [SQLize.online](https://sqlize.online/sql/mariadb118/7a04936ecb50e04
 
 ### Temporal Data Types
 
-- DATE
-- TIME
-- DATETIME
-- TIMESTAMP
-- YEAR
+- **DATE**  
+  - Stores dates in the format `YYYY-MM-DD`, with a range from `'0000-00-00'` to `'9999-12-31'`.
+- **TIME** [(<microsecond precision>)]  
+  - Stores time values in the format `hh:mm:ss` (optionally with fractional seconds).
+  - Range: `-838:59:59.000000` to `838:59:59.000000`.
+  - Microsecond precision can be specified from 0 to 6 (default is 0).
+- **DATETIME** [(<microsecond precision>)]  
+  - Stores date and time in the format `YYYY-MM-DD HH:MM:SS` (optionally with fractional seconds).
+  - Range: `'0000-00-00 00:00:00'` to `'9999-12-31 23:59:59.999999'`.
+  - Microsecond precision can be specified from 0 to 6 (default is 0).
+- **TIMESTAMP**  
+  - Stores date and time as the number of seconds since `'1970-01-01 00:00:00'` UTC (Unix timestamp).
+- **YEAR**  
+  - Stores a year value as a 4-digit number, with a range from `1901` to `2155`.
 
 ```sql
-SELECT CURTIME(4);
+CREATE TABLE employees (
+    name VARCHAR(35) NOT NULL,
+    birthday DATE,
+    stage_from YEAR,
+    working_hours_from TIME,
+    working_hours_to TIME,
+    updated_at DATETIME(6),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
-
-```shell
-+---------------+
-| CURTIME(4)    |
-+---------------+
-| 05:33:09.1061 |
-+---------------+
-```
-
-- `DATE` — from 1000-01-01 to 9999-12-31
-  - YYYY-MM-DD
-- `TIME` [(<microsecond precision>)]
-  - from -838:59:59 to 838:59:59
-- `DATETIME` [(<microsecond precision>)]
-  - Same ranges as `DATE` and `TIME` above
-  - YYYY-MM-DD HH:mm:ss
-- `TIMESTAMP` — Unix timestamp, in seconds from 1970-01-01
-  - Many applications store `UNIX_TIMESTAMP()` values in unsigned integer field
-- `YEAR` — Accepts YYYY
 
 ### JSON Data Type
 
@@ -614,16 +657,16 @@ SELECT CURTIME(4);
 
 ```sql
 CREATE TABLE city (
-  Name VARCHAR(35) NOT NULL,
-  Info JSON DEFAULT NULL
+    name VARCHAR(35) NOT NULL,
+    info JSON DEFAULT NULL
 );
 
 INSERT INTO city VALUES (
-  'New York',
-  JSON_OBJECT(
-    'Population','8008278',
-    'Country', 'USA'
-  )
+    'New York',
+    JSON_OBJECT(
+        'Population','8008278',
+        'Country', 'USA'
+    )
 );
 ```
 
@@ -656,7 +699,7 @@ SELECT * FROM city;
 
   ```sql
   CREATE TABLE country (
-      Continent ENUM('Asia','Europe','N America','Africa','Oceania','Antarctica','S America')
+      continent ENUM('Asia','Europe','N America','Africa','Oceania','Antarctica','S America')
   );
   ```
 
@@ -664,12 +707,12 @@ SELECT * FROM city;
   - Can hold one or more values from the defined set
 
   ```sql
-  CREATE TABLE countrylanguage (
-      CountryCode CHAR(3),
-      Language SET ('English','French','Mandarin','Spanish')
+  CREATE TABLE country_languages (
+      country_code CHAR(3),
+      language SET ('English','French','Mandarin','Spanish')
   );
 
-  INSERT INTO countrylanguage VALUES
+  INSERT INTO country_languages VALUES
       ('CHN','Mandarin'),
       ('CAN','English,French');
   ```
@@ -678,7 +721,22 @@ SELECT * FROM city;
   - Stores as a BINARY(16)
   
   ```sql
-  CREATE TABLE ipaddress (address INET6);
+  CREATE TABLE ip_address (
+      id INT AUTO_INCREMENT PRIMARY KEY, 
+      address INET6
+  );
+  ```
+
+- **VECTOR(N)** - data type enables MariaDB Server to store and query fixed-length arrays of numeric values, supporting use cases such as AI embeddings and similarity search.  
+  - `N` specifies the number of dimensions (elements) in the vector, with a maximum of 16,383.  
+  - The dimension count (`N`) should match the output size of your embedding algorithm.
+
+  ```sql
+  CREATE TABLE vectors (
+      id INT AUTO_INCREMENT PRIMARY KEY, 
+      v VECTOR(5) NOT NULL,
+      VECTOR INDEX (v)
+  );
   ```
 
 ## Built-in Functions
@@ -739,6 +797,8 @@ SELECT * FROM city;
 - **YEAR()** - Returns the year part of a given date.
 - **YEARMONTH()** - Returns the year and month value (often used as an extraction unit or in periodic calculations).
 
+[Documentation on Date and Time Functions](https://mariadb.com/docs/server/reference/sql-functions/date-time-functions)
+
 ### Examples of Date and Time Functions
 
 **Used in Queries and Data Manipulation Statements**
@@ -749,7 +809,7 @@ SELECT NOW() + INTERVAL 1 DAY
        AS 'Day & Hour Earlier';
 ```
 
-```sql
+```shell
 +---------------------+
 | Day & Hour Earlier  |
 +---------------------+
@@ -768,10 +828,10 @@ WHERE col5 = CURDATE();
 **Used in Bulk Load**
 
 ```sql
-load data local infile '/tmp/test.csv' into
-table test fields terminated by ','
-ignore 1 lines (id,@dt1)
-set dt=str_to_date(@dt1,'%d/%m/%Y');
+LOAD DATA LOCAL infile '/tmp/test.csv' 
+INTO TABLE test FIELDS TERMINATED BY ','
+IGNORE 1 LINES (id,@dt1)
+SET dt=str_to_date(@dt1,'%d/%m/%Y');
 ```
 
 ### Manipulating Strings
@@ -839,7 +899,7 @@ set dt=str_to_date(@dt1,'%d/%m/%Y');
 - **UPPER()** - Converts a string to uppercase.
 - **WEIGHT_STRING()** - Returns the binary weight string of a value used for sorting.
 
-Documentation on String Functions: [https://mariadb.com/kb/en/library/string-functions/](https://mariadb.com/kb/en/library/string-functions/)
+[Documentation on String Functions](https://mariadb.com/kb/en/library/string-functions/)
 
 ### An Example of a String Function
 
@@ -898,6 +958,8 @@ LIMIT 100;
 - **JSON_VALID** - Returns 1 if a string is a valid JSON document, otherwise 0.
 - **JSON_VALUE** - Extracts a scalar value (string, number, or boolean) from a JSON document.
 
+[Documentation on JSON Functions](https://mariadb.com/docs/server/reference/sql-functions/special-functions/json-functions)
+
 ### Examples of JSON Functions
 
 #### `JSON_VALUE` Used to pull a scalar value from JSON data
@@ -924,7 +986,7 @@ SELECT
     name, 
     latitude, 
     longitude, 
-     JSON_QUERY(attr, '$.details') AS details 
+    JSON_QUERY(attr, '$.details') AS details 
 FROM locations 
 WHERE type = 'R';
 ```
@@ -954,16 +1016,16 @@ CREATE TABLE locations (
 
 ```sql
 UPDATE locations
-    SET attr = JSON_INSERT(attr,'$.nickname','The Bean') WHERE id = 8;
+SET attr = JSON_INSERT(attr, '$.nickname', 'The Bean') 
+WHERE id = 8;
 ```
 
 #### `JSON_ARRAY` Used to create new arrays
 
 ```sql
 UPDATE locations
-    SET attr = JSON_INSERT(attr, '$.foodTypes',
-    JSON_ARRAY('Asian', 'Mexican'))
-    WHERE id = 1;
+SET attr = JSON_INSERT(attr, '$.foodTypes', JSON_ARRAY('Asian', 'Mexican'))
+WHERE id = 1;
 ```
 
 #### `JSON_TABLE` Used to convert data
@@ -971,11 +1033,12 @@ UPDATE locations
 ```sql
 SELECT l.name, d.food_type, d.menu
 FROM locations AS l,
-     JSON_TABLE(l.attr,
+    JSON_TABLE(l.attr,
        '$' COLUMNS(
-         food_type VARCHAR(25) PATH '$.foodType',
-         menu VARCHAR(200) PATH '$.menu')
-     ) AS d
+            food_type VARCHAR(25) PATH '$.foodType',
+            menu VARCHAR(200) PATH '$.menu'
+        )
+    ) AS d
 WHERE id = 2;
 ```
 ```shell
@@ -983,6 +1046,28 @@ WHERE id = 2;
 |--------|-----------|-------------------------------------------------------|
 | Shogun | Japanese  | https://www.restaurantshogun.com/menu/teppan-1-22.pdf |
 ```
+
+### MariaDB Vector Functions
+
+- **VEC_DISTANCE(v1, v2)** - Compute the distance between two vectors (commonly Euclidean/L2 by default).
+- **VEC_DISTANCE_COSINE(v1, v2)** - Compute cosine-based distance (1 - cosine similarity).
+- **VEC_DISTANCE_EUCLIDEAN(v1, v2)** - Explicit Euclidean (L2) distance between vectors.
+- **VEC_FROMTEXT(s)** - Parse a textual vector record (e.g. '[0.1,0.2,...]') into a `VECTOR(N)` value.
+- **VEC_TOTEXT(v)** - Render a vector value as text for display or export.
+
+**Vector Functions Example**
+
+```sql
+SELECT 
+    id,
+    VEC_DISTANCE(v, VEC_FROMTEXT('[0.1,0.2,0.3,0.4,0.5]')) AS dist
+FROM vectors
+ORDER BY dist
+LIMIT 5;
+```
+
+Note: function availability and precise names can differ between MariaDB versions and builds. Use `SHOW FUNCTIONS` or consult your server documentation for exact signatures and index helper functions for nearest-neighbour searches.
+
 
 ## Lesson Summary
 
